@@ -40,6 +40,8 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
+import javax.annotation.Nullable;
+
 public class SpongeUserStorageService implements UserStorageService {
 
     public static final UUID FAKEPLAYER_UUID = UUID.fromString("41C82C87-7AfB-4024-BA57-13D2C99CAE77");
@@ -64,6 +66,23 @@ public class SpongeUserStorageService implements UserStorageService {
     @Override
     public Optional<User> get(GameProfile profile) {
         return Optional.ofNullable(UserDiscoverer.findByProfile(profile));
+    }
+
+    @Override
+    public User getOrCreate(String name) {
+        checkNotNull(name, "name");
+        checkArgument(name.length() >= 3 && name.length() <= 16, "Invalid username %s", name);
+        @Nullable final User user = UserDiscoverer.findByUsername(name);
+        if (user != null) {
+            return user;
+        } else {
+            try {
+                checkState(Sponge.isServerAvailable(), "Server is not available!");
+                return this.getOrCreate(Sponge.getServer().getGameProfileManager().get(name).get());
+            } catch (ExecutionException | InterruptedException e) {
+                throw new RuntimeException("Error looking up GameProfile!", e);
+            }
+        }
     }
 
     @Override

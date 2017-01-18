@@ -31,7 +31,6 @@ import com.google.common.collect.Sets;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.server.management.PlayerList;
-import net.minecraft.server.management.PlayerProfileCache;
 import net.minecraft.server.management.UserListBans;
 import net.minecraft.server.management.UserListEntryBan;
 import net.minecraft.server.management.UserListWhitelist;
@@ -49,8 +48,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
@@ -105,13 +102,9 @@ class UserDiscoverer {
     }
 
     static User findByUsername(String username) {
-        PlayerProfileCache cache = SpongeImpl.getServer().getPlayerProfileCache();
-        HashSet<String> names = Sets.newHashSet(cache.getUsernames());
-        if (names.contains(username.toLowerCase(Locale.ROOT))) {
-            GameProfile profile = cache.getGameProfileForUsername(username);
-            if (profile != null) {
-                return findByProfile((org.spongepowered.api.profile.GameProfile) profile);
-            }
+        org.spongepowered.api.profile.GameProfile profile = Sponge.getServer().getGameProfileManager().getCache().getByName(username).orElse(null);
+        if (profile != null) {
+            return findByProfile(profile);
         }
         return null;
     }
