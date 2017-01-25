@@ -126,6 +126,8 @@ public interface IMixinEntity extends org.spongepowered.api.entity.Entity {
 
     boolean isVanilla();
 
+    Cause getDestructCause();
+
     void setDestructCause(Cause cause);
 
     void setLocationAndAngles(Location<World> location);
