@@ -27,23 +27,35 @@ package org.spongepowered.common.data.persistence;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static org.spongepowered.api.data.DataQuery.of;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.reflect.TypeToken;
 import ninja.leaping.configurate.ConfigurationNode;
-import ninja.leaping.configurate.SimpleConfigurationNode;
+import ninja.leaping.configurate.commented.CommentedConfigurationNode;
+import ninja.leaping.configurate.commented.SimpleCommentedConfigurationNode;
 import org.spongepowered.api.data.DataContainer;
+import org.spongepowered.api.data.DataQuery;
 import org.spongepowered.api.data.DataView;
 import org.spongepowered.api.data.persistence.DataTranslator;
 import org.spongepowered.api.data.persistence.InvalidDataException;
+import org.spongepowered.common.data.MemoryDataView;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
+import java.util.stream.Collectors;
+
+import javax.annotation.Nullable;
 
 /**
- * A translator for translating {@link DataView}s into {@link ConfigurationNode}
- * s.
+ * A translator for translating {@link DataView}s into
+ * {@link ConfigurationNode}s.
  */
 public class ConfigurateTranslator implements DataTranslator<ConfigurationNode> {
 
+    @VisibleForTesting
+    public static final String DATA_VIEW_IDENTIFIER = "$DataView-8f3d5a9"; // random junk, just in case of clashes
     private static final ConfigurateTranslator instance = new ConfigurateTranslator();
     private static final TypeToken<ConfigurationNode> TOKEN = TypeToken.of(ConfigurationNode.class);
 
@@ -59,43 +71,123 @@ public class ConfigurateTranslator implements DataTranslator<ConfigurationNode> 
         return instance;
     }
 
-    private static void populateNode(ConfigurationNode node, DataView container) {
+    private void populateNode(ConfigurationNode node, DataView container) {
         checkNotNull(node, "node");
         checkNotNull(container, "container");
-        node.setValue(container.getMap(of()).get());
+
+        // Configurate won't serialize this for us with a wildcard type, so we'll walk the map ourselves.
+        if (container instanceof MemoryDataView) {
+            walk(node, ((MemoryDataView) container).getMap(of(), false).get());
+        } else {
+            walk(node, container.getMap(of()).get());
+        }
     }
 
-    private static DataContainer translateFromNode(ConfigurationNode node) {
+    private void walk(ConfigurationNode node, Map<?, ?> map) {
+        map.forEach((key, value) -> keyValueToNode(node.getNode(key), value));
+    }
+
+    private void walk(ConfigurationNode node, @Nullable Collection<?> list) {
+        if (list == null || list.isEmpty()) {
+            return;
+        }
+
+        List<ConfigurationNode> listOfNodes = new ArrayList<>();
+        for (Object obj : list) {
+            ConfigurationNode newNode = SimpleCommentedConfigurationNode.root();
+            keyValueToNode(newNode, obj);
+            if (newNode.getValue() != null) {
+                listOfNodes.add(newNode);
+            }
+        }
+
+        node.setValue(listOfNodes);
+    }
+
+    private void keyValueToNode(ConfigurationNode node, @Nullable Object value) {
+        if (value == null) {
+            return;
+        }
+
+        if (value instanceof Map) {
+            walk(node, (Map<?, ?>) value);
+        } else if (value instanceof Collection) {
+            walk(node, (List<?>) value);
+        } else if (value instanceof DataView) {
+            node.setValue(translate((DataView) value));
+            ConfigurationNode idNode = node.getNode(DATA_VIEW_IDENTIFIER);
+            idNode.setValue(true);
+            if (idNode instanceof CommentedConfigurationNode) {
+                ((CommentedConfigurationNode) idNode).setComment("Do not edit this node, this marks this entry as a DataView.");
+            }
+        } else {
+            node.setValue(value);
+        }
+    }
+
+    private DataContainer translateFromNode(ConfigurationNode node) {
         checkNotNull(node, "node");
         DataContainer dataContainer = DataContainer.createNew(DataView.SafetyMode.NO_DATA_CLONED);
         ConfigurateTranslator.instance().addTo(node, dataContainer);
         return dataContainer;
     }
 
-    @SuppressWarnings("unchecked")
-    private static void translateMapOrList(ConfigurationNode node, DataView container) {
-        Object value = node.getValue();
-        if (value instanceof Map) {
-            for (Map.Entry<Object, Object> entry : ((Map<Object, Object>) value).entrySet()) {
-                container.set(of('.', entry.getKey().toString()), entry.getValue());
-            }
-        } else if (value != null) {
-            container.set(of(node.getKey().toString()), value);
+    private DataQuery dataQueryFromPathStack(Stack<Object> key) {
+        if (key.isEmpty()) {
+            return of("value"); // TODO: What do we do about singular values?
         }
+
+        return of(key.stream().map(Object::toString).collect(Collectors.toList()));
     }
 
-    public ConfigurationNode translateData(DataView container) {
-        ConfigurationNode node = SimpleConfigurationNode.root();
-        translateContainerToData(node, container);
-        return node;
+    @SuppressWarnings("unchecked")
+    private void translateNodeToData(ConfigurationNode node, DataView container, @Nullable Stack<Object> path) {
+
+        if (path == null) {
+            // We don't populate this here, an empty stack indicates the root of a DataView
+            // and so we never check to see if it's a child DataView.
+            path = new Stack<>();
+        }
+
+        if (node.hasMapChildren()) {
+            // If we're on the top level, we are creating a DataView for this level as it is,
+            // otherwise, if we have a data view, we translate that separately.
+            if (!path.isEmpty() && !node.getNode(DATA_VIEW_IDENTIFIER).isVirtual()) {
+                // This needs to be deserialized into a DataView - send it through the translator.
+                container.set(dataQueryFromPathStack(path), translateFromNode(node));
+            } else {
+                for (Map.Entry<Object, ? extends ConfigurationNode> entry : node.getChildrenMap().entrySet()) {
+                    if (entry.getKey().toString().equals(DATA_VIEW_IDENTIFIER)) {
+                        // We ignore this - it's our marker.
+                        continue;
+                    }
+
+                    path.push(entry.getKey());
+                    translateNodeToData(entry.getValue(), container, path);
+                    path.pop();
+                }
+            }
+        } else if (node.hasListChildren()) {
+            List<Object> list = new ArrayList<>();
+
+            for (ConfigurationNode childNode : node.getChildrenList()) {
+                // TODO: Should this be a DataView regardless if this is a map?
+                if (childNode.hasMapChildren() && !childNode.getNode(DATA_VIEW_IDENTIFIER).isVirtual()) {
+                    list.add(instance.translate(childNode));
+                } else {
+                    list.add(childNode.getValue());
+                }
+            }
+
+            container.set(dataQueryFromPathStack(path), list);
+        } else {
+            container.set(dataQueryFromPathStack(path), node.getValue());
+        }
+
     }
 
-    public void translateContainerToData(ConfigurationNode node, DataView container) {
-        ConfigurateTranslator.populateNode(node, container);
-    }
-
-    public DataContainer translateFrom(ConfigurationNode node) {
-        return ConfigurateTranslator.translateFromNode(node);
+    void translateContainerToData(ConfigurationNode node, DataView container) {
+        populateNode(node, container);
     }
 
     @Override
@@ -105,14 +197,14 @@ public class ConfigurateTranslator implements DataTranslator<ConfigurationNode> 
 
     @Override
     public ConfigurationNode translate(DataView view) throws InvalidDataException {
-        final SimpleConfigurationNode node = SimpleConfigurationNode.root();
+        ConfigurationNode node = SimpleCommentedConfigurationNode.root();
         populateNode(node, view);
         return node;
     }
 
     @Override
     public DataContainer translate(ConfigurationNode obj) throws InvalidDataException {
-        return ConfigurateTranslator.translateFromNode(obj);
+        return translateFromNode(obj);
     }
 
     @Override
@@ -121,7 +213,7 @@ public class ConfigurateTranslator implements DataTranslator<ConfigurationNode> 
         Object key = node.getKey();
         if (value != null) {
             if (key == null || value instanceof Map || value instanceof List) {
-                translateMapOrList(node, dataView);
+                translateNodeToData(node, dataView, null);
             } else {
                 dataView.set(of('.', key.toString()), value);
             }
@@ -138,4 +230,5 @@ public class ConfigurateTranslator implements DataTranslator<ConfigurationNode> 
     public String getName() {
         return "ConfigurationNodeTranslator";
     }
+
 }
