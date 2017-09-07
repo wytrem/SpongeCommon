@@ -86,7 +86,6 @@ import org.spongepowered.api.event.cause.entity.dismount.DismountType;
 import org.spongepowered.api.event.cause.entity.dismount.DismountTypes;
 import org.spongepowered.api.event.cause.entity.teleport.TeleportTypes;
 import org.spongepowered.api.event.entity.MoveEntityEvent;
-import org.spongepowered.api.item.inventory.ItemStack;
 import org.spongepowered.api.service.user.UserStorageService;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.translation.Translation;
@@ -363,7 +362,7 @@ public abstract class MixinEntity implements IMixinEntity {
     }
 
     @Inject(method = "setDead", at = @At("HEAD"))
-    public void onSetDead(CallbackInfo ci) {
+    private void onSetDead(CallbackInfo ci) {
         net.minecraft.entity.Entity mcEntity = (net.minecraft.entity.Entity) (Object) this;
         if (!this.world.isRemote && (!(mcEntity instanceof EntityLivingBase) || (mcEntity instanceof EntityArmorStand))) {
             final CauseTracker causeTracker = CauseTracker.getInstance();

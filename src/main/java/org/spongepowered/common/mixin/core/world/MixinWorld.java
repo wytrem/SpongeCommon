@@ -523,9 +523,10 @@ public abstract class MixinWorld implements World, IMixinWorld {
     }
 
     @Inject(method = "onEntityRemoved", at = @At(value = "HEAD"))
-    public void onEntityRemoval(net.minecraft.entity.Entity entityIn, CallbackInfo ci) {
-        if (!this.isRemote && (!(entityIn instanceof EntityLivingBase) || entityIn instanceof EntityArmorStand)) {
+    private void onEntityRemoval(net.minecraft.entity.Entity entityIn, CallbackInfo ci) {
+        if (!this.isRemote) {
             SpongeCommonEventFactory.callDestructEntityEvent((Entity) entityIn, ((IMixinEntity) entityIn).getDestructCause());
+            ((IMixinEntity) entityIn).setDestructCause(null);
         }
     }
 
