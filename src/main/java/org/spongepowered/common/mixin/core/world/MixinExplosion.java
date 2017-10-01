@@ -100,8 +100,7 @@ public abstract class MixinExplosion implements Explosion, IMixinExplosion {
 
     @Inject(method = "<init>*", at = @At("RETURN"))
     public void onConstructed(net.minecraft.world.World world, Entity entity, double originX, double originY,
-            double originZ, float radius, boolean isFlaming, boolean isSmoking,
-            CallbackInfo ci) {
+            double originZ, float radius, boolean isFlaming, boolean isSmoking, CallbackInfo ci) {
         this.origin = new Vector3d(this.x, this.y, this.z);
         // In Vanilla and Forge, 'damagesTerrain' controls both smoke particles and block damage
         // Sponge-created explosions will explicitly set 'shouldBreakBlocks' to its proper value

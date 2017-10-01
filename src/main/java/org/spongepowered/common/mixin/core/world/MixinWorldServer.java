@@ -1192,7 +1192,7 @@ public abstract class MixinWorldServer extends MixinWorld implements IMixinWorld
             final double x = mcExplosion.x;
             final double y = mcExplosion.y;
             final double z = mcExplosion.z;
-            final boolean damagesTerrain = mcExplosion.damagesTerrain;
+            final boolean damagesTerrain = explosion.shouldBreakBlocks();
             final float strength = explosion.getRadius();
 
             // Set up the pre event
@@ -1206,7 +1206,7 @@ public abstract class MixinWorldServer extends MixinWorld implements IMixinWorld
             // Sponge End
 
             mcExplosion.doExplosionA();
-            mcExplosion.doExplosionB(false);
+            mcExplosion.doExplosionB(true);
 
             if (!damagesTerrain) {
                 mcExplosion.clearAffectedBlockPositions();
@@ -1214,9 +1214,8 @@ public abstract class MixinWorldServer extends MixinWorld implements IMixinWorld
 
             for (EntityPlayer entityplayer : this.playerEntities) {
                 if (entityplayer.getDistanceSq(x, y, z) < 4096.0D) {
-                    ((EntityPlayerMP) entityplayer).connection
-                        .sendPacket(new SPacketExplosion(x, y, z, strength, mcExplosion.getAffectedBlockPositions(),
-                            mcExplosion.getPlayerKnockbackMap().get(entityplayer)));
+                    ((EntityPlayerMP) entityplayer).connection.sendPacket(new SPacketExplosion(x, y, z, strength, mcExplosion
+                            .getAffectedBlockPositions(), mcExplosion.getPlayerKnockbackMap().get(entityplayer)));
                 }
             }
 
