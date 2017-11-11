@@ -38,6 +38,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.Level;
 import org.spongepowered.api.data.DataContainer;
+import org.spongepowered.api.data.DataHolder;
 import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.DataView;
 import org.spongepowered.api.data.MemoryDataContainer;
@@ -52,6 +53,8 @@ import org.spongepowered.api.item.ItemType;
 import org.spongepowered.api.item.inventory.ItemStack;
 import org.spongepowered.api.item.inventory.ItemStackSnapshot;
 import org.spongepowered.api.text.translation.Translation;
+import org.spongepowered.asm.mixin.Implements;
+import org.spongepowered.asm.mixin.Interface;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -84,7 +87,8 @@ import java.util.stream.Collectors;
 import javax.annotation.Nullable;
 
 @Mixin(net.minecraft.item.ItemStack.class)
-public abstract class MixinItemStack implements ItemStack, IMixinItemStack, IMixinCustomDataHolder {
+@Implements(@Interface(iface = ItemStack.class, prefix = "itemstack$"))
+public abstract class MixinItemStack implements DataHolder, IMixinItemStack, IMixinCustomDataHolder {
 
     @Shadow public int stackSize;
 
@@ -146,48 +150,45 @@ public abstract class MixinItemStack implements ItemStack, IMixinItemStack, IMix
             final CauseTracker causeTracker = CauseTracker.getInstance();
             final PhaseData peek = causeTracker.getCurrentPhaseData();
             final IPhaseState state = peek.state;
-            state.getPhase().capturePlayerUsingStackToBreakBlock(this, (EntityPlayerMP) playerIn, state, peek.context, causeTracker);
+            state.getPhase().capturePlayerUsingStackToBreakBlock((ItemStack)this, (EntityPlayerMP) playerIn, state, peek.context, causeTracker);
         }
     }
 
-    @Override
-    public ItemType getItem() {
+    public ItemType itemstack$getItem() {
         final Item item = shadow$getItem();
         return item == null ? (ItemType) ItemTypeRegistryModule.NONE_ITEM : (ItemType) item;
     }
 
-    @Override
-    public int getQuantity() {
+    public int itemstack$getQuantity() {
         return this.stackSize;
     }
 
-    @Override
-    public void setQuantity(int quantity) throws IllegalArgumentException {
-        if (quantity > this.getMaxStackQuantity()) {
-            throw new IllegalArgumentException("Quantity (" + quantity + ") exceeded the maximum stack size (" + this.getMaxStackQuantity() + ")");
+    public void itemstack$setQuantity(int quantity) throws IllegalArgumentException {
+        if (quantity > this.getMaxStackSize()) {
+            throw new IllegalArgumentException("Quantity (" + quantity + ") exceeded the maximum stack size (" + this.getMaxStackSize() + ")");
         } else {
             this.stackSize = quantity;
         }
     }
 
-    @Override
-    public int getMaxStackQuantity() {
+    public int itemstack$getMaxStackQuantity() {
         return getMaxStackSize();
     }
 
-    @Override
-    public boolean validateRawData(DataView container) {
+    public boolean dataholder$validateRawData(DataView container) {
         return false;
     }
 
-    @Override
-    public void setRawData(DataView container) throws InvalidDataException {
-
+    public void dataholder$setRawData(DataView container) throws InvalidDataException {
 
     }
 
     @Override
-    public ItemStack copy() {
+    public DataHolder copy() {
+        return this.itemstack$copy();
+    }
+
+    public ItemStack itemstack$copy() {
         return (ItemStack) shadow$copy();
     }
 
@@ -200,8 +201,8 @@ public abstract class MixinItemStack implements ItemStack, IMixinItemStack, IMix
     public DataContainer toContainer() {
         final DataContainer container = new MemoryDataContainer()
             .set(Queries.CONTENT_VERSION, getContentVersion())
-                .set(DataQueries.ITEM_TYPE, this.getItem().getId())
-                .set(DataQueries.ITEM_COUNT, this.getQuantity())
+                .set(DataQueries.ITEM_TYPE, this.itemstack$getItem().getId())
+                .set(DataQueries.ITEM_COUNT, this.itemstack$getQuantity())
                 .set(DataQueries.ITEM_DAMAGE_VALUE, this.getItemDamage());
         if (hasTagCompound()) { // no tag? no data, simple as that.
             final NBTTagCompound compound = getTagCompound().copy();
@@ -224,18 +225,15 @@ public abstract class MixinItemStack implements ItemStack, IMixinItemStack, IMix
         return container;
     }
 
-    @Override
-    public Translation getTranslation() {
+    public Translation itemstack$getTranslation() {
         return new SpongeTranslation(shadow$getItem().getUnlocalizedName((net.minecraft.item.ItemStack) (Object) this) + ".name");
     }
 
-    @Override
-    public ItemStackSnapshot createSnapshot() {
-        return new SpongeItemStackSnapshot(this);
+    public ItemStackSnapshot itemstack$createSnapshot() {
+        return new SpongeItemStackSnapshot((ItemStack)this);
     }
 
-    @Override
-    public boolean equalTo(ItemStack that) {
+    public boolean itemstack$equalTo(ItemStack that) {
         return net.minecraft.item.ItemStack.areItemStacksEqual(
                 (net.minecraft.item.ItemStack) (Object) this,
                 (net.minecraft.item.ItemStack) that
