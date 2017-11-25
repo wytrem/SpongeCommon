@@ -611,7 +611,7 @@ public class SpongeCommonEventFactory {
         if (((net.minecraft.entity.Entity) entity).isDead && (!(entity instanceof EntityLivingBase) || entity instanceof EntityArmorStand)) {
             MessageChannel originalChannel = MessageChannel.TO_NONE;
             if (cause == null) {
-                cause = Cause.of(NamedCause.source(entity.getWorld()));
+                cause = Sponge.getCauseStackManager().getCurrentCause();
             }
             DestructEntityEvent event = SpongeEventFactory.createDestructEntityEvent(
                     cause, originalChannel, Optional.of(originalChannel), new MessageEvent.MessageFormatter(),

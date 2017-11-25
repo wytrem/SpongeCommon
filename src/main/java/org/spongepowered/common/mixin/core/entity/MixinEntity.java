@@ -78,6 +78,8 @@ import org.spongepowered.api.entity.EntityType;
 import org.spongepowered.api.entity.Transform;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.entity.living.player.User;
+import org.spongepowered.api.entity.projectile.Projectile;
+import org.spongepowered.api.entity.projectile.source.ProjectileSource;
 import org.spongepowered.api.event.CauseStackManager;
 import org.spongepowered.api.event.SpongeEventFactory;
 import org.spongepowered.api.event.cause.Cause;
@@ -124,6 +126,7 @@ import org.spongepowered.common.event.ShouldFire;
 import org.spongepowered.common.event.SpongeCommonEventFactory;
 import org.spongepowered.common.event.damage.DamageEventHandler;
 import org.spongepowered.common.event.damage.MinecraftBlockDamageSource;
+import org.spongepowered.common.event.tracking.PhaseData;
 import org.spongepowered.common.event.tracking.phase.plugin.BasicPluginContext;
 import org.spongepowered.common.event.tracking.phase.plugin.PluginPhase;
 import org.spongepowered.common.interfaces.IMixinChunk;
@@ -365,25 +368,26 @@ public abstract class MixinEntity implements IMixinEntity {
     private void onSetDead(CallbackInfo ci) {
         net.minecraft.entity.Entity mcEntity = (net.minecraft.entity.Entity) (Object) this;
         if (!this.world.isRemote && (!(mcEntity instanceof EntityLivingBase) || (mcEntity instanceof EntityArmorStand))) {
-            final CauseTracker causeTracker = CauseTracker.getInstance();
+            try (CauseStackManager.StackFrame frame = Sponge.getCauseStackManager().pushCauseFrame()) {
+                // TODO Need help converting the old cause stuff to new cause stuff here.
+                PhaseData phaseData = causeTracker.getCurrentPhaseData();
 
-            PhaseData phaseData = causeTracker.getCurrentPhaseData();
+                Cause.Builder causeBuilder = Cause.builder();
+                Optional<Object> sourceOptional = phaseData.context.getSource(Object.class);
+                sourceOptional.ifPresent(source -> {
+                    causeBuilder.named(NamedCause.source(source));
+                    if (source instanceof Projectile) {
+                        ProjectileSource projectileSource = ((Projectile) source).getShooter();
+                        causeBuilder.named(NamedCause.of(NamedCause.THROWER, projectileSource));
+                    }
+                });
+                Optional<ItemStack> usedItemOptional = phaseData.context.firstNamed(InternalNamedCauses.Packet.ITEM_USED, ItemStack.class);
+                usedItemOptional.ifPresent(item -> causeBuilder.named(NamedCause.of(InternalNamedCauses.Packet.ITEM_USED, item)));
 
-            Cause.Builder causeBuilder = Cause.builder();
-            Optional<Object> sourceOptional = phaseData.context.getSource(Object.class);
-            sourceOptional.ifPresent(source -> {
-                causeBuilder.named(NamedCause.source(source));
-                if (source instanceof Projectile) {
-                    ProjectileSource projectileSource = ((Projectile) source).getShooter();
-                    causeBuilder.named(NamedCause.of(NamedCause.THROWER, projectileSource));
-                }
-            });
-            Optional<ItemStack> usedItemOptional = phaseData.context.firstNamed(InternalNamedCauses.Packet.ITEM_USED, ItemStack.class);
-            usedItemOptional.ifPresent(item -> causeBuilder.named(NamedCause.of(InternalNamedCauses.Packet.ITEM_USED, item)));
+                phaseData.context.getOwner().ifPresent(owner -> causeBuilder.named(NamedCause.owner(owner)));
 
-            phaseData.context.getOwner().ifPresent(owner -> causeBuilder.named(NamedCause.owner(owner)));
-
-            this.destructCause = causeBuilder.build();
+                this.destructCause = Sponge.getCauseStackManager().getCurrentCause();
+            }
         }
     }
 
