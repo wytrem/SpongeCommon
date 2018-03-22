@@ -318,4 +318,7 @@ public interface IPhaseState<C extends PhaseContext<C>> {
     default void appendContextPreExplosion(ExplosionContext explosionContext, C currentPhaseData) {
 
     }
+    default boolean allowWorldSave() {
+        return true;
+    }
 }

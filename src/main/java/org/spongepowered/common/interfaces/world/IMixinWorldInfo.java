@@ -40,6 +40,8 @@ public interface IMixinWorldInfo {
 
     NBTTagCompound getSpongeRootLevelNbt();
 
+    void saveConfig(boolean ignorePhase);
+
     void setSpongeRootLevelNBT(NBTTagCompound nbt);
 
     NBTTagCompound getSpongeNbt();

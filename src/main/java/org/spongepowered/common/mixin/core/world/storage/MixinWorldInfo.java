@@ -76,6 +76,7 @@ import org.spongepowered.common.data.util.DataQueries;
 import org.spongepowered.common.data.util.DataUtil;
 import org.spongepowered.common.data.util.NbtDataUtil;
 import org.spongepowered.common.event.SpongeCommonEventFactory;
+import org.spongepowered.common.event.tracking.PhaseTracker;
 import org.spongepowered.common.interfaces.world.IMixinDimensionType;
 import org.spongepowered.common.interfaces.world.IMixinGameRules;
 import org.spongepowered.common.interfaces.world.IMixinWorldInfo;
@@ -165,7 +166,6 @@ public abstract class MixinWorldInfo implements WorldProperties, IMixinWorldInfo
     @Inject(method = "<init>", at = @At("RETURN") )
     public void onConstruction(CallbackInfo ci) {
         onConstructionCommon();
-        this.isConstructed = true;
     }
 
     //     public WorldInfo(NBTTagCompound nbt)
@@ -174,7 +174,6 @@ public abstract class MixinWorldInfo implements WorldProperties, IMixinWorldInfo
         if (!SpongeCommonEventFactory.convertingMapFormat) {
             onConstructionCommon();
         }
-        this.isConstructed = true;
     }
 
     //     public WorldInfo(WorldSettings settings, String name)
@@ -182,7 +181,6 @@ public abstract class MixinWorldInfo implements WorldProperties, IMixinWorldInfo
     public void onConstruction(WorldSettings settings, String name, CallbackInfo ci) {
         if (name.equals("MpServer") || name.equals("sponge$dummy_world")) {
             this.isValid = false;
-            this.isConstructed = true;
             return;
         }
 
@@ -208,8 +206,6 @@ public abstract class MixinWorldInfo implements WorldProperties, IMixinWorldInfo
         }
         setDoesGenerateBonusChest(archetype.doesGenerateBonusChest());
         setSerializationBehavior(archetype.getSerializationBehavior());
-        this.getOrCreateWorldConfig().save();
-        this.isConstructed = true;
     }
 
     //     public WorldInfo(WorldInfo worldInformation)
@@ -221,7 +217,6 @@ public abstract class MixinWorldInfo implements WorldProperties, IMixinWorldInfo
         // TODO Zidane needs to fix this
         MixinWorldInfo info = (MixinWorldInfo) (Object) worldInformation;
         this.portalAgentType = info.portalAgentType;
-        this.isConstructed = true;
         this.setDimensionType(info.dimensionType);
     }
 
@@ -888,10 +883,20 @@ public abstract class MixinWorldInfo implements WorldProperties, IMixinWorldInfo
         return NbtTranslator.getInstance().translateFrom(additionalProperties);
     }
 
-    private void saveConfig() {
+
+    public void saveConfig() {
+        saveConfig(false);
+    }
+
+    @Override
+    public void saveConfig(boolean ignorePhase) {
+        if (this.getOrCreateWorldConfig().getConfig().isConfigEnabled()) {
+            return;
+        }
+
         // this.isConstructed is checked so that we don't continuously save until
         // object construction is complete.
-        if (this.isConstructed && this.getOrCreateWorldConfig().getConfig().isConfigEnabled()) {
+        if (ignorePhase || PhaseTracker.getInstance().getCurrentPhaseData().state.allowWorldSave()) {
             getOrCreateWorldConfig().save();
         }
     }

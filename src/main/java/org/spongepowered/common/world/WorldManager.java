@@ -66,7 +66,9 @@ import org.spongepowered.common.config.SpongeConfig;
 import org.spongepowered.common.config.type.GeneralConfigBase;
 import org.spongepowered.common.data.util.DataUtil;
 import org.spongepowered.common.data.util.NbtDataUtil;
+import org.spongepowered.common.event.tracking.IPhaseState;
 import org.spongepowered.common.event.tracking.PhaseContext;
+import org.spongepowered.common.event.tracking.context.GeneralizedContext;
 import org.spongepowered.common.event.tracking.phase.general.GeneralPhase;
 import org.spongepowered.common.interfaces.IMixinIntegratedServer;
 import org.spongepowered.common.interfaces.IMixinMinecraftServer;
@@ -563,65 +565,69 @@ public final class WorldManager {
 
     private static Optional<WorldServer> loadWorld(String worldName, @Nullable ISaveHandler saveHandler, @Nullable WorldProperties properties) {
         checkNotNull(worldName);
-        final Path currentSavesDir = WorldManager.getCurrentSavesDirectory().orElseThrow(() -> new IllegalStateException("Attempt "
-                + "made to load world too early!"));
-        final MinecraftServer server = SpongeImpl.getServer();
-        final Optional<WorldServer> optExistingWorldServer = getWorld(worldName);
-        if (optExistingWorldServer.isPresent()) {
-            return optExistingWorldServer;
-        }
+        try (GeneralizedContext context = GeneralPhase.State.WORLD_LOAD.createPhaseContext().buildAndSwitch()) {
+            final Path currentSavesDir = WorldManager.getCurrentSavesDirectory().orElseThrow(() -> new IllegalStateException("Attempt "
+                    + "made to load world too early!"));
+            final MinecraftServer server = SpongeImpl.getServer();
+            final Optional<WorldServer> optExistingWorldServer = getWorld(worldName);
+            if (optExistingWorldServer.isPresent()) {
+                return optExistingWorldServer;
+            }
 
-        if (!server.getAllowNether()) {
-            SpongeImpl.getLogger().error("Unable to load world [{}]. Multi-world is disabled via [allow-nether] in [server.properties].", worldName);
-            return Optional.empty();
-        }
-
-        final Path worldFolder = currentSavesDir.resolve(worldName);
-        if (!Files.isDirectory(worldFolder)) {
-            SpongeImpl.getLogger().error("Unable to load world [{}]. We cannot find its folder under [{}].", worldFolder, currentSavesDir);
-            return Optional.empty();
-        }
-
-        if (saveHandler == null) {
-            saveHandler = new AnvilSaveHandler(currentSavesDir.toFile(), worldName, true, SpongeImpl.getDataFixer());
-        }
-
-        // We weren't given a properties, see if one is cached
-        if (properties == null) {
-            properties = (WorldProperties) saveHandler.loadWorldInfo();
-
-            // We tried :'(
-            if (properties == null) {
-                SpongeImpl.getLogger().error("Unable to load world [{}]. No world properties was found!", worldName);
+            if (!server.getAllowNether()) {
+                SpongeImpl.getLogger()
+                        .error("Unable to load world [{}]. Multi-world is disabled via [allow-nether] in [server.properties].", worldName);
                 return Optional.empty();
             }
+
+            final Path worldFolder = currentSavesDir.resolve(worldName);
+            if (!Files.isDirectory(worldFolder)) {
+                SpongeImpl.getLogger().error("Unable to load world [{}]. We cannot find its folder under [{}].", worldFolder, currentSavesDir);
+                return Optional.empty();
+            }
+
+            if (saveHandler == null) {
+                saveHandler = new AnvilSaveHandler(currentSavesDir.toFile(), worldName, true, SpongeImpl.getDataFixer());
+            }
+
+            // We weren't given a properties, see if one is cached
+            if (properties == null) {
+                properties = (WorldProperties) saveHandler.loadWorldInfo();
+
+                // We tried :'(
+                if (properties == null) {
+                    SpongeImpl.getLogger().error("Unable to load world [{}]. No world properties was found!", worldName);
+                    return Optional.empty();
+                }
+            }
+
+            if (((IMixinWorldInfo) properties).getDimensionId() == null || ((IMixinWorldInfo) properties).getDimensionId() == Integer.MIN_VALUE) {
+                ((IMixinWorldInfo) properties).setDimensionId(getNextFreeDimensionId());
+            }
+            setUuidOnProperties(getCurrentSavesDirectory().get(), properties);
+            registerWorldProperties(properties);
+
+            final WorldInfo worldInfo = (WorldInfo) properties;
+            ((IMixinWorldInfo) worldInfo).createWorldConfig();
+
+            // check if enabled
+            if (!((WorldProperties) worldInfo).isEnabled()) {
+                SpongeImpl.getLogger().error("Unable to load world [{}]. It is disabled.", worldName);
+                return Optional.empty();
+            }
+
+            final int dimensionId = ((IMixinWorldInfo) properties).getDimensionId();
+            registerDimension(dimensionId, (DimensionType) (Object) properties.getDimensionType());
+            registerDimensionPath(dimensionId, worldFolder);
+            SpongeImpl.getLogger().info("Loading world [{}] ({})", properties.getWorldName(), getDimensionType
+                    (dimensionId).get().getName());
+
+            final WorldServer worldServer = createWorldFromProperties(dimensionId, saveHandler, (WorldInfo) properties, new WorldSettings((WorldInfo)
+                    properties));
+            ((IMixinWorldInfo) properties).saveConfig(true);
+
+            return Optional.of(worldServer);
         }
-
-        if (((IMixinWorldInfo) properties).getDimensionId() == null || ((IMixinWorldInfo) properties).getDimensionId() == Integer.MIN_VALUE) {
-            ((IMixinWorldInfo) properties).setDimensionId(getNextFreeDimensionId());
-        }
-        setUuidOnProperties(getCurrentSavesDirectory().get(), properties);
-        registerWorldProperties(properties);
-
-        final WorldInfo worldInfo = (WorldInfo) properties;
-        ((IMixinWorldInfo) worldInfo).createWorldConfig();
-
-        // check if enabled
-        if (!((WorldProperties) worldInfo).isEnabled()) {
-            SpongeImpl.getLogger().error("Unable to load world [{}]. It is disabled.", worldName);
-            return Optional.empty();
-        }
-
-        final int dimensionId = ((IMixinWorldInfo) properties).getDimensionId();
-        registerDimension(dimensionId, (DimensionType) (Object) properties.getDimensionType());
-        registerDimensionPath(dimensionId, worldFolder);
-        SpongeImpl.getLogger().info("Loading world [{}] ({})", properties.getWorldName(), getDimensionType
-                (dimensionId).get().getName());
-
-        final WorldServer worldServer = createWorldFromProperties(dimensionId, saveHandler, (WorldInfo) properties, new WorldSettings((WorldInfo)
-                        properties));
-
-        return Optional.of(worldServer);
     }
 
     public static void loadAllWorlds(String worldName, long defaultSeed, WorldType defaultWorldType, String generatorOptions) {
@@ -654,113 +660,119 @@ public final class WorldManager {
         registerExistingSpongeDimensions(currentSavesDir);
 
         for (Map.Entry<Integer, DimensionType> entry: sortedDimensionMap().entrySet()) {
+            try (GeneralizedContext context = GeneralPhase.State.WORLD_LOAD.createPhaseContext().buildAndSwitch()) {
+                final int dimensionId = entry.getKey();
+                final DimensionType dimensionType = entry.getValue();
 
-            final int dimensionId = entry.getKey();
-            final DimensionType dimensionType = entry.getValue();
+                // Skip all worlds besides dimension 0 if multi-world is disabled
+                if (dimensionId != 0 && !server.getAllowNether()) {
+                    continue;
+                }
 
-            // Skip all worlds besides dimension 0 if multi-world is disabled
-            if (dimensionId != 0 && !server.getAllowNether()) {
-                continue;
-            }
+                // Skip already loaded worlds by plugins
+                if (getWorldByDimensionId(dimensionId).isPresent()) {
+                    continue;
+                }
 
-            // Skip already loaded worlds by plugins
-            if (getWorldByDimensionId(dimensionId).isPresent()) {
-                continue;
-            }
-
-            // Step 1 - Grab the world's data folder
-            final Path worldFolder = getWorldFolder(dimensionType, dimensionId);
-            if (worldFolder == null) {
-                SpongeImpl.getLogger().error("An attempt was made to load a world with dimension id [{}] that has no registered world folder!",
-                        dimensionId);
-                continue;
-            }
-
-            final String worldFolderName = worldFolder.getFileName().toString();
-
-            // Step 2 - See if we are allowed to load it
-            if (dimensionId != 0) {
-                final SpongeConfig<? extends GeneralConfigBase> activeConfig = SpongeHooks.getActiveConfig(((IMixinDimensionType)(Object) dimensionType).getConfigPath(), worldFolderName);
-                if (!activeConfig.getConfig().getWorld().isWorldEnabled()) {
-                    SpongeImpl.getLogger().warn("World [{}] (DIM{}) is disabled. World will not be loaded...", worldFolder,
+                // Step 1 - Grab the world's data folder
+                final Path worldFolder = getWorldFolder(dimensionType, dimensionId);
+                if (worldFolder == null) {
+                    SpongeImpl.getLogger().error("An attempt was made to load a world with dimension id [{}] that has no registered world folder!",
                             dimensionId);
                     continue;
                 }
-            }
 
-            // Step 3 - Get our world information from disk
-            final ISaveHandler saveHandler;
-            if (dimensionId == 0) {
-                saveHandler = server.getActiveAnvilConverter().getSaveLoader(server.getFolderName(), true);
-            } else {
-                saveHandler = new AnvilSaveHandler(WorldManager.getCurrentSavesDirectory().get().toFile(), worldFolderName, true,
-                        SpongeImpl.getDataFixer());
-            }
+                final String worldFolderName = worldFolder.getFileName().toString();
 
-            WorldInfo worldInfo = saveHandler.loadWorldInfo();
-            WorldSettings worldSettings;
-
-            // If this is integrated server, we need to use the WorldSettings from the client's Single Player menu to construct the worlds
-            if (server instanceof IMixinIntegratedServer) {
-                worldSettings = ((IMixinIntegratedServer) server).getSettings();
-
-                // If this is overworld and a new save, the WorldInfo has already been made but we want to still fire the construct event.
-                if (dimensionId == 0 && ((IMixinIntegratedServer) server).isNewSave()) {
-                    SpongeImpl.postEvent(SpongeEventFactory.createConstructWorldPropertiesEvent(Sponge.getCauseStackManager().getCurrentCause(), (WorldArchetype)
-                            (Object) worldSettings, (WorldProperties) worldInfo));
+                // Step 2 - See if we are allowed to load it
+                if (dimensionId != 0) {
+                    final SpongeConfig<? extends GeneralConfigBase> activeConfig =
+                            SpongeHooks.getActiveConfig(((IMixinDimensionType) (Object) dimensionType).getConfigPath(), worldFolderName);
+                    if (!activeConfig.getConfig().getWorld().isWorldEnabled()) {
+                        SpongeImpl.getLogger().warn("World [{}] (DIM{}) is disabled. World will not be loaded...", worldFolder,
+                                dimensionId);
+                        continue;
+                    }
                 }
-            } else {
-                // WorldSettings will be null here on dedicated server so we need to build one
-                worldSettings = new WorldSettings(defaultSeed, server.getGameType(), server.canStructuresSpawn(), server.isHardcore(),
-                        defaultWorldType);
+
+                // Step 3 - Get our world information from disk
+                final ISaveHandler saveHandler;
+                if (dimensionId == 0) {
+                    saveHandler = server.getActiveAnvilConverter().getSaveLoader(server.getFolderName(), true);
+                } else {
+                    saveHandler = new AnvilSaveHandler(WorldManager.getCurrentSavesDirectory().get().toFile(), worldFolderName, true,
+                            SpongeImpl.getDataFixer());
+                }
+
+                WorldInfo worldInfo = saveHandler.loadWorldInfo();
+                WorldSettings worldSettings;
+
+                // If this is integrated server, we need to use the WorldSettings from the client's Single Player menu to construct the worlds
+                if (server instanceof IMixinIntegratedServer) {
+                    worldSettings = ((IMixinIntegratedServer) server).getSettings();
+
+                    // If this is overworld and a new save, the WorldInfo has already been made but we want to still fire the construct event.
+                    if (dimensionId == 0 && ((IMixinIntegratedServer) server).isNewSave()) {
+                        SpongeImpl.postEvent(SpongeEventFactory
+                                .createConstructWorldPropertiesEvent(Sponge.getCauseStackManager().getCurrentCause(), (WorldArchetype)
+                                        (Object) worldSettings, (WorldProperties) worldInfo));
+                    }
+                } else {
+                    // WorldSettings will be null here on dedicated server so we need to build one
+                    worldSettings = new WorldSettings(defaultSeed, server.getGameType(), server.canStructuresSpawn(), server.isHardcore(),
+                            defaultWorldType);
+                }
+
+                if (worldInfo == null) {
+                    // Step 4 - At this point, we have either have the WorldInfo or we have none. If we have none, we'll use the settings built above to
+
+                    // create the WorldInfo
+                    worldInfo = createWorldInfoFromSettings(currentSavesDir, (org.spongepowered.api.world.DimensionType) (Object) dimensionType,
+                            dimensionId, worldFolderName, worldSettings, generatorOptions);
+                } else {
+                    // create config
+                    ((IMixinWorldInfo) worldInfo).setDimensionType((org.spongepowered.api.world.DimensionType) (Object) dimensionType);
+                    ((IMixinWorldInfo) worldInfo).createWorldConfig();
+                    ((WorldProperties) worldInfo).setGenerateSpawnOnLoad(((IMixinDimensionType) (Object) dimensionType).shouldGenerateSpawnOnLoad());
+                }
+
+                // Safety check to ensure we'll get a unique id no matter what
+                if (((WorldProperties) worldInfo).getUniqueId() == null) {
+                    setUuidOnProperties(dimensionId == 0 ? currentSavesDir.getParent() : currentSavesDir, (WorldProperties) worldInfo);
+                }
+
+                // Safety check to ensure the world info has the dimension id set
+                if (((IMixinWorldInfo) worldInfo).getDimensionId() == null) {
+                    ((IMixinWorldInfo) worldInfo).setDimensionId(dimensionId);
+                }
+
+                // Keep the LevelName in the LevelInfo up to date with the directory name
+                if (!worldInfo.getWorldName().equals(worldFolderName)) {
+                    worldInfo.setWorldName(worldFolderName);
+                }
+
+                // Step 5 - Load server resource pack from dimension 0
+                if (dimensionId == 0) {
+                    server.setResourcePackFromWorld(worldFolderName, saveHandler);
+                }
+
+                // Step 6 - Cache the WorldProperties we've made so we don't load from disk later, and save at this point.
+                registerWorldProperties((WorldProperties) worldInfo);
+                ((IMixinWorldInfo) worldInfo).saveConfig(true);
+
+                if (dimensionId != 0 && !((WorldProperties) worldInfo).loadOnStartup()) {
+                    SpongeImpl.getLogger()
+                            .warn("World [{}] (DIM{}) is set to not load on startup. To load it later, enable [load-on-startup] in config "
+                                    + "or use a plugin", worldFolder, dimensionId);
+                    continue;
+                }
+
+                // Step 7 - Finally, we can create the world and tell it to load
+                final WorldServer worldServer = createWorldFromProperties(dimensionId, saveHandler, worldInfo, worldSettings);
+
+                SpongeImpl.getLogger().info("Loading world [{}] ({})", ((org.spongepowered.api.world.World) worldServer).getName(), getDimensionType
+                        (dimensionId).get().getName());
             }
-
-            if (worldInfo == null) {
-                // Step 4 - At this point, we have either have the WorldInfo or we have none. If we have none, we'll use the settings built above to
-                // create the WorldInfo
-                worldInfo = createWorldInfoFromSettings(currentSavesDir, (org.spongepowered.api.world.DimensionType) (Object) dimensionType,
-                        dimensionId, worldFolderName, worldSettings, generatorOptions);
-            } else {
-                // create config
-                ((IMixinWorldInfo) worldInfo).setDimensionType((org.spongepowered.api.world.DimensionType)(Object) dimensionType);
-                ((IMixinWorldInfo) worldInfo).createWorldConfig();
-                ((WorldProperties) worldInfo).setGenerateSpawnOnLoad(((IMixinDimensionType)(Object) dimensionType).shouldGenerateSpawnOnLoad());
-            }
-
-            // Safety check to ensure we'll get a unique id no matter what
-            if (((WorldProperties) worldInfo).getUniqueId() == null) {
-                setUuidOnProperties(dimensionId == 0 ? currentSavesDir.getParent() : currentSavesDir, (WorldProperties) worldInfo);
-            }
-
-            // Safety check to ensure the world info has the dimension id set
-            if (((IMixinWorldInfo) worldInfo).getDimensionId() == null) {
-                ((IMixinWorldInfo) worldInfo).setDimensionId(dimensionId);
-            }
-
-            // Keep the LevelName in the LevelInfo up to date with the directory name
-            if (!worldInfo.getWorldName().equals(worldFolderName)) {
-                worldInfo.setWorldName(worldFolderName);
-            }
-
-            // Step 5 - Load server resource pack from dimension 0
-            if (dimensionId == 0) {
-                server.setResourcePackFromWorld(worldFolderName, saveHandler);
-            }
-
-            // Step 6 - Cache the WorldProperties we've made so we don't load from disk later.
-            registerWorldProperties((WorldProperties) worldInfo);
-
-            if (dimensionId != 0 && !((WorldProperties) worldInfo).loadOnStartup()) {
-                SpongeImpl.getLogger().warn("World [{}] (DIM{}) is set to not load on startup. To load it later, enable [load-on-startup] in config "
-                        + "or use a plugin", worldFolder, dimensionId);
-                continue;
-            }
-
-            // Step 7 - Finally, we can create the world and tell it to load
-            final WorldServer worldServer = createWorldFromProperties(dimensionId, saveHandler, worldInfo, worldSettings);
-
-            SpongeImpl.getLogger().info("Loading world [{}] ({})", ((org.spongepowered.api.world.World) worldServer).getName(), getDimensionType
-                    (dimensionId).get().getName());
         }
     }
 
