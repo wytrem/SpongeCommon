@@ -158,10 +158,6 @@ public abstract class MixinWorldInfo implements WorldProperties, IMixinWorldInfo
     private ServerScoreboard scoreboard;
     private PortalAgentType portalAgentType;
 
-    // Flag to indicate that construction is complete to save operations
-    // Fixes file locking issues, see https://github.com/SpongePowered/SpongeForge/issues/1991
-    private boolean isConstructed = false;
-
     //     protected WorldInfo()
     @Inject(method = "<init>", at = @At("RETURN") )
     public void onConstruction(CallbackInfo ci) {
@@ -894,9 +890,7 @@ public abstract class MixinWorldInfo implements WorldProperties, IMixinWorldInfo
             return;
         }
 
-        // this.isConstructed is checked so that we don't continuously save until
-        // object construction is complete.
-        if (ignorePhase || PhaseTracker.getInstance().getCurrentPhaseData().state.allowWorldSave()) {
+        if (ignorePhase || PhaseTracker.getInstance().getCurrentPhaseData().state.allowWorldConfigSave()) {
             getOrCreateWorldConfig().save();
         }
     }

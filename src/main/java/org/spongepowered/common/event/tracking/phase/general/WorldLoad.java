@@ -24,7 +24,6 @@
  */
 package org.spongepowered.common.event.tracking.phase.general;
 
-import net.minecraft.util.math.BlockPos;
 import org.spongepowered.common.event.tracking.IPhaseState;
 import org.spongepowered.common.event.tracking.context.GeneralizedContext;
 
@@ -33,12 +32,6 @@ public class WorldLoad extends GeneralState<GeneralizedContext> {
     @Override
     public boolean canSwitchTo(IPhaseState<?> state) {
         return true;
-    }
-
-
-    @Override
-    public boolean shouldCaptureBlockChangeOrSkip(GeneralizedContext phaseContext, BlockPos pos) {
-        return false;
     }
 
     @Override
@@ -52,7 +45,8 @@ public class WorldLoad extends GeneralState<GeneralizedContext> {
     }
 
     @Override
-    public boolean allowWorldSave() {
+    public boolean allowWorldConfigSave() {
         return false;
     }
+
 }
