@@ -34,6 +34,7 @@ import com.flowpowered.math.vector.Vector3i;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
@@ -282,6 +283,9 @@ public abstract class MixinWorld implements World, IMixinWorld {
     @Shadow public abstract boolean canSnowAt(BlockPos pos, boolean checkLight);
     @Shadow public abstract List<AxisAlignedBB> getCollisionBoxes(net.minecraft.entity.Entity entityIn, AxisAlignedBB bb);
     @Shadow public abstract void notifyLightSet(BlockPos pos);
+    @Shadow public boolean isFlammableWithin(AxisAlignedBB bb) {
+        return false; // Shadowed
+    }
     @Shadow @Nullable private net.minecraft.tileentity.TileEntity getPendingTileEntityAt(BlockPos p_189508_1_) {
         return null; // Shadowed
     }
@@ -1423,6 +1427,25 @@ public abstract class MixinWorld implements World, IMixinWorld {
         }
     }
 
+    @Redirect(method = "isFlammableWithin", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;isAreaLoaded(IIIIIIZ)Z"))
+    public boolean isFlammableWithinAccel(net.minecraft.world.World world, int xStart, int yStart, int zStart, int xEnd, int yEnd, int zEnd, boolean allowEmpty) {
+        // Avoid check as we handle this in WorldServer override
+        return true;
+    }
+
+    @Inject(method = "handleMaterialAcceleration", at = @At(value = "HEAD"), cancellable = true)
+    public void onHandleMaterialAcceleration(AxisAlignedBB bb, Material materialIn, net.minecraft.entity.Entity entityIn, CallbackInfoReturnable<Boolean> cir) {
+        final IMixinEntity spongeEntity = (IMixinEntity) entityIn;
+        final IMixinChunk activeChunk = spongeEntity.getActiveChunk();
+        if (activeChunk == null || activeChunk.isQueuedForUnload() || !activeChunk.areNeighborsLoaded()) {
+            cir.setReturnValue(false);
+        }
+    }
+
+    @Redirect(method = "handleMaterialAcceleration", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;isAreaLoaded(IIIIIIZ)Z"))
+    public boolean isAreaLoadedAccel(net.minecraft.world.World world, int xStart, int yStart, int zStart, int xEnd, int yEnd, int zEnd, boolean allowEmpty) {
+        return true;
+    }
 
     /*********************** TIMINGS ***********************/
 

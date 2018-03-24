@@ -1113,6 +1113,20 @@ public abstract class MixinEntity implements IMixinEntity {
         this.setCurrentCollidingBlock(null);
     }
 
+    @Inject(method = "doBlockCollisions", at = @At(value = "INVOKE"), cancellable = true)
+    public void onDoBlockCollisions(CallbackInfo ci) {
+        final IMixinChunk activeChunk = this.getActiveChunk();
+        if (activeChunk == null || activeChunk.isQueuedForUnload() || !activeChunk.areNeighborsLoaded()) {
+            ci.cancel();
+        }
+    }
+
+    @Redirect(method = "doBlockCollisions", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;isAreaLoaded(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/math/BlockPos;)Z"))
+    public boolean onIsAreaLoadedCollisions(net.minecraft.world.World world, BlockPos start, BlockPos end) {
+        // Avoid check as we handle this in method above using chunk cache
+        return true;
+    }
+
     @Redirect(method = "doBlockCollisions", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/Block;onEntityCollidedWithBlock(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/state/IBlockState;Lnet/minecraft/entity/Entity;)V")) // doBlockCollisions
     public void onEntityCollideWithBlockState(Block block, net.minecraft.world.World world, BlockPos pos, IBlockState state, net.minecraft.entity.Entity entity) {
         // if block can't collide, return

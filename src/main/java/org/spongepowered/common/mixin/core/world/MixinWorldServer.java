@@ -60,7 +60,9 @@ import net.minecraft.util.IProgressUpdate;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.ReportedException;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.EnumSkyBlock;
@@ -1907,6 +1909,10 @@ public abstract class MixinWorldServer extends MixinWorld implements IMixinWorld
         }
 
         IMixinChunk currentColumn = (IMixinChunk) base;
+        if (xStart == xEnd && zStart == zEnd) {
+            return currentColumn.areNeighborsLoaded();
+        }
+
         for (int i = xStart; i <= xEnd; i++) {
             if (currentColumn == null) {
                 return false;
@@ -1973,6 +1979,31 @@ public abstract class MixinWorldServer extends MixinWorld implements IMixinWorld
         if (chunk != null) {
             chunk.markChunkDirty();
         }
+    }
+
+    @Override
+    public boolean isFlammableWithin(AxisAlignedBB bb) {
+        final Object rootCause = Sponge.getCauseStackManager().getCurrentCause().root();
+        if (rootCause instanceof Entity) {
+            final IMixinEntity spongeEntity = (IMixinEntity) rootCause;
+            final IMixinChunk activeChunk = spongeEntity.getActiveChunk();
+            if (activeChunk == null || activeChunk.isQueuedForUnload() || !activeChunk.areNeighborsLoaded()) {
+               return false;
+            }
+        } else { // mods may call this for non-entities
+            final int xStart = MathHelper.floor(bb.minX);
+            final int xEnd = MathHelper.ceil(bb.maxX);
+            final int yStart = MathHelper.floor(bb.minY);
+            final int yEnd = MathHelper.ceil(bb.maxY);
+            final int zStart = MathHelper.floor(bb.minZ);
+            final int zEnd = MathHelper.ceil(bb.maxZ);
+
+            if (!this.isAreaLoaded(xStart, yStart, zStart, xEnd, yEnd, zEnd, true)) {
+                return false;
+            }
+        }
+
+        return super.isFlammableWithin(bb);
     }
 
     /**************************** TIMINGS ***************************************/
