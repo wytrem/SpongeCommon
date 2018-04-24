@@ -24,6 +24,7 @@
  */
 package org.spongepowered.common.entity;
 
+import static com.google.common.base.Preconditions.checkState;
 import static net.minecraft.util.EntitySelectors.NOT_SPECTATING;
 
 import com.flowpowered.math.vector.Vector3d;
@@ -61,13 +62,13 @@ import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.Teleporter;
+import net.minecraft.village.MerchantRecipeList;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.WorldProviderEnd;
-import net.minecraft.world.WorldProviderHell;
 import net.minecraft.world.WorldServer;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.block.BlockSnapshot;
+import org.spongepowered.api.data.type.Career;
 import org.spongepowered.api.data.type.Profession;
 import org.spongepowered.api.entity.EntityArchetype;
 import org.spongepowered.api.entity.EntitySnapshot;
@@ -86,6 +87,8 @@ import org.spongepowered.api.event.entity.ConstructEntityEvent;
 import org.spongepowered.api.event.entity.MoveEntityEvent;
 import org.spongepowered.api.event.item.inventory.DropItemEvent;
 import org.spongepowered.api.item.inventory.ItemStackSnapshot;
+import org.spongepowered.api.item.merchant.Merchant;
+import org.spongepowered.api.item.merchant.TradeOffer;
 import org.spongepowered.api.world.BlockChangeFlags;
 import org.spongepowered.api.world.Dimension;
 import org.spongepowered.api.world.Location;
@@ -95,13 +98,17 @@ import org.spongepowered.api.world.gamerule.DefaultGameRules;
 import org.spongepowered.api.world.storage.WorldProperties;
 import org.spongepowered.common.SpongeImpl;
 import org.spongepowered.common.SpongeImplHooks;
-import org.spongepowered.common.event.tracking.*;
+import org.spongepowered.common.event.tracking.IPhaseState;
+import org.spongepowered.common.event.tracking.PhaseContext;
+import org.spongepowered.common.event.tracking.PhaseData;
 import org.spongepowered.common.event.tracking.PhaseTracker;
+import org.spongepowered.common.event.tracking.TrackingUtil;
 import org.spongepowered.common.event.tracking.context.ItemDropData;
 import org.spongepowered.common.event.tracking.phase.entity.EntityPhase;
 import org.spongepowered.common.event.tracking.phase.entity.TeleportingContext;
 import org.spongepowered.common.interfaces.IMixinPlayerList;
 import org.spongepowered.common.interfaces.entity.IMixinEntity;
+import org.spongepowered.common.interfaces.entity.IMixinVillager;
 import org.spongepowered.common.interfaces.entity.player.IMixinEntityPlayer;
 import org.spongepowered.common.interfaces.entity.player.IMixinEntityPlayerMP;
 import org.spongepowered.common.interfaces.network.IMixinNetHandlerPlayServer;
@@ -109,6 +116,7 @@ import org.spongepowered.common.interfaces.world.IMixinITeleporter;
 import org.spongepowered.common.interfaces.world.IMixinTeleporter;
 import org.spongepowered.common.interfaces.world.IMixinWorldServer;
 import org.spongepowered.common.item.inventory.util.ItemStackUtil;
+import org.spongepowered.common.registry.SpongeVillagerRegistry;
 import org.spongepowered.common.registry.type.entity.EntityTypeRegistryModule;
 import org.spongepowered.common.registry.type.entity.ProfessionRegistryModule;
 import org.spongepowered.common.util.VecHelper;
@@ -1178,5 +1186,31 @@ public final class EntityUtil {
     // I'm lazy, but this is better than using the convenience method
     public static EntityArchetype archetype(EntityType type) {
         return new SpongeEntityArchetypeBuilder().type(type).build();
+    }
+
+    public static void villagerPopulateBuyingList(IMixinVillager villager) {
+        // Sponge
+        List<Career> careers = (List<Career>) villager.getProfession().getCareers();
+
+        // EntityVillager.ITradeList[][][] aentityvillager$itradelist = DEFAULT_TRADE_LIST_MAP[villager.getProfession()];
+
+        if (villager.getCareerId() != 0 && villager.getCareerLevel() != 0) {
+            villager.setCareerLevel(villager.getCareerLevel() + 1);
+        } else {
+            // Sponge change aentityvillager$itradelist to use villager.profession.getCareers()
+            villager.setCareerId(((org.spongepowered.api.entity.Entity) villager).getRandom().nextInt(careers.size()) + 1);
+            villager.setCareerLevel(1);
+        }
+
+        if (villager.getBuyingList() == null) {
+            villager.setBuyingList(new MerchantRecipeList());
+        }
+
+        // Sponge start - use our own registry stuffs
+        checkState(villager.getCareerId() <= careers.size(), "The villager career id is out of bounds fo the available Careers! Found: " + villager.getCareerId()
+                + " when the current maximum is: " + careers.size());
+        final Career careerLevel = careers.get(villager.getCareerId() - 1);
+        SpongeVillagerRegistry.getInstance().populateOffers((Merchant) villager, (List<TradeOffer>) (List<?>) villager.getBuyingList(), careerLevel, villager.getCareerLevel(), ((org.spongepowered.api.entity.Entity) villager).getRandom());
+        // Sponge end
     }
 }

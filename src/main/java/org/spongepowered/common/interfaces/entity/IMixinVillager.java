@@ -24,6 +24,8 @@
  */
 package org.spongepowered.common.interfaces.entity;
 
+import net.minecraft.village.MerchantRecipe;
+import net.minecraft.village.MerchantRecipeList;
 import org.spongepowered.api.data.type.Career;
 import org.spongepowered.api.data.type.Profession;
 
@@ -40,5 +42,17 @@ public interface IMixinVillager {
     boolean isPlaying();
 
     void setPlaying(boolean playing);
+
+    int getCareerId();
+
+    void setCareerId(int careerId);
+
+    int getCareerLevel();
+
+    void setCareerLevel(int careerLevel);
+
+    MerchantRecipeList getBuyingList();
+
+    void setBuyingList(MerchantRecipeList list);
 
 }

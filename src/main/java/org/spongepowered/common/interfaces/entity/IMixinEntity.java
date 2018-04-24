@@ -43,6 +43,7 @@ import org.spongepowered.common.interfaces.IMixinChunk;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.UUID;
 
 import javax.annotation.Nullable;

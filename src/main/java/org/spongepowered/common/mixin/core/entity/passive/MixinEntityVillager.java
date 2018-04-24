@@ -185,29 +185,7 @@ public abstract class MixinEntityVillager extends MixinEntityAgeable implements 
     @SuppressWarnings("unchecked")
     @Overwrite
     public void populateBuyingList() { // populateBuyingList
-        // Sponge
-        List<Career> careers = (List<Career>) this.profession.getCareers();
-
-        // EntityVillager.ITradeList[][][] aentityvillager$itradelist = DEFAULT_TRADE_LIST_MAP[this.getProfession()];
-
-        if (this.careerId != 0 && this.careerLevel != 0) {
-            ++this.careerLevel;
-        } else {
-            // Sponge change aentityvillager$itradelist to use this.profession.getCareers()
-            this.careerId = this.rand.nextInt(careers.size()) + 1;
-            this.careerLevel = 1;
-        }
-
-        if (this.buyingList == null) {
-            this.buyingList = new MerchantRecipeList();
-        }
-
-        // Sponge start - use our own registry stuffs
-        checkState(this.careerId <= careers.size(), "The villager career id is out of bounds fo the available Careers! Found: " + this.careerId
-                                                    + " when the current maximum is: " + careers.size());
-        final Career careerLevel = careers.get(this.careerId - 1);
-        SpongeVillagerRegistry.getInstance().populateOffers(this, (List<TradeOffer>) (List<?>) this.buyingList, careerLevel, this.careerLevel, this.rand);
-        // Sponge end
+        EntityUtil.villagerPopulateBuyingList(this);
     }
 
     @Override
@@ -242,5 +220,35 @@ public abstract class MixinEntityVillager extends MixinEntityAgeable implements 
     @Override
     public Optional<Villager> getCarrier() {
         return Optional.of(this);
+    }
+
+    @Override
+    public int getCareerId() {
+        return this.careerId;
+    }
+
+    @Override
+    public void setCareerId(int careerId) {
+        this.careerId = careerId;
+    }
+
+    @Override
+    public int getCareerLevel() {
+        return this.careerLevel;
+    }
+
+    @Override
+    public void setCareerLevel(int careerLevel) {
+        this.careerLevel = careerLevel;
+    }
+
+    @Override
+    public MerchantRecipeList getBuyingList() {
+        return this.buyingList;
+    }
+
+    @Override
+    public void setBuyingList(MerchantRecipeList list) {
+        this.buyingList = list;
     }
 }
