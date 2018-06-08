@@ -35,17 +35,17 @@ import org.spongepowered.api.data.type.NotePitch;
 import org.spongepowered.api.data.type.NotePitches;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.manipulator.mutable.tileentity.SpongeNoteData;
 import org.spongepowered.common.data.processor.common.AbstractTileEntitySingleDataProcessor;
 import org.spongepowered.common.data.processor.common.NoteUtils;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
 import java.util.Optional;
 
 public class NoteDataProcessor
-        extends AbstractTileEntitySingleDataProcessor<TileEntityNote, NotePitch, Value<NotePitch>, NoteData, ImmutableNoteData> {
+        extends AbstractTileEntitySingleDataProcessor<TileEntityNote, NotePitch, MutableValue<NotePitch>, NoteData, ImmutableNoteData> {
 
     public NoteDataProcessor() {
         super(TileEntityNote.class, Keys.NOTE_PITCH);
@@ -64,8 +64,8 @@ public class NoteDataProcessor
     }
 
     @Override
-    protected Value<NotePitch> constructValue(NotePitch value) {
-        return new SpongeValue<>(Keys.NOTE_PITCH, NotePitches.F_SHARP0, value);
+    protected MutableValue<NotePitch> constructValue(NotePitch value) {
+        return new SpongeMutableValue<>(Keys.NOTE_PITCH, NotePitches.F_SHARP0, value);
     }
 
     @Override

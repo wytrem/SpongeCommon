@@ -32,23 +32,23 @@ import org.spongepowered.api.data.manipulator.immutable.entity.ImmutableFlyingDa
 import org.spongepowered.api.data.manipulator.mutable.entity.FlyingData;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.manipulator.mutable.entity.SpongeFlyingData;
 import org.spongepowered.common.data.processor.common.AbstractEntitySingleDataProcessor;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
 import java.util.Optional;
 
-public class FlyingDataProcessor extends AbstractEntitySingleDataProcessor<Entity, Boolean, Value<Boolean>, FlyingData, ImmutableFlyingData> {
+public class FlyingDataProcessor extends AbstractEntitySingleDataProcessor<Entity, Boolean, MutableValue<Boolean>, FlyingData, ImmutableFlyingData> {
 
     public FlyingDataProcessor() {
         super(Entity.class, Keys.IS_FLYING);
     }
 
     @Override
-    protected Value<Boolean> constructValue(Boolean actualValue) {
-        return new SpongeValue<>(Keys.IS_FLYING, actualValue);
+    protected MutableValue<Boolean> constructValue(Boolean actualValue) {
+        return new SpongeMutableValue<>(Keys.IS_FLYING, actualValue);
     }
 
     @Override

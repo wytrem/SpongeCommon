@@ -31,16 +31,16 @@ import org.spongepowered.api.data.manipulator.immutable.entity.ImmutableFlammabl
 import org.spongepowered.api.data.manipulator.mutable.entity.FlammableData;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.manipulator.mutable.entity.SpongeFlammableData;
 import org.spongepowered.common.data.processor.common.AbstractEntitySingleDataProcessor;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
 import java.util.Optional;
 
 public final class BlazeFlammableDataProcessor
-        extends AbstractEntitySingleDataProcessor<EntityBlaze, Boolean, Value<Boolean>, FlammableData, ImmutableFlammableData> {
+        extends AbstractEntitySingleDataProcessor<EntityBlaze, Boolean, MutableValue<Boolean>, FlammableData, ImmutableFlammableData> {
 
     public BlazeFlammableDataProcessor() {
         super(EntityBlaze.class, Keys.IS_AFLAME);
@@ -52,8 +52,8 @@ public final class BlazeFlammableDataProcessor
     }
 
     @Override
-    protected Value<Boolean> constructValue(Boolean actualValue) {
-        return new SpongeValue<>(Keys.IS_AFLAME, false, actualValue);
+    protected MutableValue<Boolean> constructValue(Boolean actualValue) {
+        return new SpongeMutableValue<>(Keys.IS_AFLAME, false, actualValue);
     }
 
     @Override

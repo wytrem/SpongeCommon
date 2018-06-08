@@ -85,7 +85,7 @@ import org.apache.logging.log4j.Logger;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.block.tileentity.Sign;
 import org.spongepowered.api.data.manipulator.mutable.tileentity.SignData;
-import org.spongepowered.api.data.value.mutable.ListValue;
+import org.spongepowered.api.data.value.mutable.MutableListValue;
 import org.spongepowered.api.entity.Transform;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.CauseStackManager;
@@ -303,7 +303,7 @@ public abstract class MixinNetHandlerPlayServer implements PlayerConnection, IMi
             throw new RuntimeException("Critical error! Sign data not present on sign!");
         }
         final SignData changedSignData = existingSignData.get().copy();
-        final ListValue<Text> lines = changedSignData.lines();
+        final MutableListValue<Text> lines = changedSignData.lines();
         for (int i = 0; i < packetIn.getLines().length; i++) {
             lines.set(i, SpongeTexts.toText(new TextComponentString(packetIn.getLines()[i])));
         }

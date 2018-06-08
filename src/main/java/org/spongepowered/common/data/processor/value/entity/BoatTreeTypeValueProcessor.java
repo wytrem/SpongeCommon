@@ -33,15 +33,15 @@ import org.spongepowered.api.data.type.TreeType;
 import org.spongepowered.api.data.type.TreeTypes;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.manipulator.mutable.block.SpongeTreeData;
 import org.spongepowered.common.data.processor.common.AbstractEntitySingleDataProcessor;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
 import java.util.Optional;
 
-public class BoatTreeTypeValueProcessor extends AbstractEntitySingleDataProcessor<EntityBoat, TreeType, Value<TreeType>, TreeData, ImmutableTreeData> {
+public class BoatTreeTypeValueProcessor extends AbstractEntitySingleDataProcessor<EntityBoat, TreeType, MutableValue<TreeType>, TreeData, ImmutableTreeData> {
 
     public BoatTreeTypeValueProcessor() {
         super(EntityBoat.class, Keys.TREE_TYPE);
@@ -106,7 +106,7 @@ public class BoatTreeTypeValueProcessor extends AbstractEntitySingleDataProcesso
     }
 
     @Override
-    protected Value<TreeType> constructValue(TreeType actualValue) {
-        return new SpongeValue<>(this.key, actualValue);
+    protected MutableValue<TreeType> constructValue(TreeType actualValue) {
+        return new SpongeMutableValue<>(this.key, actualValue);
     }
 }

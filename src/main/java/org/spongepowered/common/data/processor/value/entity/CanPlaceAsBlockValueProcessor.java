@@ -29,22 +29,22 @@ import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.processor.common.AbstractSpongeValueProcessor;
 import org.spongepowered.common.data.util.DataConstants;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
 import java.util.Optional;
 
-public class CanPlaceAsBlockValueProcessor extends AbstractSpongeValueProcessor<EntityFallingBlock, Boolean, Value<Boolean>> {
+public class CanPlaceAsBlockValueProcessor extends AbstractSpongeValueProcessor<EntityFallingBlock, Boolean, MutableValue<Boolean>> {
 
     public CanPlaceAsBlockValueProcessor() {
         super(EntityFallingBlock.class, Keys.CAN_PLACE_AS_BLOCK);
     }
 
     @Override
-    protected Value<Boolean> constructValue(Boolean value) {
-        return new SpongeValue<>(Keys.CAN_PLACE_AS_BLOCK, DataConstants.DEFAULT_FALLING_BLOCK_CAN_PLACE_AS_BLOCK, value);
+    protected MutableValue<Boolean> constructValue(Boolean value) {
+        return new SpongeMutableValue<>(Keys.CAN_PLACE_AS_BLOCK, DataConstants.DEFAULT_FALLING_BLOCK_CAN_PLACE_AS_BLOCK, value);
     }
 
     @Override

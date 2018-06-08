@@ -29,22 +29,22 @@ import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.processor.common.AbstractSpongeValueProcessor;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
 import java.util.Optional;
 
 public class ConnectedSouthValueProcessor extends
-        AbstractSpongeValueProcessor<TileEntityChest, Boolean, Value<Boolean>> {
+        AbstractSpongeValueProcessor<TileEntityChest, Boolean, MutableValue<Boolean>> {
 
     public ConnectedSouthValueProcessor() {
         super(TileEntityChest.class, Keys.CONNECTED_SOUTH);
     }
 
     @Override
-    protected Value<Boolean> constructValue(Boolean defaultValue) {
-        return new SpongeValue<>(Keys.CONNECTED_SOUTH, false, defaultValue);
+    protected MutableValue<Boolean> constructValue(Boolean defaultValue) {
+        return new SpongeMutableValue<>(Keys.CONNECTED_SOUTH, false, defaultValue);
     }
 
     @Override

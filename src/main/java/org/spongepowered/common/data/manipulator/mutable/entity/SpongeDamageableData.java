@@ -28,13 +28,12 @@ import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.entity.ImmutableDamageableData;
 import org.spongepowered.api.data.manipulator.mutable.entity.DamageableData;
-import org.spongepowered.api.data.value.mutable.OptionalValue;
+import org.spongepowered.api.data.value.mutable.MutableOptionalValue;
 import org.spongepowered.api.entity.EntitySnapshot;
 import org.spongepowered.api.entity.living.Living;
-import org.spongepowered.common.data.ImmutableDataCachingUtil;
 import org.spongepowered.common.data.manipulator.immutable.entity.ImmutableSpongeDamageableData;
 import org.spongepowered.common.data.manipulator.mutable.common.AbstractData;
-import org.spongepowered.common.data.value.mutable.SpongeOptionalValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableOptionalValue;
 
 import java.util.Optional;
 
@@ -60,13 +59,13 @@ public class SpongeDamageableData extends AbstractData<DamageableData, Immutable
     }
 
     @Override
-    public OptionalValue<EntitySnapshot> lastAttacker() {
-        return new SpongeOptionalValue<>(Keys.LAST_ATTACKER, Optional.empty(), Optional.ofNullable(this.lastAttacker));
+    public MutableOptionalValue<EntitySnapshot> lastAttacker() {
+        return new SpongeMutableOptionalValue<>(Keys.LAST_ATTACKER, Optional.empty(), Optional.ofNullable(this.lastAttacker));
     }
 
     @Override
-    public OptionalValue<Double> lastDamage() {
-        return new SpongeOptionalValue<>(Keys.LAST_DAMAGE, Optional.empty(), Optional.ofNullable(this.lastAttacker == null ? null : this.lastDamage));
+    public MutableOptionalValue<Double> lastDamage() {
+        return new SpongeMutableOptionalValue<>(Keys.LAST_DAMAGE, Optional.empty(), Optional.ofNullable(this.lastAttacker == null ? null : this.lastDamage));
     }
 
     @Override

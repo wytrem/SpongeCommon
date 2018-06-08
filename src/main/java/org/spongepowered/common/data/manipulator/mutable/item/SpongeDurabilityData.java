@@ -31,7 +31,7 @@ import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.item.ImmutableDurabilityData;
 import org.spongepowered.api.data.manipulator.mutable.item.DurabilityData;
 import org.spongepowered.api.data.value.mutable.MutableBoundedValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.manipulator.immutable.item.ImmutableSpongeDurabilityData;
 import org.spongepowered.common.data.manipulator.mutable.common.AbstractData;
 import org.spongepowered.common.data.value.SpongeValueFactory;
@@ -82,7 +82,7 @@ public class SpongeDurabilityData extends AbstractData<DurabilityData, Immutable
     }
 
     @Override
-    public Value<Boolean> unbreakable() {
+    public MutableValue<Boolean> unbreakable() {
         return SpongeValueFactory.getInstance().createValue(Keys.UNBREAKABLE, this.unbreakable, false);
     }
 

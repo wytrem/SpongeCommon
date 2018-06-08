@@ -32,17 +32,17 @@ import org.spongepowered.api.data.manipulator.mutable.entity.PickupRuleData;
 import org.spongepowered.api.data.type.PickupRule;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.ImmutableDataCachingUtil;
 import org.spongepowered.common.data.manipulator.mutable.entity.SpongePickupRuleData;
 import org.spongepowered.common.data.processor.common.AbstractEntitySingleDataProcessor;
 import org.spongepowered.common.data.util.DataConstants;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
 import java.util.Optional;
 
-public final class PickupRuleDataProcessor extends AbstractEntitySingleDataProcessor<EntityArrow, PickupRule, Value<PickupRule>,
+public final class PickupRuleDataProcessor extends AbstractEntitySingleDataProcessor<EntityArrow, PickupRule, MutableValue<PickupRule>,
         PickupRuleData, ImmutablePickupRuleData> {
 
     public PickupRuleDataProcessor() {
@@ -66,8 +66,8 @@ public final class PickupRuleDataProcessor extends AbstractEntitySingleDataProce
     }
 
     @Override
-    protected Value<PickupRule> constructValue(PickupRule actualValue) {
-        return new SpongeValue<>(this.key, DataConstants.Catalog.DEFAULT_PICKUP_RULE, actualValue);
+    protected MutableValue<PickupRule> constructValue(PickupRule actualValue) {
+        return new SpongeMutableValue<>(this.key, DataConstants.Catalog.DEFAULT_PICKUP_RULE, actualValue);
     }
 
     @Override

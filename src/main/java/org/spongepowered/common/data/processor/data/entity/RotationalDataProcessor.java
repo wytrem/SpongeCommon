@@ -31,19 +31,19 @@ import org.spongepowered.api.data.manipulator.immutable.ImmutableRotationalData;
 import org.spongepowered.api.data.manipulator.mutable.RotationalData;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.api.util.rotation.Rotation;
 import org.spongepowered.api.util.rotation.Rotations;
 import org.spongepowered.common.data.manipulator.mutable.SpongeRotationalData;
 import org.spongepowered.common.data.processor.common.AbstractEntitySingleDataProcessor;
 import org.spongepowered.common.data.processor.common.RotationalUtils;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
 import java.util.Optional;
 
 public class RotationalDataProcessor
-        extends AbstractEntitySingleDataProcessor<EntityItemFrame, Rotation, Value<Rotation>, RotationalData, ImmutableRotationalData> {
+        extends AbstractEntitySingleDataProcessor<EntityItemFrame, Rotation, MutableValue<Rotation>, RotationalData, ImmutableRotationalData> {
 
     public RotationalDataProcessor() {
         super(EntityItemFrame.class, Keys.ROTATION);
@@ -71,8 +71,8 @@ public class RotationalDataProcessor
     }
 
     @Override
-    protected Value<Rotation> constructValue(Rotation actualValue) {
-        return new SpongeValue<>(Keys.ROTATION, Rotations.BOTTOM, actualValue);
+    protected MutableValue<Rotation> constructValue(Rotation actualValue) {
+        return new SpongeMutableValue<>(Keys.ROTATION, Rotations.BOTTOM, actualValue);
     }
 
     @Override

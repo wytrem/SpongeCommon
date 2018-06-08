@@ -36,18 +36,18 @@ import org.spongepowered.api.data.manipulator.mutable.item.EnchantmentData;
 import org.spongepowered.api.item.enchantment.Enchantment;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.ListValue;
+import org.spongepowered.api.data.value.mutable.MutableListValue;
 import org.spongepowered.common.data.manipulator.mutable.item.SpongeEnchantmentData;
 import org.spongepowered.common.data.processor.common.AbstractItemSingleDataProcessor;
 import org.spongepowered.common.data.util.NbtDataUtil;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeListValue;
-import org.spongepowered.common.data.value.mutable.SpongeListValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableListValue;
 
 import java.util.List;
 import java.util.Optional;
 
 public class ItemEnchantmentDataProcessor
-        extends AbstractItemSingleDataProcessor<List<Enchantment>, ListValue<Enchantment>, EnchantmentData, ImmutableEnchantmentData> {
+        extends AbstractItemSingleDataProcessor<List<Enchantment>, MutableListValue<Enchantment>, EnchantmentData, ImmutableEnchantmentData> {
 
     public ItemEnchantmentDataProcessor() {
         super(input -> true, Keys.ITEM_ENCHANTMENTS);
@@ -73,8 +73,8 @@ public class ItemEnchantmentDataProcessor
     }
 
     @Override
-    protected ListValue<Enchantment> constructValue(List<Enchantment> actualValue) {
-        return new SpongeListValue<>(Keys.ITEM_ENCHANTMENTS, actualValue);
+    protected MutableListValue<Enchantment> constructValue(List<Enchantment> actualValue) {
+        return new SpongeMutableListValue<>(Keys.ITEM_ENCHANTMENTS, actualValue);
     }
 
     @Override
@@ -86,7 +86,7 @@ public class ItemEnchantmentDataProcessor
     public Optional<EnchantmentData> fill(DataContainer container, EnchantmentData enchantmentData) {
         checkDataExists(container, Keys.ITEM_ENCHANTMENTS.getQuery());
         final List<Enchantment> enchantments = container.getSerializableList(Keys.ITEM_ENCHANTMENTS.getQuery(), Enchantment.class).get();
-        final ListValue<Enchantment> existing = enchantmentData.enchantments();
+        final MutableListValue<Enchantment> existing = enchantmentData.enchantments();
         existing.addAll(enchantments);
         enchantmentData.set(existing);
         return Optional.of(enchantmentData);

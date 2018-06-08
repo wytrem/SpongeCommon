@@ -32,9 +32,9 @@ import org.spongepowered.api.data.DataManager;
 import org.spongepowered.api.data.DataQuery;
 import org.spongepowered.api.data.DataRegistration;
 import org.spongepowered.api.data.key.Key;
-import org.spongepowered.api.data.value.mutable.ListValue;
-import org.spongepowered.api.data.value.mutable.MapValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableListValue;
+import org.spongepowered.api.data.value.mutable.MutableMapValue;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.game.GameRegistryEvent;
@@ -63,9 +63,9 @@ import java.util.UUID;
 @Plugin(id = "myhomes", name = "MyHomes")
 public class MyHomes {
 
-    public static Key<Value<Home>> DEFAULT_HOME = DummyObjectProvider.createExtendedFor(Key.class, "DEFAULT_HOME");
-    public static Key<MapValue<String, Home>> HOMES = DummyObjectProvider.createExtendedFor(Key.class, "HOMES");
-    public static Key<ListValue<UUID>> FRIENDS = DummyObjectProvider.createExtendedFor(Key.class, "FRIENDS");
+    public static Key<MutableValue<Home>> DEFAULT_HOME = DummyObjectProvider.createExtendedFor(Key.class, "DEFAULT_HOME");
+    public static Key<MutableMapValue<String, Home>> HOMES = DummyObjectProvider.createExtendedFor(Key.class, "HOMES");
+    public static Key<MutableListValue<UUID>> FRIENDS = DummyObjectProvider.createExtendedFor(Key.class, "FRIENDS");
 
     @Inject private PluginContainer container;
     @Inject private Logger logger;
@@ -77,7 +77,7 @@ public class MyHomes {
     public void onKeyRegistration(GameRegistryEvent.Register<Key<?>> event) {
         this.logger.info("onKeyRegistration");
         DEFAULT_HOME = Key.builder()
-            .type(new TypeToken<Value<Home>>() {})
+            .type(new TypeToken<MutableValue<Home>>() {})
             .id("default_home")
             .name("Default Home")
             .query(DataQuery.of("DefaultHome"))
@@ -85,7 +85,7 @@ public class MyHomes {
         event.register(DEFAULT_HOME);
 
         HOMES = Key.builder()
-            .type(new TypeToken<MapValue<String, Home>>() {})
+            .type(new TypeToken<MutableMapValue<String, Home>>() {})
             .id("homes")
             .name("Homes")
             .query(DataQuery.of("Homes"))
@@ -93,7 +93,7 @@ public class MyHomes {
         event.register(HOMES);
 
         FRIENDS = Key.builder()
-            .type(new TypeToken<ListValue<UUID>>() {})
+            .type(new TypeToken<MutableListValue<UUID>>() {})
             .id("friends")
             .name("Friends")
             .query(DataQuery.of("Friends"))

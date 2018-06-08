@@ -30,24 +30,24 @@ import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.meta.PatternLayer;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.PatternListValue;
+import org.spongepowered.api.data.value.mutable.PatternMutableListValue;
 import org.spongepowered.common.data.processor.common.AbstractSpongeValueProcessor;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongePatternListValue;
-import org.spongepowered.common.data.value.mutable.SpongePatternListValue;
+import org.spongepowered.common.data.value.mutable.SpongePatternMutableListValue;
 import org.spongepowered.common.interfaces.block.tile.IMixinBanner;
 
 import java.util.List;
 import java.util.Optional;
 
-public class TileBannerPatternLayersValueProcessor extends AbstractSpongeValueProcessor<TileEntityBanner, List<PatternLayer>, PatternListValue> {
+public class TileBannerPatternLayersValueProcessor extends AbstractSpongeValueProcessor<TileEntityBanner, List<PatternLayer>, PatternMutableListValue> {
 
     public TileBannerPatternLayersValueProcessor() {
         super(TileEntityBanner.class, Keys.BANNER_PATTERNS);
     }
 
     @Override
-    protected PatternListValue constructValue(List<PatternLayer> actualValue) {
-        return new SpongePatternListValue(Keys.BANNER_PATTERNS, actualValue);
+    protected PatternMutableListValue constructValue(List<PatternLayer> actualValue) {
+        return new SpongePatternMutableListValue(Keys.BANNER_PATTERNS, actualValue);
     }
 
     @Override

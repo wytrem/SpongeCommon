@@ -31,7 +31,7 @@ import com.google.common.collect.ImmutableMap;
 import org.spongepowered.api.data.key.Key;
 import org.spongepowered.api.data.manipulator.immutable.ImmutableMappedData;
 import org.spongepowered.api.data.manipulator.mutable.MappedData;
-import org.spongepowered.api.data.value.BaseValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.immutable.ImmutableMapValue;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeMapValue;
 import org.spongepowered.common.util.ReflectionUtil;
@@ -48,7 +48,7 @@ public abstract class AbstractImmutableMappedData<K, V, I extends ImmutableMappe
     private final ImmutableMapValue<K, V> mapValue;
 
     public AbstractImmutableMappedData(Class<I> immutableClass, Map<K, V> value,
-                                          Key<? extends BaseValue<Map<K, V>>> usedKey,
+                                          Key<? extends Value<Map<K, V>>> usedKey,
                                           Class<? extends M> manipulatorClass) {
         super(immutableClass, ImmutableMap.copyOf(value), usedKey);
         checkArgument(!Modifier.isAbstract(manipulatorClass.getModifiers()), "The immutable class cannot be abstract!");

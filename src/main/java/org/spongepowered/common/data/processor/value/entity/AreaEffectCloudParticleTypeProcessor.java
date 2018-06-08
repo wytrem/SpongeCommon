@@ -30,24 +30,24 @@ import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.api.effect.particle.ParticleType;
 import org.spongepowered.api.effect.particle.ParticleTypes;
 import org.spongepowered.common.data.processor.common.AbstractSpongeValueProcessor;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 import org.spongepowered.common.effect.particle.SpongeParticleType;
 
 import java.util.Optional;
 
-public class AreaEffectCloudParticleTypeProcessor extends AbstractSpongeValueProcessor<EntityAreaEffectCloud, ParticleType, Value<ParticleType>> {
+public class AreaEffectCloudParticleTypeProcessor extends AbstractSpongeValueProcessor<EntityAreaEffectCloud, ParticleType, MutableValue<ParticleType>> {
 
     public AreaEffectCloudParticleTypeProcessor() {
         super(EntityAreaEffectCloud.class, Keys.AREA_EFFECT_CLOUD_PARTICLE_TYPE);
     }
 
     @Override
-    protected Value<ParticleType> constructValue(ParticleType actualValue) {
-        return new SpongeValue<ParticleType>(Keys.AREA_EFFECT_CLOUD_PARTICLE_TYPE, ParticleTypes.MOB_SPELL, actualValue);
+    protected MutableValue<ParticleType> constructValue(ParticleType actualValue) {
+        return new SpongeMutableValue<ParticleType>(Keys.AREA_EFFECT_CLOUD_PARTICLE_TYPE, ParticleTypes.MOB_SPELL, actualValue);
     }
 
     @Override

@@ -30,18 +30,18 @@ import org.spongepowered.api.data.manipulator.immutable.entity.ImmutableSkinData
 import org.spongepowered.api.data.manipulator.mutable.entity.SkinData;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.manipulator.mutable.entity.SpongeSkinData;
 import org.spongepowered.common.data.processor.common.AbstractEntitySingleDataProcessor;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 import org.spongepowered.common.entity.living.human.EntityHuman;
 
 import java.util.Optional;
 import java.util.UUID;
 
 public class SkinDataProcessor extends
-        AbstractEntitySingleDataProcessor<EntityHuman, UUID, Value<UUID>, SkinData, ImmutableSkinData> {
+        AbstractEntitySingleDataProcessor<EntityHuman, UUID, MutableValue<UUID>, SkinData, ImmutableSkinData> {
 
     public SkinDataProcessor() {
         super(EntityHuman.class, Keys.SKIN_UNIQUE_ID);
@@ -56,8 +56,8 @@ public class SkinDataProcessor extends
     }
 
     @Override
-    protected Value<UUID> constructValue(UUID actualValue) {
-        return new SpongeValue<>(Keys.SKIN_UNIQUE_ID, actualValue);
+    protected MutableValue<UUID> constructValue(UUID actualValue) {
+        return new SpongeMutableValue<>(Keys.SKIN_UNIQUE_ID, actualValue);
     }
 
     @Override

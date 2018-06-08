@@ -33,15 +33,15 @@ import org.spongepowered.api.data.type.BodyPart;
 import org.spongepowered.api.data.type.BodyParts;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MapValue;
+import org.spongepowered.api.data.value.mutable.MutableMapValue;
 import org.spongepowered.common.data.processor.common.AbstractSpongeValueProcessor;
-import org.spongepowered.common.data.value.mutable.SpongeMapValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableMapValue;
 import org.spongepowered.common.util.VecHelper;
 
 import java.util.Map;
 import java.util.Optional;
 
-public class BodyRotationsValueProcessor extends AbstractSpongeValueProcessor<EntityArmorStand, Map<BodyPart, Vector3d>, MapValue<BodyPart, Vector3d>> {
+public class BodyRotationsValueProcessor extends AbstractSpongeValueProcessor<EntityArmorStand, Map<BodyPart, Vector3d>, MutableMapValue<BodyPart, Vector3d>> {
 
     public BodyRotationsValueProcessor() {
         super(EntityArmorStand.class, Keys.BODY_ROTATIONS);
@@ -53,8 +53,8 @@ public class BodyRotationsValueProcessor extends AbstractSpongeValueProcessor<En
     }
 
     @Override
-    protected MapValue<BodyPart, Vector3d> constructValue(Map<BodyPart, Vector3d> actualValue) {
-        return new SpongeMapValue<>(Keys.BODY_ROTATIONS, actualValue);
+    protected MutableMapValue<BodyPart, Vector3d> constructValue(Map<BodyPart, Vector3d> actualValue) {
+        return new SpongeMutableMapValue<>(Keys.BODY_ROTATIONS, actualValue);
     }
 
     @Override

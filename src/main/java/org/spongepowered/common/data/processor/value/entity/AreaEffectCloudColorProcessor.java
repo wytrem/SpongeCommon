@@ -29,22 +29,22 @@ import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.api.util.Color;
 import org.spongepowered.common.data.processor.common.AbstractSpongeValueProcessor;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
 import java.util.Optional;
 
-public class AreaEffectCloudColorProcessor extends AbstractSpongeValueProcessor<EntityAreaEffectCloud, Color, Value<Color>> {
+public class AreaEffectCloudColorProcessor extends AbstractSpongeValueProcessor<EntityAreaEffectCloud, Color, MutableValue<Color>> {
 
     public AreaEffectCloudColorProcessor() {
         super(EntityAreaEffectCloud.class, Keys.AREA_EFFECT_CLOUD_COLOR);
     }
 
     @Override
-    protected Value<Color> constructValue(Color actualValue) {
-        return new SpongeValue<>(Keys.AREA_EFFECT_CLOUD_COLOR, Color.WHITE, actualValue);
+    protected MutableValue<Color> constructValue(Color actualValue) {
+        return new SpongeMutableValue<>(Keys.AREA_EFFECT_CLOUD_COLOR, Color.WHITE, actualValue);
     }
 
     @Override

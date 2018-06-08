@@ -29,21 +29,21 @@ import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.processor.common.AbstractSpongeValueProcessor;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
 import java.util.Optional;
 
-public class WalkingSpeedValueProcessor extends AbstractSpongeValueProcessor<EntityPlayer, Double, Value<Double>> {
+public class WalkingSpeedValueProcessor extends AbstractSpongeValueProcessor<EntityPlayer, Double, MutableValue<Double>> {
 
     public WalkingSpeedValueProcessor() {
         super(EntityPlayer.class, Keys.WALKING_SPEED);
     }
 
     @Override
-    protected Value<Double> constructValue(Double defaultValue) {
-        return new SpongeValue<>(Keys.WALKING_SPEED, 0.7D);
+    protected MutableValue<Double> constructValue(Double defaultValue) {
+        return new SpongeMutableValue<>(Keys.WALKING_SPEED, 0.7D);
     }
 
     @Override

@@ -30,7 +30,7 @@ import org.spongepowered.api.Sponge;
 import org.spongepowered.api.data.DataHolder;
 import org.spongepowered.api.data.DataQuery;
 import org.spongepowered.api.data.key.Key;
-import org.spongepowered.api.data.value.BaseValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.event.EventListener;
 import org.spongepowered.api.event.data.ChangeDataHolderEvent;
 import org.spongepowered.api.plugin.PluginContainer;
@@ -44,7 +44,7 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-public final class SpongeKey<V extends BaseValue<?>> implements Key<V> {
+public final class SpongeKey<V extends Value<?>> implements Key<V> {
 
     private static final Set<String> loggedPlugins = new HashSet<>();
 
@@ -60,7 +60,7 @@ public final class SpongeKey<V extends BaseValue<?>> implements Key<V> {
         this.valueToken = builder.valueToken;
         this.name = builder.name;
         this.query = builder.query;
-        this.elementToken = this.valueToken.resolveType(BaseValue.class.getTypeParameters()[0]);
+        this.elementToken = this.valueToken.resolveType(Value.class.getTypeParameters()[0]);
         this.parent = getCurrentContainer();
         final String id = builder.id;
         if (id.indexOf(':') == -1) {

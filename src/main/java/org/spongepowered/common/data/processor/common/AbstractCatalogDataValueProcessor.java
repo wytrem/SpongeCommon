@@ -30,11 +30,11 @@ import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Key;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 
 import java.util.Optional;
 
-public abstract class AbstractCatalogDataValueProcessor<T extends CatalogType, V extends Value<T>> extends
+public abstract class AbstractCatalogDataValueProcessor<T extends CatalogType, V extends MutableValue<T>> extends
         AbstractSpongeValueProcessor<ItemStack, T, V> {
 
     protected AbstractCatalogDataValueProcessor(Key<V> key) {

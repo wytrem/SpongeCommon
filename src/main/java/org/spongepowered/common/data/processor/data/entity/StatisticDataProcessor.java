@@ -37,19 +37,19 @@ import org.spongepowered.api.data.manipulator.immutable.entity.ImmutableStatisti
 import org.spongepowered.api.data.manipulator.mutable.entity.StatisticData;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MapValue;
+import org.spongepowered.api.data.value.mutable.MutableMapValue;
 import org.spongepowered.api.statistic.Statistic;
 import org.spongepowered.common.data.manipulator.mutable.entity.SpongeStatisticData;
 import org.spongepowered.common.data.processor.common.AbstractEntitySingleDataProcessor;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeMapValue;
-import org.spongepowered.common.data.value.mutable.SpongeMapValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableMapValue;
 import org.spongepowered.common.interfaces.statistic.IMixinStatisticsManager;
 
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 
-public class StatisticDataProcessor extends AbstractEntitySingleDataProcessor<EntityPlayerMP, Map<Statistic, Long>, MapValue<Statistic, Long>, StatisticData, ImmutableStatisticData> {
+public class StatisticDataProcessor extends AbstractEntitySingleDataProcessor<EntityPlayerMP, Map<Statistic, Long>, MutableMapValue<Statistic, Long>, StatisticData, ImmutableStatisticData> {
 
     public StatisticDataProcessor() {
         super(EntityPlayerMP.class, Keys.STATISTICS);
@@ -94,8 +94,8 @@ public class StatisticDataProcessor extends AbstractEntitySingleDataProcessor<En
     }
 
     @Override
-    protected MapValue<Statistic, Long> constructValue(Map<Statistic, Long> actualValue) {
-        return new SpongeMapValue<>(Keys.STATISTICS, checkNotNull(actualValue, "null value"));
+    protected MutableMapValue<Statistic, Long> constructValue(Map<Statistic, Long> actualValue) {
+        return new SpongeMutableMapValue<>(Keys.STATISTICS, checkNotNull(actualValue, "null value"));
     }
 
     @Override

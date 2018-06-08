@@ -33,17 +33,17 @@ import org.spongepowered.api.data.type.Career;
 import org.spongepowered.api.data.type.Careers;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.manipulator.mutable.entity.SpongeCareerData;
 import org.spongepowered.common.data.processor.common.AbstractEntitySingleDataProcessor;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 import org.spongepowered.common.interfaces.entity.IMixinVillager;
 
 import java.util.Optional;
 
 public class CareerDataProcessor
-        extends AbstractEntitySingleDataProcessor<EntityVillager, Career, Value<Career>, CareerData, ImmutableCareerData> {
+        extends AbstractEntitySingleDataProcessor<EntityVillager, Career, MutableValue<Career>, CareerData, ImmutableCareerData> {
 
     public CareerDataProcessor() {
         super(EntityVillager.class, Keys.CAREER);
@@ -71,8 +71,8 @@ public class CareerDataProcessor
     }
 
     @Override
-    protected Value<Career> constructValue(Career actualValue) {
-        return new SpongeValue<>(Keys.CAREER, Careers.FARMER, actualValue);
+    protected MutableValue<Career> constructValue(Career actualValue) {
+        return new SpongeMutableValue<>(Keys.CAREER, Careers.FARMER, actualValue);
     }
 
     @Override

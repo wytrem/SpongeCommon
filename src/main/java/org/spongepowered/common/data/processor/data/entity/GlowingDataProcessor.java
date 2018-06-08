@@ -33,17 +33,17 @@ import org.spongepowered.api.data.manipulator.immutable.entity.ImmutableGlowingD
 import org.spongepowered.api.data.manipulator.mutable.entity.GlowingData;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.api.util.OptBool;
 import org.spongepowered.common.data.manipulator.mutable.entity.SpongeGlowingData;
 import org.spongepowered.common.data.processor.common.AbstractEntitySingleDataProcessor;
 import org.spongepowered.common.data.util.DataConstants;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
 import java.util.Optional;
 
-public class GlowingDataProcessor extends AbstractEntitySingleDataProcessor<Entity, Boolean, Value<Boolean>, GlowingData, ImmutableGlowingData> {
+public class GlowingDataProcessor extends AbstractEntitySingleDataProcessor<Entity, Boolean, MutableValue<Boolean>, GlowingData, ImmutableGlowingData> {
 
     public GlowingDataProcessor() {
         super(Entity.class, Keys.GLOWING);
@@ -66,8 +66,8 @@ public class GlowingDataProcessor extends AbstractEntitySingleDataProcessor<Enti
     }
 
     @Override
-    protected Value<Boolean> constructValue(Boolean actualValue) {
-        return new SpongeValue<>(Keys.GLOWING, DataConstants.DEFAULT_GLOWING, actualValue);
+    protected MutableValue<Boolean> constructValue(Boolean actualValue) {
+        return new SpongeMutableValue<>(Keys.GLOWING, DataConstants.DEFAULT_GLOWING, actualValue);
     }
 
     @Override

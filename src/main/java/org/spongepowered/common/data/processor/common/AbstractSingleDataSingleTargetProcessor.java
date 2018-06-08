@@ -33,10 +33,10 @@ import org.spongepowered.api.data.key.Key;
 import org.spongepowered.api.data.manipulator.DataManipulator;
 import org.spongepowered.api.data.manipulator.ImmutableDataManipulator;
 import org.spongepowered.api.data.merge.MergeFunction;
-import org.spongepowered.api.data.value.BaseValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.api.entity.EntityType;
 import org.spongepowered.common.SpongeImpl;
 import org.spongepowered.common.data.ValueProcessor;
@@ -44,7 +44,7 @@ import org.spongepowered.common.data.util.DataUtil;
 
 import java.util.Optional;
 
-public abstract class AbstractSingleDataSingleTargetProcessor<Holder, T, V extends BaseValue<T>, M extends DataManipulator<M, I>, I extends ImmutableDataManipulator<I, M>>
+public abstract class AbstractSingleDataSingleTargetProcessor<Holder, T, V extends Value<T>, M extends DataManipulator<M, I>, I extends ImmutableDataManipulator<I, M>>
         extends AbstractSingleDataProcessor<T, V, M, I> implements ValueProcessor<T, V> {
 
     protected final Class<Holder> holderClass;
@@ -83,7 +83,7 @@ public abstract class AbstractSingleDataSingleTargetProcessor<Holder, T, V exten
             final Optional<M> old = from(dataHolder);
             final M merged = checkNotNull(function).merge(old.orElse(null), manipulator);
             final T newValue = merged.get(this.key).get();
-            final V immutableValue = (V) ((Value) merged.getValue(this.key).get()).asImmutable();
+            final V immutableValue = (V) ((MutableValue) merged.getValue(this.key).get()).asImmutable();
             try {
                 if (set((Holder) dataHolder, newValue)) {
                     if (old.isPresent()) {
@@ -118,7 +118,7 @@ public abstract class AbstractSingleDataSingleTargetProcessor<Holder, T, V exten
 
     @SuppressWarnings("unchecked")
     @Override
-    public Optional<I> with(Key<? extends BaseValue<?>> key, Object value, I immutable) {
+    public Optional<I> with(Key<? extends Value<?>> key, Object value, I immutable) {
         if (immutable.supports(key)) {
             return Optional.of(immutable.asMutable().set(this.key, (T) value).asImmutable());
         }
@@ -144,11 +144,11 @@ public abstract class AbstractSingleDataSingleTargetProcessor<Holder, T, V exten
     }
 
     /**
-     * Builds a {@link Value} of the type produced by this processor from an
+     * Builds a {@link MutableValue} of the type produced by this processor from an
      * input, actual value.
      *
      * @param actualValue The actual value
-     * @return The constructed {@link Value}
+     * @return The constructed {@link MutableValue}
      */
     protected abstract V constructValue(T actualValue);
 

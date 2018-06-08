@@ -33,7 +33,7 @@ import org.spongepowered.api.data.DataHolder;
 import org.spongepowered.api.data.DataQuery;
 import org.spongepowered.api.data.key.Key;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.api.event.EventListener;
 import org.spongepowered.api.event.data.ChangeDataHolderEvent;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
@@ -95,13 +95,13 @@ public class ReflectionTest {
 
     @Test
     public void testImmutableValueCache() {
-        final Key<Value<Double>> key = new Key<Value<Double>>() {
+        final Key<MutableValue<Double>> key = new Key<MutableValue<Double>>() {
 
             private final TypeToken<Double> type = new TypeToken<Double>() {
                 private static final long serialVersionUID = 2192586007346356478L;
             };
 
-            private final TypeToken<Value<Double>> token = new TypeToken<Value<Double>>() {
+            private final TypeToken<MutableValue<Double>> token = new TypeToken<MutableValue<Double>>() {
                 private static final long serialVersionUID = -5667097529739857142L;
             };
 
@@ -116,7 +116,7 @@ public class ReflectionTest {
             }
 
             @Override
-            public TypeToken<Value<Double>> getValueToken() {
+            public TypeToken<MutableValue<Double>> getValueToken() {
                 return this.token;
             }
 

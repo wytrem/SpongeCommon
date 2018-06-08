@@ -32,16 +32,16 @@ import org.spongepowered.api.data.manipulator.immutable.ImmutableTargetedLocatio
 import org.spongepowered.api.data.manipulator.mutable.TargetedLocationData;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.manipulator.mutable.SpongeTargetedLocationData;
 import org.spongepowered.common.data.processor.common.AbstractEntitySingleDataProcessor;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 import org.spongepowered.common.interfaces.ITargetedLocation;
 
 import java.util.Optional;
 
-public final class EntityTargetedLocationDataProcessor extends AbstractEntitySingleDataProcessor<Entity, Vector3d, Value<Vector3d>,
+public final class EntityTargetedLocationDataProcessor extends AbstractEntitySingleDataProcessor<Entity, Vector3d, MutableValue<Vector3d>,
         TargetedLocationData, ImmutableTargetedLocationData> {
 
     public EntityTargetedLocationDataProcessor() {
@@ -73,8 +73,8 @@ public final class EntityTargetedLocationDataProcessor extends AbstractEntitySin
     }
 
     @Override
-    protected Value<Vector3d> constructValue(Vector3d actualValue) {
-        return new SpongeValue<>(this.key, Vector3d.ZERO, actualValue);
+    protected MutableValue<Vector3d> constructValue(Vector3d actualValue) {
+        return new SpongeMutableValue<>(this.key, Vector3d.ZERO, actualValue);
     }
 
     @Override

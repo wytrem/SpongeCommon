@@ -29,11 +29,10 @@ import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.OptionalValue;
+import org.spongepowered.api.data.value.mutable.MutableOptionalValue;
 import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.entity.EntitySnapshot;
 import org.spongepowered.api.entity.living.Living;
-import org.spongepowered.api.world.World;
 import org.spongepowered.common.data.processor.common.AbstractSpongeValueProcessor;
 import org.spongepowered.common.data.value.SpongeValueFactory;
 
@@ -42,14 +41,14 @@ import java.util.Optional;
 import javax.annotation.Nullable;
 
 public class LastAttackerValueProcessor
-        extends AbstractSpongeValueProcessor<EntityLivingBase, Optional<EntitySnapshot>, OptionalValue<EntitySnapshot>> {
+        extends AbstractSpongeValueProcessor<EntityLivingBase, Optional<EntitySnapshot>, MutableOptionalValue<EntitySnapshot>> {
 
     public LastAttackerValueProcessor() {
         super(EntityLivingBase.class, Keys.LAST_ATTACKER);
     }
 
     @Override
-    protected OptionalValue<EntitySnapshot> constructValue(Optional<EntitySnapshot> actualValue) {
+    protected MutableOptionalValue<EntitySnapshot> constructValue(Optional<EntitySnapshot> actualValue) {
         return SpongeValueFactory.getInstance().createOptionalValue(Keys.LAST_ATTACKER, actualValue.orElse(null));
     }
 

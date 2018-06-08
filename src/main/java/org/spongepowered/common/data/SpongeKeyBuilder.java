@@ -31,13 +31,13 @@ import static com.google.common.base.Preconditions.checkState;
 import com.google.common.reflect.TypeToken;
 import org.spongepowered.api.data.DataQuery;
 import org.spongepowered.api.data.key.Key;
-import org.spongepowered.api.data.value.BaseValue;
+import org.spongepowered.api.data.value.Value;
 
 import java.util.Locale;
 
 import javax.annotation.Nullable;
 
-public final class SpongeKeyBuilder<E, V extends BaseValue<E>> implements Key.Builder<E, V> {
+public final class SpongeKeyBuilder<E, V extends Value<E>> implements Key.Builder<E, V> {
 
     @Nullable TypeToken<V> valueToken;
     @Nullable String id;
@@ -46,7 +46,7 @@ public final class SpongeKeyBuilder<E, V extends BaseValue<E>> implements Key.Bu
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T, B extends BaseValue<T>> Key.Builder<T, B> type(TypeToken<B> token) {
+    public <T, B extends Value<T>> Key.Builder<T, B> type(TypeToken<B> token) {
         this.valueToken = (TypeToken<V>) checkNotNull(token, "Value Token cannot be null!");
         return (Key.Builder<T, B>) this;
     }

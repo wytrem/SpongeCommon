@@ -30,7 +30,7 @@ import com.google.common.collect.ImmutableSet;
 import org.spongepowered.api.data.key.Key;
 import org.spongepowered.api.data.manipulator.DataManipulator;
 import org.spongepowered.api.data.manipulator.ImmutableDataManipulator;
-import org.spongepowered.api.data.value.BaseValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.immutable.ImmutableSetValue;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeSetValue;
 import org.spongepowered.common.util.ReflectionUtil;
@@ -45,7 +45,7 @@ public abstract class AbstractImmutableSingleSetData<E, I extends ImmutableDataM
     private final ImmutableSetValue<E> setValue;
 
     public AbstractImmutableSingleSetData(Class<I> manipulatorClass, Set<E> value,
-                                          Key<? extends BaseValue<Set<E>>> usedKey,
+                                          Key<? extends Value<Set<E>>> usedKey,
                                           Class<? extends M> mutableClass) {
         super(manipulatorClass, ImmutableSet.copyOf(value), usedKey);
         checkArgument(!Modifier.isAbstract(mutableClass.getModifiers()), "The immutable class cannot be abstract!");

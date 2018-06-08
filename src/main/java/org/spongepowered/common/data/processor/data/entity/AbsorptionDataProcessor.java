@@ -33,16 +33,16 @@ import org.spongepowered.api.data.manipulator.immutable.entity.ImmutableAbsorpti
 import org.spongepowered.api.data.manipulator.mutable.entity.AbsorptionData;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.manipulator.mutable.entity.SpongeAbsorptionData;
 import org.spongepowered.common.data.processor.common.AbstractSingleDataSingleTargetProcessor;
 import org.spongepowered.common.data.util.DataConstants;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
 import java.util.Optional;
 
-public final class AbsorptionDataProcessor extends AbstractSingleDataSingleTargetProcessor<EntityLivingBase, Double, Value<Double>, AbsorptionData, ImmutableAbsorptionData> {
+public final class AbsorptionDataProcessor extends AbstractSingleDataSingleTargetProcessor<EntityLivingBase, Double, MutableValue<Double>, AbsorptionData, ImmutableAbsorptionData> {
 
     public AbsorptionDataProcessor() {
         super(Keys.ABSORPTION, EntityLivingBase.class);
@@ -71,8 +71,8 @@ public final class AbsorptionDataProcessor extends AbstractSingleDataSingleTarge
     }
 
     @Override
-    protected Value<Double> constructValue(Double actualValue) {
-        return new SpongeValue<>(this.key, DataConstants.Entity.DEFAULT_ABSORPTION, actualValue);
+    protected MutableValue<Double> constructValue(Double actualValue) {
+        return new SpongeMutableValue<>(this.key, DataConstants.Entity.DEFAULT_ABSORPTION, actualValue);
     }
 
     @Override

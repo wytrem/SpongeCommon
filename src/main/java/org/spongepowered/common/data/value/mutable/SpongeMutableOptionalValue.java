@@ -27,10 +27,10 @@ package org.spongepowered.common.data.value.mutable;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import org.spongepowered.api.data.key.Key;
-import org.spongepowered.api.data.value.BaseValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.immutable.ImmutableOptionalValue;
-import org.spongepowered.api.data.value.mutable.OptionalValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
+import org.spongepowered.api.data.value.mutable.MutableOptionalValue;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeOptionalValue;
 
 import java.util.Optional;
@@ -38,28 +38,28 @@ import java.util.function.Function;
 
 import javax.annotation.Nullable;
 
-public class SpongeOptionalValue<E> extends SpongeValue<Optional<E>> implements OptionalValue<E> {
+public class SpongeMutableOptionalValue<E> extends SpongeMutableValue<Optional<E>> implements MutableOptionalValue<E> {
 
-    public SpongeOptionalValue(Key<? extends BaseValue<Optional<E>>> key) {
+    public SpongeMutableOptionalValue(Key<? extends Value<Optional<E>>> key) {
         this(key, Optional.<E>empty());
     }
 
-    public SpongeOptionalValue(Key<? extends BaseValue<Optional<E>>> key, Optional<E> actualValue) {
+    public SpongeMutableOptionalValue(Key<? extends Value<Optional<E>>> key, Optional<E> actualValue) {
         this(key, Optional.<E>empty(), actualValue);
     }
 
-    public SpongeOptionalValue(Key<? extends BaseValue<Optional<E>>> key, Optional<E> defaultValue, Optional<E> actualValue) {
+    public SpongeMutableOptionalValue(Key<? extends Value<Optional<E>>> key, Optional<E> defaultValue, Optional<E> actualValue) {
         super(key, defaultValue, actualValue);
     }
 
     @Override
-    public OptionalValue<E> set(Optional<E> value) {
+    public MutableOptionalValue<E> set(Optional<E> value) {
         this.actualValue = checkNotNull(value);
         return this;
     }
 
     @Override
-    public OptionalValue<E> transform(Function<Optional<E>, Optional<E>> function) {
+    public MutableOptionalValue<E> transform(Function<Optional<E>, Optional<E>> function) {
         this.actualValue = checkNotNull(function.apply(this.actualValue));
         return this;
     }
@@ -70,17 +70,17 @@ public class SpongeOptionalValue<E> extends SpongeValue<Optional<E>> implements 
     }
 
     @Override
-    public OptionalValue<E> copy() {
-        return new SpongeOptionalValue<>(getKey(), this.actualValue);
+    public MutableOptionalValue<E> copy() {
+        return new SpongeMutableOptionalValue<>(getKey(), this.actualValue);
     }
 
     @Override
-    public OptionalValue<E> setTo(@Nullable E value) {
+    public MutableOptionalValue<E> setTo(@Nullable E value) {
         return set(Optional.ofNullable(value));
     }
 
     @Override
-    public Value<E> or(E defaultValue) { // TODO actually construct the keys
-        return new SpongeValue<>(null, null, get().isPresent() ? get().get() : checkNotNull(defaultValue));
+    public MutableValue<E> or(E defaultValue) { // TODO actually construct the keys
+        return new SpongeMutableValue<>(null, null, get().isPresent() ? get().get() : checkNotNull(defaultValue));
     }
 }

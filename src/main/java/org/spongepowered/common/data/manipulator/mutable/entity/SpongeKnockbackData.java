@@ -28,7 +28,7 @@ import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.entity.ImmutableKnockbackData;
 import org.spongepowered.api.data.manipulator.mutable.entity.KnockbackData;
 import org.spongepowered.api.data.value.mutable.MutableBoundedValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.manipulator.immutable.entity.ImmutableSpongeKnockbackData;
 import org.spongepowered.common.data.manipulator.mutable.common.AbstractIntData;
 import org.spongepowered.common.data.value.SpongeValueFactory;
@@ -54,7 +54,7 @@ public class SpongeKnockbackData extends AbstractIntData<KnockbackData, Immutabl
     }
 
     @Override
-    protected Value<?> getValueGetter() {
+    protected MutableValue<?> getValueGetter() {
         return knockbackStrength();
     }
 

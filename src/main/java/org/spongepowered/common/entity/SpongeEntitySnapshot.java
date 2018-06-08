@@ -40,7 +40,7 @@ import org.spongepowered.api.data.Queries;
 import org.spongepowered.api.data.key.Key;
 import org.spongepowered.api.data.manipulator.ImmutableDataManipulator;
 import org.spongepowered.api.data.merge.MergeFunction;
-import org.spongepowered.api.data.value.BaseValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
 import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.entity.EntityArchetype;
@@ -251,7 +251,7 @@ public class SpongeEntitySnapshot implements EntitySnapshot {
     }
 
     @Override
-    public <E> Optional<EntitySnapshot> transform(Key<? extends BaseValue<E>> key, Function<E, E> function) {
+    public <E> Optional<EntitySnapshot> transform(Key<? extends Value<E>> key, Function<E, E> function) {
         checkNotNull(key);
         checkNotNull(function);
         final ImmutableList.Builder<ImmutableDataManipulator<?, ?>> builder = ImmutableList.builder();
@@ -273,14 +273,14 @@ public class SpongeEntitySnapshot implements EntitySnapshot {
     }
 
     @Override
-    public <E> Optional<EntitySnapshot> with(Key<? extends BaseValue<E>> key, E value) {
+    public <E> Optional<EntitySnapshot> with(Key<? extends Value<E>> key, E value) {
         return transform(key, input -> value);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public Optional<EntitySnapshot> with(BaseValue<?> value) {
-        return with((Key<? extends BaseValue<Object>>) value.getKey(), value.get());
+    public Optional<EntitySnapshot> with(Value<?> value) {
+        return with((Key<? extends Value<Object>>) value.getKey(), value.get());
     }
 
     @Override
@@ -331,7 +331,7 @@ public class SpongeEntitySnapshot implements EntitySnapshot {
 
     @SuppressWarnings("unchecked")
     @Override
-    public <E> Optional<E> get(Key<? extends BaseValue<E>> key) {
+    public <E> Optional<E> get(Key<? extends Value<E>> key) {
         checkNotNull(key);
         for (ImmutableValue<?> value : this.values) {
             if (value.getKey().equals(key)) {
@@ -343,7 +343,7 @@ public class SpongeEntitySnapshot implements EntitySnapshot {
 
     @SuppressWarnings("unchecked")
     @Override
-    public <E, V extends BaseValue<E>> Optional<V> getValue(Key<V> key) {
+    public <E, V extends Value<E>> Optional<V> getValue(Key<V> key) {
         checkNotNull(key);
         for (ImmutableValue<?> value : this.values) {
             if (value.getKey().equals(key)) {

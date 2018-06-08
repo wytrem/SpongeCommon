@@ -29,11 +29,11 @@ import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.entity.ImmutableAgeableData;
 import org.spongepowered.api.data.manipulator.mutable.entity.AgeableData;
 import org.spongepowered.api.data.value.mutable.MutableBoundedValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.manipulator.immutable.entity.ImmutableSpongeAgeableData;
 import org.spongepowered.common.data.manipulator.mutable.common.AbstractData;
 import org.spongepowered.common.data.value.SpongeValueFactory;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
 public class SpongeAgeableData extends AbstractData<AgeableData, ImmutableAgeableData> implements AgeableData {
 
@@ -72,8 +72,8 @@ public class SpongeAgeableData extends AbstractData<AgeableData, ImmutableAgeabl
     }
 
     @Override
-    public Value<Boolean> adult() {
-        return new SpongeValue<>(Keys.IS_ADULT, this.adult);
+    public MutableValue<Boolean> adult() {
+        return new SpongeMutableValue<>(Keys.IS_ADULT, this.adult);
     }
 
     @Override

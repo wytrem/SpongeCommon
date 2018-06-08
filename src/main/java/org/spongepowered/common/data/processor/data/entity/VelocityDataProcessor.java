@@ -37,17 +37,17 @@ import org.spongepowered.api.data.manipulator.immutable.entity.ImmutableVelocity
 import org.spongepowered.api.data.manipulator.mutable.entity.VelocityData;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.manipulator.mutable.entity.SpongeVelocityData;
 import org.spongepowered.common.data.processor.common.AbstractEntitySingleDataProcessor;
 import org.spongepowered.common.data.util.DataQueries;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 import org.spongepowered.common.interfaces.entity.IMixinEntity;
 
 import java.util.Optional;
 
-public class VelocityDataProcessor extends AbstractEntitySingleDataProcessor<Entity, Vector3d, Value<Vector3d>, VelocityData, ImmutableVelocityData> {
+public class VelocityDataProcessor extends AbstractEntitySingleDataProcessor<Entity, Vector3d, MutableValue<Vector3d>, VelocityData, ImmutableVelocityData> {
 
     public VelocityDataProcessor() {
         super(Entity.class, Keys.VELOCITY);
@@ -85,8 +85,8 @@ public class VelocityDataProcessor extends AbstractEntitySingleDataProcessor<Ent
     }
 
     @Override
-    protected Value<Vector3d> constructValue(Vector3d actualValue) {
-        return new SpongeValue<>(Keys.VELOCITY, Vector3d.ZERO, actualValue);
+    protected MutableValue<Vector3d> constructValue(Vector3d actualValue) {
+        return new SpongeMutableValue<>(Keys.VELOCITY, Vector3d.ZERO, actualValue);
     }
 
     @Override

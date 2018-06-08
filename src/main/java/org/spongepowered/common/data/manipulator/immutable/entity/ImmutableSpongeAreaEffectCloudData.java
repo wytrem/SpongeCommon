@@ -40,7 +40,7 @@ import org.spongepowered.common.data.manipulator.immutable.common.AbstractImmuta
 import org.spongepowered.common.data.manipulator.mutable.entity.SpongeAreaEffectData;
 import org.spongepowered.common.data.value.SpongeValueFactory;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeListValue;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
 import java.util.List;
 
@@ -145,9 +145,9 @@ public class ImmutableSpongeAreaEffectCloudData extends AbstractImmutableData<Im
                 .build()
                 .asImmutable();
         this.particleTypeImmutableValue =
-                new SpongeValue<>(Keys.AREA_EFFECT_CLOUD_PARTICLE_TYPE, ParticleTypes.MOB_SPELL, ParticleTypes.MOB_SPELL).asImmutable();
+                new SpongeMutableValue<>(Keys.AREA_EFFECT_CLOUD_PARTICLE_TYPE, ParticleTypes.MOB_SPELL, ParticleTypes.MOB_SPELL).asImmutable();
         this.colorImmutableValue =
-                new SpongeValue<>(Keys.AREA_EFFECT_CLOUD_COLOR, Color.WHITE, this.color).asImmutable();
+                new SpongeMutableValue<>(Keys.AREA_EFFECT_CLOUD_COLOR, Color.WHITE, this.color).asImmutable();
         this.durationOnUseValue = SpongeValueFactory.boundedBuilder(Keys.AREA_EFFECT_CLOUD_DURATION_ON_USE)
                 .minimum(0)
                 .maximum(Integer.MAX_VALUE)

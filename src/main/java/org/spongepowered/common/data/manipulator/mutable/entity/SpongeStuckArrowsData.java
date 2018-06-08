@@ -31,7 +31,7 @@ import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.entity.ImmutableStuckArrowsData;
 import org.spongepowered.api.data.manipulator.mutable.entity.StuckArrowsData;
 import org.spongepowered.api.data.value.mutable.MutableBoundedValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.manipulator.immutable.entity.ImmutableSpongeStuckArrowsData;
 import org.spongepowered.common.data.manipulator.mutable.common.AbstractIntData;
 import org.spongepowered.common.data.value.SpongeValueFactory;
@@ -47,7 +47,7 @@ public class SpongeStuckArrowsData extends AbstractIntData<StuckArrowsData, Immu
     }
 
     @Override
-    protected Value<?> getValueGetter() {
+    protected MutableValue<?> getValueGetter() {
         return this.stuckArrows();
     }
 

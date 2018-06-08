@@ -30,24 +30,24 @@ import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.api.entity.explosive.FusedExplosive;
 import org.spongepowered.common.data.processor.common.AbstractSpongeValueProcessor;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 import org.spongepowered.common.interfaces.entity.explosive.IMixinFusedExplosive;
 
 import java.util.Optional;
 
-public class FuseDurationValueProcessor extends AbstractSpongeValueProcessor<FusedExplosive, Integer, Value<Integer>> {
+public class FuseDurationValueProcessor extends AbstractSpongeValueProcessor<FusedExplosive, Integer, MutableValue<Integer>> {
 
     public FuseDurationValueProcessor() {
         super(FusedExplosive.class, Keys.FUSE_DURATION);
     }
 
     @Override
-    protected Value<Integer> constructValue(Integer actualValue) {
-        return new SpongeValue<>(Keys.FUSE_DURATION, actualValue);
+    protected MutableValue<Integer> constructValue(Integer actualValue) {
+        return new SpongeMutableValue<>(Keys.FUSE_DURATION, actualValue);
     }
 
     @Override

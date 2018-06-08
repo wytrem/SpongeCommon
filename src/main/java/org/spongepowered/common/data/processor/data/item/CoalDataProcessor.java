@@ -34,18 +34,18 @@ import org.spongepowered.api.data.type.CoalType;
 import org.spongepowered.api.data.type.CoalTypes;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.SpongeImpl;
 import org.spongepowered.common.data.manipulator.mutable.item.SpongeCoalData;
 import org.spongepowered.common.data.processor.common.AbstractItemSingleDataProcessor;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 import org.spongepowered.common.item.SpongeCoalType;
 
 import java.util.List;
 import java.util.Optional;
 
-public class CoalDataProcessor extends AbstractItemSingleDataProcessor<CoalType, Value<CoalType>, CoalData, ImmutableCoalData> {
+public class CoalDataProcessor extends AbstractItemSingleDataProcessor<CoalType, MutableValue<CoalType>, CoalData, ImmutableCoalData> {
 
     public CoalDataProcessor() {
         super(stack -> stack.getItem().equals(Items.COAL), Keys.COAL_TYPE);
@@ -70,8 +70,8 @@ public class CoalDataProcessor extends AbstractItemSingleDataProcessor<CoalType,
     }
 
     @Override
-    protected Value<CoalType> constructValue(CoalType actualValue) {
-        return new SpongeValue<>(Keys.COAL_TYPE, CoalTypes.COAL, actualValue);
+    protected MutableValue<CoalType> constructValue(CoalType actualValue) {
+        return new SpongeMutableValue<>(Keys.COAL_TYPE, CoalTypes.COAL, actualValue);
     }
 
     @Override

@@ -28,9 +28,9 @@ import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.entity.ImmutableAreaEffectCloudData;
 import org.spongepowered.api.data.manipulator.mutable.entity.AreaEffectCloudData;
-import org.spongepowered.api.data.value.mutable.ListValue;
+import org.spongepowered.api.data.value.mutable.MutableListValue;
 import org.spongepowered.api.data.value.mutable.MutableBoundedValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.api.effect.particle.ParticleType;
 import org.spongepowered.api.effect.particle.ParticleTypes;
 import org.spongepowered.api.effect.potion.PotionEffect;
@@ -39,8 +39,8 @@ import org.spongepowered.common.data.manipulator.immutable.entity.ImmutableSpong
 import org.spongepowered.common.data.manipulator.mutable.common.AbstractData;
 import org.spongepowered.common.data.util.ImplementationRequiredForTest;
 import org.spongepowered.common.data.value.SpongeValueFactory;
-import org.spongepowered.common.data.value.mutable.SpongeListValue;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableListValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -184,8 +184,8 @@ public class SpongeAreaEffectData extends AbstractData<AreaEffectCloudData, Immu
     }
 
     @Override
-    public Value<Color> color() {
-        return new SpongeValue<>(Keys.AREA_EFFECT_CLOUD_COLOR, Color.WHITE, this.color);
+    public MutableValue<Color> color() {
+        return new SpongeMutableValue<>(Keys.AREA_EFFECT_CLOUD_COLOR, Color.WHITE, this.color);
     }
 
     @Override
@@ -199,8 +199,8 @@ public class SpongeAreaEffectData extends AbstractData<AreaEffectCloudData, Immu
     }
 
     @Override
-    public Value<ParticleType> particleType() {
-        return new SpongeValue<>(Keys.AREA_EFFECT_CLOUD_PARTICLE_TYPE, ParticleTypes.MOB_SPELL, ParticleTypes.MOB_SPELL);
+    public MutableValue<ParticleType> particleType() {
+        return new SpongeMutableValue<>(Keys.AREA_EFFECT_CLOUD_PARTICLE_TYPE, ParticleTypes.MOB_SPELL, ParticleTypes.MOB_SPELL);
     }
 
     @Override
@@ -264,8 +264,8 @@ public class SpongeAreaEffectData extends AbstractData<AreaEffectCloudData, Immu
     }
 
     @Override
-    public ListValue<PotionEffect> effects() {
-        return new SpongeListValue<>(Keys.POTION_EFFECTS, this.potionEffects);
+    public MutableListValue<PotionEffect> effects() {
+        return new SpongeMutableListValue<>(Keys.POTION_EFFECTS, this.potionEffects);
     }
 
     @Override

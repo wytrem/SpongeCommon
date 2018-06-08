@@ -31,16 +31,16 @@ import org.spongepowered.api.data.manipulator.immutable.entity.ImmutableElytraFl
 import org.spongepowered.api.data.manipulator.mutable.entity.ElytraFlyingData;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.manipulator.mutable.entity.SpongeElytraFlyingData;
 import org.spongepowered.common.data.processor.common.AbstractEntitySingleDataProcessor;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 import org.spongepowered.common.interfaces.entity.IMixinEntityLivingBase;
 
 import java.util.Optional;
 
-public class ElytraFlyingDataProcessor extends AbstractEntitySingleDataProcessor<EntityLivingBase, Boolean, Value<Boolean>, ElytraFlyingData, ImmutableElytraFlyingData> {
+public class ElytraFlyingDataProcessor extends AbstractEntitySingleDataProcessor<EntityLivingBase, Boolean, MutableValue<Boolean>, ElytraFlyingData, ImmutableElytraFlyingData> {
 
     public ElytraFlyingDataProcessor() {
         super(EntityLivingBase.class, Keys.IS_ELYTRA_FLYING);
@@ -63,8 +63,8 @@ public class ElytraFlyingDataProcessor extends AbstractEntitySingleDataProcessor
     }
 
     @Override
-    protected Value<Boolean> constructValue(Boolean actualValue) {
-        return new SpongeValue<>(this.key, false, actualValue);
+    protected MutableValue<Boolean> constructValue(Boolean actualValue) {
+        return new SpongeMutableValue<>(this.key, false, actualValue);
     }
 
     @Override

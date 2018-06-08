@@ -28,16 +28,16 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Key;
-import org.spongepowered.api.data.value.BaseValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.SpongeImpl;
 import org.spongepowered.common.data.ValueProcessor;
 
 import java.util.Optional;
 
-public abstract class AbstractSpongeValueProcessor<C, E, V extends BaseValue<E>> implements ValueProcessor<E, V> {
+public abstract class AbstractSpongeValueProcessor<C, E, V extends Value<E>> implements ValueProcessor<E, V> {
 
     private final Class<C> containerClass;
     protected final Key<V> key;
@@ -48,11 +48,11 @@ public abstract class AbstractSpongeValueProcessor<C, E, V extends BaseValue<E>>
     }
 
     /**
-     * Builds a {@link Value} of the type produced by this processor from an
+     * Builds a {@link MutableValue} of the type produced by this processor from an
      * input, actual value.
      *
      * @param actualValue The actual value
-     * @return The constructed {@link Value}
+     * @return The constructed {@link MutableValue}
      */
     protected abstract V constructValue(E actualValue);
 
@@ -74,7 +74,7 @@ public abstract class AbstractSpongeValueProcessor<C, E, V extends BaseValue<E>>
 
 
     @Override
-    public final Key<? extends BaseValue<E>> getKey() {
+    public final Key<? extends Value<E>> getKey() {
         return this.key;
     }
 

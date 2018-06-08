@@ -31,16 +31,16 @@ import org.spongepowered.api.data.manipulator.immutable.entity.ImmutablePigSaddl
 import org.spongepowered.api.data.manipulator.mutable.entity.PigSaddleData;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.manipulator.mutable.entity.SpongePigSaddleData;
 import org.spongepowered.common.data.processor.common.AbstractEntitySingleDataProcessor;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
 import java.util.Optional;
 
 public class PigSaddleDataProcessor
-        extends AbstractEntitySingleDataProcessor<EntityPig, Boolean, Value<Boolean>, PigSaddleData, ImmutablePigSaddleData> {
+        extends AbstractEntitySingleDataProcessor<EntityPig, Boolean, MutableValue<Boolean>, PigSaddleData, ImmutablePigSaddleData> {
 
     public PigSaddleDataProcessor() {
         super(EntityPig.class, Keys.PIG_SADDLE);
@@ -58,8 +58,8 @@ public class PigSaddleDataProcessor
     }
 
     @Override
-    protected Value<Boolean> constructValue(Boolean actualValue) {
-        return new SpongeValue<>(this.key, false, actualValue);
+    protected MutableValue<Boolean> constructValue(Boolean actualValue) {
+        return new SpongeMutableValue<>(this.key, false, actualValue);
     }
 
     @Override

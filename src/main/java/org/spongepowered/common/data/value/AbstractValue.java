@@ -29,23 +29,23 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import org.spongepowered.api.data.key.Key;
-import org.spongepowered.api.data.value.BaseValue;
+import org.spongepowered.api.data.value.Value;
 
 import java.util.Optional;
 
-public abstract class AbstractBaseValue<E> implements BaseValue<E> {
+public abstract class AbstractValue<E> implements Value<E> {
 
-    private final Key<? extends BaseValue<E>> key;
+    private final Key<? extends Value<E>> key;
     private final E defaultValue;
     protected E actualValue;
 
-    public AbstractBaseValue(Key<? extends BaseValue<E>> key, E defaultValue) {
+    public AbstractValue(Key<? extends Value<E>> key, E defaultValue) {
         this.key = checkNotNull(key);
         this.defaultValue = checkNotNull(defaultValue);
         this.actualValue = defaultValue;
     }
 
-    protected AbstractBaseValue(Key<? extends BaseValue<E>> key, E defaultValue, E actualValue) {
+    protected AbstractValue(Key<? extends Value<E>> key, E defaultValue, E actualValue) {
         this.key = checkNotNull(key);
         this.defaultValue = checkNotNull(defaultValue);
         this.actualValue = checkNotNull(actualValue);
@@ -72,7 +72,7 @@ public abstract class AbstractBaseValue<E> implements BaseValue<E> {
     }
 
     @Override
-    public Key<? extends BaseValue<E>> getKey() {
+    public Key<? extends Value<E>> getKey() {
         return this.key;
     }
 
@@ -90,7 +90,7 @@ public abstract class AbstractBaseValue<E> implements BaseValue<E> {
         if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-        final AbstractBaseValue other = (AbstractBaseValue) obj;
+        final AbstractValue other = (AbstractValue) obj;
         return Objects.equal(this.key, other.key)
                && Objects.equal(this.defaultValue, other.defaultValue)
                && Objects.equal(this.actualValue, other.actualValue);

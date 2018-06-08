@@ -40,7 +40,7 @@ import org.spongepowered.api.data.manipulator.immutable.tileentity.ImmutableBann
 import org.spongepowered.api.data.manipulator.mutable.tileentity.BannerData;
 import org.spongepowered.api.data.meta.PatternLayer;
 import org.spongepowered.api.data.type.DyeColor;
-import org.spongepowered.api.data.value.mutable.PatternListValue;
+import org.spongepowered.api.data.value.mutable.PatternMutableListValue;
 import org.spongepowered.common.data.manipulator.mutable.tileentity.SpongeBannerData;
 import org.spongepowered.common.data.processor.common.AbstractItemDataProcessor;
 import org.spongepowered.common.data.util.NbtDataUtil;
@@ -68,7 +68,7 @@ public class ShieldBannerDataProcessor extends AbstractItemDataProcessor<BannerD
         final NBTTagCompound tagCompound = ItemStackUtil.getTagCompound(itemStack);
         final NBTTagCompound blockEntity = new NBTTagCompound();
         final DyeColor baseColor = (DyeColor) keyValues.get(Keys.BANNER_BASE_COLOR);
-        final PatternListValue patternLayers = (PatternListValue) keyValues.get(Keys.BANNER_PATTERNS);
+        final PatternMutableListValue patternLayers = (PatternMutableListValue) keyValues.get(Keys.BANNER_PATTERNS);
         if (!patternLayers.isEmpty()) {
             final NBTTagList patterns = new NBTTagList();
 

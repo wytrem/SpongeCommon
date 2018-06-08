@@ -29,12 +29,12 @@ import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.entity.ImmutablePickupDelayData;
 import org.spongepowered.api.data.manipulator.mutable.entity.PickupDelayData;
 import org.spongepowered.api.data.value.mutable.MutableBoundedValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.manipulator.immutable.entity.ImmutableSpongePickupDelayData;
 import org.spongepowered.common.data.manipulator.mutable.common.AbstractIntData;
 import org.spongepowered.common.data.util.DataConstants;
 import org.spongepowered.common.data.value.SpongeValueFactory;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
 public final class SpongePickupDelayData extends AbstractIntData<PickupDelayData, ImmutablePickupDelayData> implements PickupDelayData {
 
@@ -67,8 +67,8 @@ public final class SpongePickupDelayData extends AbstractIntData<PickupDelayData
     }
 
     @Override
-    public Value<Boolean> infinite() {
-        return new SpongeValue<>(Keys.INFINITE_PICKUP_DELAY, false, isInifinitePickup());
+    public MutableValue<Boolean> infinite() {
+        return new SpongeMutableValue<>(Keys.INFINITE_PICKUP_DELAY, false, isInifinitePickup());
     }
 
     private boolean isInifinitePickup() {
@@ -76,7 +76,7 @@ public final class SpongePickupDelayData extends AbstractIntData<PickupDelayData
     }
 
     @Override
-    protected Value<?> getValueGetter() {
+    protected MutableValue<?> getValueGetter() {
         return this.delay();
     }
 

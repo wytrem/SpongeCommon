@@ -27,7 +27,7 @@ package org.spongepowered.common.data.manipulator.mutable.entity;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.entity.ImmutableSilentData;
 import org.spongepowered.api.data.manipulator.mutable.entity.SilentData;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.manipulator.immutable.entity.ImmutableSpongeSilentData;
 import org.spongepowered.common.data.manipulator.mutable.common.AbstractBooleanData;
 
@@ -42,7 +42,7 @@ public class SpongeSilentData extends AbstractBooleanData<SilentData, ImmutableS
     }
 
     @Override
-    public Value<Boolean> silent() {
+    public MutableValue<Boolean> silent() {
         return this.getValueGetter();
     }
 }

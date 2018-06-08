@@ -29,10 +29,10 @@ import static com.google.common.base.Preconditions.checkArgument;
 import org.spongepowered.api.data.key.Key;
 import org.spongepowered.api.data.manipulator.DataManipulator;
 import org.spongepowered.api.data.manipulator.ImmutableDataManipulator;
-import org.spongepowered.api.data.value.BaseValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.BoundedValue;
 import org.spongepowered.api.data.value.immutable.ImmutableBoundedValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.ImmutableDataCachingUtil;
 import org.spongepowered.common.data.value.SpongeValueFactory;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeBoundedValue;
@@ -43,7 +43,7 @@ import java.util.Comparator;
 
 /**
  * An abstracted {@link ImmutableDataManipulator} that focuses solely on an
- * {@link ImmutableBoundedValue} as it's {@link Value} return type. The
+ * {@link ImmutableBoundedValue} as it's {@link MutableValue} return type. The
  * advantage is that this type of {@link ImmutableDataManipulator} can easily
  * be cached in the {@link ImmutableDataCachingUtil}.
  *
@@ -63,7 +63,7 @@ public abstract class AbstractImmutableBoundedComparableData<T extends Comparabl
 
     @SuppressWarnings("unchecked")
     protected AbstractImmutableBoundedComparableData(Class<I> immutableClass, T value,
-                                                     Key<? extends BaseValue<T>> usedKey,
+                                                     Key<? extends Value<T>> usedKey,
                                                      Comparator<T> comparator, Class<? extends M> mutableClass, T lowerBound, T upperBound, T defaultValue) {
         super(immutableClass, value, usedKey);
         this.comparator = comparator;

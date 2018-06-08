@@ -26,13 +26,13 @@ package org.spongepowered.common.data.manipulator.mutable.extra;
 
 import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.key.Keys;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.api.extra.fluid.FluidStackSnapshot;
 import org.spongepowered.api.extra.fluid.data.manipulator.immutable.ImmutableFluidItemData;
 import org.spongepowered.api.extra.fluid.data.manipulator.mutable.FluidItemData;
 import org.spongepowered.common.data.manipulator.immutable.extra.ImmutableSpongeFluidItemData;
 import org.spongepowered.common.data.manipulator.mutable.common.AbstractSingleData;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 import org.spongepowered.common.extra.fluid.SpongeFluidStackSnapshot;
 
 public class SpongeFluidItemData extends AbstractSingleData<FluidStackSnapshot, FluidItemData, ImmutableFluidItemData> implements FluidItemData {
@@ -46,8 +46,8 @@ public class SpongeFluidItemData extends AbstractSingleData<FluidStackSnapshot, 
     }
 
     @Override
-    protected Value<FluidStackSnapshot> getValueGetter() {
-        return new SpongeValue<>(Keys.FLUID_ITEM_STACK, SpongeFluidStackSnapshot.DEFAULT, this.getValue());
+    protected MutableValue<FluidStackSnapshot> getValueGetter() {
+        return new SpongeMutableValue<>(Keys.FLUID_ITEM_STACK, SpongeFluidStackSnapshot.DEFAULT, this.getValue());
     }
 
     @Override
@@ -61,7 +61,7 @@ public class SpongeFluidItemData extends AbstractSingleData<FluidStackSnapshot, 
     }
 
     @Override
-    public Value<FluidStackSnapshot> fluid() {
+    public MutableValue<FluidStackSnapshot> fluid() {
         return getValueGetter();
     }
 

@@ -30,14 +30,14 @@ import org.spongepowered.api.data.manipulator.immutable.block.ImmutableDoublePla
 import org.spongepowered.api.data.manipulator.mutable.block.DoublePlantData;
 import org.spongepowered.api.data.type.DoublePlantType;
 import org.spongepowered.api.data.type.DoublePlantTypes;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.api.item.ItemTypes;
 import org.spongepowered.common.data.manipulator.mutable.block.SpongeDoublePlantData;
 import org.spongepowered.common.data.processor.common.AbstractCatalogDataProcessor;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
 public class DoublePlantDataProcessor extends
-        AbstractCatalogDataProcessor<DoublePlantType, Value<DoublePlantType>, DoublePlantData, ImmutableDoublePlantData> {
+        AbstractCatalogDataProcessor<DoublePlantType, MutableValue<DoublePlantType>, DoublePlantData, ImmutableDoublePlantData> {
 
     public DoublePlantDataProcessor() {
         super(Keys.DOUBLE_PLANT_TYPE, input -> input.getItem() == ItemTypes.DOUBLE_PLANT);
@@ -64,8 +64,8 @@ public class DoublePlantDataProcessor extends
     }
 
     @Override
-    protected Value<DoublePlantType> constructValue(DoublePlantType actualValue) {
-        return new SpongeValue<>(this.key, getDefaultValue(), actualValue);
+    protected MutableValue<DoublePlantType> constructValue(DoublePlantType actualValue) {
+        return new SpongeMutableValue<>(this.key, getDefaultValue(), actualValue);
     }
 
 }

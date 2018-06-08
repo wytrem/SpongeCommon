@@ -34,7 +34,7 @@ import org.spongepowered.api.data.manipulator.immutable.entity.ImmutableTradeOff
 import org.spongepowered.api.data.manipulator.mutable.entity.TradeOfferData;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.ListValue;
+import org.spongepowered.api.data.value.mutable.MutableListValue;
 import org.spongepowered.api.item.merchant.TradeOffer;
 import org.spongepowered.common.data.manipulator.mutable.SpongeTradeOfferData;
 import org.spongepowered.common.data.processor.common.AbstractEntitySingleDataProcessor;
@@ -44,7 +44,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class TradeOfferDataProcessor
-        extends AbstractEntitySingleDataProcessor<EntityVillager, List<TradeOffer>, ListValue<TradeOffer>, TradeOfferData, ImmutableTradeOfferData> {
+        extends AbstractEntitySingleDataProcessor<EntityVillager, List<TradeOffer>, MutableListValue<TradeOffer>, TradeOfferData, ImmutableTradeOfferData> {
 
     public TradeOfferDataProcessor() {
         super(EntityVillager.class, Keys.TRADE_OFFERS);
@@ -67,7 +67,7 @@ public class TradeOfferDataProcessor
     }
 
     @Override
-    protected ListValue<TradeOffer> constructValue(List<TradeOffer> actualValue) {
+    protected MutableListValue<TradeOffer> constructValue(List<TradeOffer> actualValue) {
         return SpongeValueFactory.getInstance().createListValue(Keys.TRADE_OFFERS, actualValue);
     }
 

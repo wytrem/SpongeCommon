@@ -30,9 +30,9 @@ import net.minecraft.potion.PotionType;
 import net.minecraft.util.EnumParticleTypes;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.mutable.entity.AreaEffectCloudData;
-import org.spongepowered.api.data.value.mutable.ListValue;
+import org.spongepowered.api.data.value.mutable.MutableListValue;
 import org.spongepowered.api.data.value.mutable.MutableBoundedValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.api.effect.particle.ParticleType;
 import org.spongepowered.api.effect.particle.ParticleTypes;
 import org.spongepowered.api.effect.potion.PotionEffect;
@@ -43,8 +43,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.common.data.manipulator.mutable.entity.SpongeAreaEffectData;
 import org.spongepowered.common.data.value.SpongeValueFactory;
-import org.spongepowered.common.data.value.mutable.SpongeListValue;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableListValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
 import java.util.List;
 import java.util.UUID;
@@ -86,8 +86,8 @@ public abstract class MixinEntityAreaEffectCloud extends MixinEntity implements 
     }
 
     @Override
-    public Value<Color> color() {
-        return new SpongeValue<>(Keys.AREA_EFFECT_CLOUD_COLOR, Color.WHITE, Color.ofRgb(getColor()));
+    public MutableValue<Color> color() {
+        return new SpongeMutableValue<>(Keys.AREA_EFFECT_CLOUD_COLOR, Color.WHITE, Color.ofRgb(getColor()));
     }
 
     @Override
@@ -101,8 +101,8 @@ public abstract class MixinEntityAreaEffectCloud extends MixinEntity implements 
     }
 
     @Override
-    public Value<ParticleType> particleType() {
-        return new SpongeValue<>(Keys.AREA_EFFECT_CLOUD_PARTICLE_TYPE, ParticleTypes.MOB_SPELL, ParticleTypes.MOB_SPELL);
+    public MutableValue<ParticleType> particleType() {
+        return new SpongeMutableValue<>(Keys.AREA_EFFECT_CLOUD_PARTICLE_TYPE, ParticleTypes.MOB_SPELL, ParticleTypes.MOB_SPELL);
     }
 
     @Override
@@ -166,8 +166,8 @@ public abstract class MixinEntityAreaEffectCloud extends MixinEntity implements 
     }
 
     @Override
-    public ListValue<PotionEffect> effects() {
-        return new SpongeListValue<>(Keys.POTION_EFFECTS, (List<PotionEffect>) (List<?>) this.effects);
+    public MutableListValue<PotionEffect> effects() {
+        return new SpongeMutableListValue<>(Keys.POTION_EFFECTS, (List<PotionEffect>) (List<?>) this.effects);
     }
 
     @Override

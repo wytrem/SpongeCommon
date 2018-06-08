@@ -30,9 +30,8 @@ import org.spongepowered.api.data.key.Key;
 import org.spongepowered.api.data.meta.PatternLayer;
 import org.spongepowered.api.data.type.BannerPatternShape;
 import org.spongepowered.api.data.type.DyeColor;
-import org.spongepowered.api.data.value.BaseValue;
-import org.spongepowered.api.data.value.immutable.ImmutablePatternListValue;
-import org.spongepowered.api.data.value.mutable.PatternListValue;
+import org.spongepowered.api.data.value.Value;
+import org.spongepowered.api.data.value.mutable.PatternMutableListValue;
 import org.spongepowered.common.data.meta.SpongePatternLayer;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongePatternListValue;
 
@@ -40,106 +39,106 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-public class SpongePatternListValue extends SpongeListValue<PatternLayer> implements PatternListValue {
+public class SpongePatternMutableListValue extends SpongeMutableListValue<PatternLayer> implements PatternMutableListValue {
 
-    public SpongePatternListValue(Key<? extends BaseValue<List<PatternLayer>>> key) {
+    public SpongePatternMutableListValue(Key<? extends Value<List<PatternLayer>>> key) {
         super(key);
     }
 
-    public SpongePatternListValue(Key<? extends BaseValue<List<PatternLayer>>> key, List<PatternLayer> actualValue) {
+    public SpongePatternMutableListValue(Key<? extends Value<List<PatternLayer>>> key, List<PatternLayer> actualValue) {
         super(key, actualValue);
     }
 
     @Override
-    public PatternListValue set(List<PatternLayer> value) {
+    public PatternMutableListValue set(List<PatternLayer> value) {
         super.set(value);
         return this;
     }
 
     @Override
-    public PatternListValue filter(Predicate<? super PatternLayer> predicate) {
+    public PatternMutableListValue filter(Predicate<? super PatternLayer> predicate) {
         super.filter(predicate);
         return this;
     }
 
     @Override
-    public PatternListValue add(BannerPatternShape patternShape, DyeColor color) {
+    public PatternMutableListValue add(BannerPatternShape patternShape, DyeColor color) {
         super.add(new SpongePatternLayer(patternShape, color));
         return this;
     }
 
     @Override
-    public PatternListValue add(int index, BannerPatternShape patternShape, DyeColor color) {
+    public PatternMutableListValue add(int index, BannerPatternShape patternShape, DyeColor color) {
         return add(index, new SpongePatternLayer(patternShape, color));
     }
 
     @Override
-    public PatternListValue add(int index, PatternLayer value) {
+    public PatternMutableListValue add(int index, PatternLayer value) {
         super.add(index, value);
         return this;
     }
 
     @Override
-    public PatternListValue add(int index, Iterable<PatternLayer> values) {
+    public PatternMutableListValue add(int index, Iterable<PatternLayer> values) {
         super.add(index, values);
         return this;
     }
 
     @Override
-    public PatternListValue remove(int index) {
+    public PatternMutableListValue remove(int index) {
         super.remove(index);
         return this;
     }
 
     @Override
-    public PatternListValue set(int index, PatternLayer element) {
+    public PatternMutableListValue set(int index, PatternLayer element) {
         super.set(index, element);
         return this;
     }
 
     @Override
-    public PatternListValue transform(Function<List<PatternLayer>, List<PatternLayer>> function) {
+    public PatternMutableListValue transform(Function<List<PatternLayer>, List<PatternLayer>> function) {
         super.transform(function);
         return this;
     }
 
     @Override
-    public PatternListValue add(PatternLayer element) {
+    public PatternMutableListValue add(PatternLayer element) {
         super.add(element);
         return this;
     }
 
     @Override
-    public PatternListValue addAll(Iterable<PatternLayer> elements) {
+    public PatternMutableListValue addAll(Iterable<PatternLayer> elements) {
         super.addAll(elements);
         return this;
     }
 
     @Override
-    public PatternListValue remove(PatternLayer element) {
+    public PatternMutableListValue remove(PatternLayer element) {
         super.remove(element);
         return this;
     }
 
     @Override
-    public PatternListValue removeAll(Iterable<PatternLayer> elements) {
+    public PatternMutableListValue removeAll(Iterable<PatternLayer> elements) {
         super.removeAll(elements);
         return this;
     }
 
     @Override
-    public PatternListValue removeAll(Predicate<PatternLayer> predicate) {
+    public PatternMutableListValue removeAll(Predicate<PatternLayer> predicate) {
         super.removeAll(predicate);
         return this;
     }
 
     @Override
-    public ImmutablePatternListValue asImmutable() {
+    public I asImmutable() {
         return new ImmutableSpongePatternListValue(getKey(), ImmutableList.copyOf(this.actualValue));
     }
 
     @Override
-    public PatternListValue copy() {
-        return new SpongePatternListValue(getKey(), Lists.newArrayList(this.actualValue));
+    public PatternMutableListValue copy() {
+        return new SpongePatternMutableListValue(getKey(), Lists.newArrayList(this.actualValue));
     }
 }

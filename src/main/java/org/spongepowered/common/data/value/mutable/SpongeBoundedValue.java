@@ -28,26 +28,25 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 
 import org.spongepowered.api.data.key.Key;
-import org.spongepowered.api.data.value.BaseValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.immutable.ImmutableBoundedValue;
 import org.spongepowered.api.data.value.mutable.MutableBoundedValue;
-import org.spongepowered.api.data.value.mutable.Value;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeBoundedValue;
 
 import java.util.Comparator;
 import java.util.function.Function;
 
-public class SpongeBoundedValue<E> extends SpongeValue<E> implements MutableBoundedValue<E> {
+public class SpongeBoundedValue<E> extends SpongeMutableValue<E> implements MutableBoundedValue<E> {
 
     private final Comparator<E> comparator;
     private final E minimum;
     private final E maximum;
 
-    public SpongeBoundedValue(Key<? extends BaseValue<E>> key, E defaultValue, Comparator<E> comparator, E minimum, E maximum) {
+    public SpongeBoundedValue(Key<? extends Value<E>> key, E defaultValue, Comparator<E> comparator, E minimum, E maximum) {
         this(key, defaultValue, comparator, minimum, maximum, defaultValue);
     }
 
-    public SpongeBoundedValue(Key<? extends BaseValue<E>> key, E defaultValue, Comparator<E> comparator, E minimum, E maximum, E actualValue) {
+    public SpongeBoundedValue(Key<? extends Value<E>> key, E defaultValue, Comparator<E> comparator, E minimum, E maximum, E actualValue) {
         super(key, defaultValue, actualValue);
         this.comparator = checkNotNull(comparator);
         this.minimum = checkNotNull(minimum);

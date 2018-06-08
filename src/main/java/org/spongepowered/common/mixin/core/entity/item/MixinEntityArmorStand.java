@@ -36,7 +36,7 @@ import org.spongepowered.api.data.manipulator.mutable.entity.ArmorStandData;
 import org.spongepowered.api.data.manipulator.mutable.entity.BodyPartRotationalData;
 import org.spongepowered.api.data.type.BodyPart;
 import org.spongepowered.api.data.type.BodyParts;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.api.entity.living.ArmorStand;
 import org.spongepowered.api.event.CauseStackManager;
 import org.spongepowered.api.event.SpongeEventFactory;
@@ -55,7 +55,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.common.SpongeImpl;
 import org.spongepowered.common.data.manipulator.mutable.entity.SpongeArmorStandData;
 import org.spongepowered.common.data.manipulator.mutable.entity.SpongeBodyPartRotationalData;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 import org.spongepowered.common.event.damage.DamageEventHandler;
 import org.spongepowered.common.mixin.core.entity.MixinEntityLivingBase;
 import org.spongepowered.common.util.VecHelper;
@@ -83,23 +83,23 @@ public abstract class MixinEntityArmorStand extends MixinEntityLivingBase implem
     @Shadow protected abstract void damageArmorStand(float damage);
 
     @Override
-    public Value<Boolean> marker() {
-        return new SpongeValue<>(Keys.ARMOR_STAND_MARKER, false, this.hasMarker());
+    public MutableValue<Boolean> marker() {
+        return new SpongeMutableValue<>(Keys.ARMOR_STAND_MARKER, false, this.hasMarker());
     }
 
     @Override
-    public Value<Boolean> small() {
-        return new SpongeValue<>(Keys.ARMOR_STAND_IS_SMALL, false, this.shadow$isSmall());
+    public MutableValue<Boolean> small() {
+        return new SpongeMutableValue<>(Keys.ARMOR_STAND_IS_SMALL, false, this.shadow$isSmall());
     }
 
     @Override
-    public Value<Boolean> basePlate() {
-        return new SpongeValue<>(Keys.ARMOR_STAND_HAS_BASE_PLATE, true, !this.hasNoBasePlate());
+    public MutableValue<Boolean> basePlate() {
+        return new SpongeMutableValue<>(Keys.ARMOR_STAND_HAS_BASE_PLATE, true, !this.hasNoBasePlate());
     }
 
     @Override
-    public Value<Boolean> arms() {
-        return new SpongeValue<>(Keys.ARMOR_STAND_HAS_ARMS, false, this.getShowArms());
+    public MutableValue<Boolean> arms() {
+        return new SpongeMutableValue<>(Keys.ARMOR_STAND_HAS_ARMS, false, this.getShowArms());
     }
 
     @Override

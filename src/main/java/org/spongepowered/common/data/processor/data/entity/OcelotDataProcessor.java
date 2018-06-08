@@ -33,27 +33,27 @@ import org.spongepowered.api.data.type.OcelotType;
 import org.spongepowered.api.data.type.OcelotTypes;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.manipulator.mutable.entity.SpongeOcelotData;
 import org.spongepowered.common.data.processor.common.AbstractEntitySingleDataProcessor;
 import org.spongepowered.common.data.util.DataConstants;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 import org.spongepowered.common.entity.SpongeOcelotType;
 import org.spongepowered.common.registry.type.entity.OcelotTypeRegistryModule;
 
 import java.util.Optional;
 
 public class OcelotDataProcessor extends
-        AbstractEntitySingleDataProcessor<EntityOcelot, OcelotType, Value<OcelotType>, OcelotData, ImmutableOcelotData> {
+        AbstractEntitySingleDataProcessor<EntityOcelot, OcelotType, MutableValue<OcelotType>, OcelotData, ImmutableOcelotData> {
 
     public OcelotDataProcessor() {
         super(EntityOcelot.class, Keys.OCELOT_TYPE);
     }
 
     @Override
-    protected Value<OcelotType> constructValue(OcelotType actualValue) {
-        return new SpongeValue<>(Keys.OCELOT_TYPE, DataConstants.Catalog.DEFAULT_OCELOT, actualValue);
+    protected MutableValue<OcelotType> constructValue(OcelotType actualValue) {
+        return new SpongeMutableValue<>(Keys.OCELOT_TYPE, DataConstants.Catalog.DEFAULT_OCELOT, actualValue);
     }
 
     @Override

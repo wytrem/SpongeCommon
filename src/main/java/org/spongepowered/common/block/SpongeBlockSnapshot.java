@@ -52,7 +52,7 @@ import org.spongepowered.api.data.Queries;
 import org.spongepowered.api.data.key.Key;
 import org.spongepowered.api.data.manipulator.ImmutableDataManipulator;
 import org.spongepowered.api.data.merge.MergeFunction;
-import org.spongepowered.api.data.value.BaseValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
 import org.spongepowered.api.world.BlockChangeFlag;
 import org.spongepowered.api.world.BlockChangeFlags;
@@ -286,12 +286,12 @@ public class SpongeBlockSnapshot implements BlockSnapshot {
     }
 
     @Override
-    public <E> Optional<BlockSnapshot> transform(Key<? extends BaseValue<E>> key, Function<E, E> function) {
+    public <E> Optional<BlockSnapshot> transform(Key<? extends Value<E>> key, Function<E, E> function) {
         return Optional.empty();
     }
 
     @Override
-    public <E> Optional<BlockSnapshot> with(Key<? extends BaseValue<E>> key, E value) {
+    public <E> Optional<BlockSnapshot> with(Key<? extends Value<E>> key, E value) {
         Optional<BlockState> optional = this.blockState.with(key, value);
         if (optional.isPresent()) {
             return Optional.of(withState(optional.get()));
@@ -301,7 +301,7 @@ public class SpongeBlockSnapshot implements BlockSnapshot {
 
     @SuppressWarnings("rawtypes")
     @Override
-    public Optional<BlockSnapshot> with(BaseValue<?> value) {
+    public Optional<BlockSnapshot> with(Value<?> value) {
         return with((Key) value.getKey(), value.get());
     }
 
@@ -368,7 +368,7 @@ public class SpongeBlockSnapshot implements BlockSnapshot {
     }
 
     @Override
-    public <E> Optional<E> get(Key<? extends BaseValue<E>> key) {
+    public <E> Optional<E> get(Key<? extends Value<E>> key) {
         if (this.keyValueMap.containsKey(key)) {
             return Optional.of((E) this.keyValueMap.get(key).get());
         } else if (getKeyValueMap().containsKey(key)) {
@@ -424,7 +424,7 @@ public class SpongeBlockSnapshot implements BlockSnapshot {
     }
 
     @Override
-    public <E, V extends BaseValue<E>> Optional<V> getValue(Key<V> key) {
+    public <E, V extends Value<E>> Optional<V> getValue(Key<V> key) {
         if (this.keyValueMap.containsKey(key)) {
             return Optional.of((V) this.keyValueMap.get(key).asMutable());
         } else if (getKeyValueMap().containsKey(key)) {

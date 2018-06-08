@@ -29,26 +29,26 @@ import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.common.SpongeImpl;
 import org.spongepowered.common.data.processor.common.AbstractSpongeValueProcessor;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 import org.spongepowered.common.interfaces.data.IMixinCustomNameable;
 import org.spongepowered.common.text.SpongeTexts;
 
 import java.util.Optional;
 
-public class TileEntityDisplayNameValueProcessor extends AbstractSpongeValueProcessor<IWorldNameable, Text, Value<Text>> {
+public class TileEntityDisplayNameValueProcessor extends AbstractSpongeValueProcessor<IWorldNameable, Text, MutableValue<Text>> {
 
     public TileEntityDisplayNameValueProcessor() {
         super(IWorldNameable.class, Keys.DISPLAY_NAME);
     }
 
     @Override
-    protected Value<Text> constructValue(Text defaultValue) {
-        return new SpongeValue<>(Keys.DISPLAY_NAME, Text.of(), defaultValue);
+    protected MutableValue<Text> constructValue(Text defaultValue) {
+        return new SpongeMutableValue<>(Keys.DISPLAY_NAME, Text.of(), defaultValue);
     }
 
     @Override

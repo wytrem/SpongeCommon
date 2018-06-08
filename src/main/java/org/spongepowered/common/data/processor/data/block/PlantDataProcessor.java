@@ -32,15 +32,15 @@ import org.spongepowered.api.data.manipulator.immutable.block.ImmutablePlantData
 import org.spongepowered.api.data.manipulator.mutable.block.PlantData;
 import org.spongepowered.api.data.type.PlantType;
 import org.spongepowered.api.data.type.PlantTypes;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.api.item.ItemTypes;
 import org.spongepowered.common.data.manipulator.mutable.block.SpongePlantData;
 import org.spongepowered.common.data.processor.common.AbstractCatalogDataProcessor;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
 import java.util.Optional;
 
-public class PlantDataProcessor extends AbstractCatalogDataProcessor<PlantType, Value<PlantType>, PlantData, ImmutablePlantData> {
+public class PlantDataProcessor extends AbstractCatalogDataProcessor<PlantType, MutableValue<PlantType>, PlantData, ImmutablePlantData> {
 
     public PlantDataProcessor() {
         super(Keys.PLANT_TYPE, input -> input.getItem() == ItemTypes.YELLOW_FLOWER || input.getItem() == ItemTypes.RED_FLOWER);
@@ -75,8 +75,8 @@ public class PlantDataProcessor extends AbstractCatalogDataProcessor<PlantType, 
     }
 
     @Override
-    protected Value<PlantType> constructValue(PlantType actualValue) {
-        return new SpongeValue<>(this.key, getDefaultValue(), actualValue);
+    protected MutableValue<PlantType> constructValue(PlantType actualValue) {
+        return new SpongeMutableValue<>(this.key, getDefaultValue(), actualValue);
     }
 
 }

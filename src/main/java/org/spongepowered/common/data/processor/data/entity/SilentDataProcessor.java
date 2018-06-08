@@ -31,15 +31,15 @@ import org.spongepowered.api.data.manipulator.immutable.entity.ImmutableSilentDa
 import org.spongepowered.api.data.manipulator.mutable.entity.SilentData;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.manipulator.mutable.entity.SpongeSilentData;
 import org.spongepowered.common.data.processor.common.AbstractEntitySingleDataProcessor;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
 import java.util.Optional;
 
-public class SilentDataProcessor extends AbstractEntitySingleDataProcessor<Entity, Boolean, Value<Boolean>, SilentData, ImmutableSilentData> {
+public class SilentDataProcessor extends AbstractEntitySingleDataProcessor<Entity, Boolean, MutableValue<Boolean>, SilentData, ImmutableSilentData> {
 
     public SilentDataProcessor() {
         super(Entity.class, Keys.IS_SILENT);
@@ -67,8 +67,8 @@ public class SilentDataProcessor extends AbstractEntitySingleDataProcessor<Entit
     }
 
     @Override
-    protected Value<Boolean> constructValue(Boolean actualValue) {
-        return new SpongeValue<>(Keys.IS_SILENT, false, actualValue);
+    protected MutableValue<Boolean> constructValue(Boolean actualValue) {
+        return new SpongeMutableValue<>(Keys.IS_SILENT, false, actualValue);
     }
 
     @Override

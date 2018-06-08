@@ -29,16 +29,16 @@ import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.OptionalValue;
+import org.spongepowered.api.data.value.mutable.MutableOptionalValue;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.common.data.processor.common.AbstractSpongeValueProcessor;
-import org.spongepowered.common.data.value.mutable.SpongeOptionalValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableOptionalValue;
 import org.spongepowered.common.text.SpongeTexts;
 
 import java.util.Optional;
 
 public class EntityLastCommandOutputValueProcessor extends
-        AbstractSpongeValueProcessor<EntityMinecartCommandBlock, Optional<Text>, OptionalValue<Text>> {
+        AbstractSpongeValueProcessor<EntityMinecartCommandBlock, Optional<Text>, MutableOptionalValue<Text>> {
 
     public EntityLastCommandOutputValueProcessor() {
         super(EntityMinecartCommandBlock.class, Keys.LAST_COMMAND_OUTPUT);
@@ -50,8 +50,8 @@ public class EntityLastCommandOutputValueProcessor extends
     }
 
     @Override
-    protected OptionalValue<Text> constructValue(Optional<Text> actualValue) {
-        return new SpongeOptionalValue<>(Keys.LAST_COMMAND_OUTPUT, actualValue);
+    protected MutableOptionalValue<Text> constructValue(Optional<Text> actualValue) {
+        return new SpongeMutableOptionalValue<>(Keys.LAST_COMMAND_OUTPUT, actualValue);
     }
 
     @Override

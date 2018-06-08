@@ -30,13 +30,13 @@ import org.spongepowered.api.data.manipulator.immutable.block.ImmutableQuartzDat
 import org.spongepowered.api.data.manipulator.mutable.block.QuartzData;
 import org.spongepowered.api.data.type.QuartzType;
 import org.spongepowered.api.data.type.QuartzTypes;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.api.item.ItemTypes;
 import org.spongepowered.common.data.manipulator.mutable.block.SpongeQuartzData;
 import org.spongepowered.common.data.processor.common.AbstractCatalogDataProcessor;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
-public class QuartzDataProcessor extends AbstractCatalogDataProcessor<QuartzType, Value<QuartzType>, QuartzData, ImmutableQuartzData> {
+public class QuartzDataProcessor extends AbstractCatalogDataProcessor<QuartzType, MutableValue<QuartzType>, QuartzData, ImmutableQuartzData> {
 
     public QuartzDataProcessor() {
         super(Keys.QUARTZ_TYPE, input -> input.getItem() == ItemTypes.QUARTZ_BLOCK || input.getItem() == ItemTypes.QUARTZ_STAIRS);
@@ -63,8 +63,8 @@ public class QuartzDataProcessor extends AbstractCatalogDataProcessor<QuartzType
     }
 
     @Override
-    protected Value<QuartzType> constructValue(QuartzType actualValue) {
-        return new SpongeValue<>(this.key, getDefaultValue(), actualValue);
+    protected MutableValue<QuartzType> constructValue(QuartzType actualValue) {
+        return new SpongeMutableValue<>(this.key, getDefaultValue(), actualValue);
     }
 
 }

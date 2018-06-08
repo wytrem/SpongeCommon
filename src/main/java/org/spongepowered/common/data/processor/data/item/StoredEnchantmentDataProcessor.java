@@ -36,7 +36,7 @@ import org.spongepowered.api.data.manipulator.mutable.item.StoredEnchantmentData
 import org.spongepowered.api.item.enchantment.Enchantment;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.ListValue;
+import org.spongepowered.api.data.value.mutable.MutableListValue;
 import org.spongepowered.api.item.enchantment.EnchantmentType;
 import org.spongepowered.common.data.manipulator.mutable.item.SpongeStoredEnchantmentData;
 import org.spongepowered.common.item.enchantment.SpongeEnchantment;
@@ -48,14 +48,14 @@ import java.util.List;
 import java.util.Optional;
 
 public class StoredEnchantmentDataProcessor extends
-        AbstractItemSingleDataProcessor<List<Enchantment>, ListValue<Enchantment>, StoredEnchantmentData, ImmutableStoredEnchantmentData> {
+        AbstractItemSingleDataProcessor<List<Enchantment>, MutableListValue<Enchantment>, StoredEnchantmentData, ImmutableStoredEnchantmentData> {
 
     public StoredEnchantmentDataProcessor() {
         super(stack -> stack.getItem().equals(Items.ENCHANTED_BOOK), Keys.STORED_ENCHANTMENTS);
     }
 
     @Override
-    protected ListValue<Enchantment> constructValue(List<Enchantment> actualValue) {
+    protected MutableListValue<Enchantment> constructValue(List<Enchantment> actualValue) {
         return SpongeValueFactory.getInstance().createListValue(Keys.STORED_ENCHANTMENTS, actualValue, Lists.newArrayList());
     }
 

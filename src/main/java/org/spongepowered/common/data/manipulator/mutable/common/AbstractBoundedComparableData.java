@@ -31,7 +31,7 @@ import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.key.Key;
 import org.spongepowered.api.data.manipulator.DataManipulator;
 import org.spongepowered.api.data.manipulator.ImmutableDataManipulator;
-import org.spongepowered.api.data.value.BaseValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.BoundedValue;
 import org.spongepowered.api.data.value.mutable.MutableBoundedValue;
 import org.spongepowered.common.data.ImmutableDataCachingUtil;
@@ -50,7 +50,7 @@ public abstract class AbstractBoundedComparableData<T extends Comparable<T>, M e
     protected final T upperBound;
     protected final T defaultValue;
 
-    protected AbstractBoundedComparableData(Class<M> manipulatorClass, T value, Key<? extends BaseValue<T>> usedKey, Comparator<T> comparator,
+    protected AbstractBoundedComparableData(Class<M> manipulatorClass, T value, Key<? extends Value<T>> usedKey, Comparator<T> comparator,
                                          Class<? extends I> immutableClass, T lowerBound, T upperBound, T defaultValue) {
         super(manipulatorClass, value, usedKey);
         this.comparator = checkNotNull(comparator);

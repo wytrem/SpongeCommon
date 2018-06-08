@@ -28,11 +28,11 @@ import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.entity.ImmutableSkinData;
 import org.spongepowered.api.data.manipulator.mutable.entity.SkinData;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.manipulator.immutable.entity.ImmutableSpongeSkinData;
 import org.spongepowered.common.data.manipulator.mutable.common.AbstractSingleData;
 import org.spongepowered.common.data.util.DataQueries;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
 import java.util.UUID;
 
@@ -63,12 +63,12 @@ public class SpongeSkinData extends AbstractSingleData<UUID, SkinData, Immutable
     }
 
     @Override
-    public Value<UUID> skinUniqueId() {
-        return new SpongeValue<>(Keys.SKIN_UNIQUE_ID, getValue());
+    public MutableValue<UUID> skinUniqueId() {
+        return new SpongeMutableValue<>(Keys.SKIN_UNIQUE_ID, getValue());
     }
 
     @Override
-    protected Value<?> getValueGetter() {
+    protected MutableValue<?> getValueGetter() {
         return skinUniqueId();
     }
 

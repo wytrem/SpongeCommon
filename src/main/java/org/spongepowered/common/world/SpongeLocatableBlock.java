@@ -34,7 +34,7 @@ import org.spongepowered.api.data.Queries;
 import org.spongepowered.api.data.key.Key;
 import org.spongepowered.api.data.manipulator.ImmutableDataManipulator;
 import org.spongepowered.api.data.merge.MergeFunction;
-import org.spongepowered.api.data.value.BaseValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
 import org.spongepowered.api.world.LocatableBlock;
 import org.spongepowered.api.world.Location;
@@ -107,12 +107,12 @@ public class SpongeLocatableBlock implements LocatableBlock {
     }
 
     @Override
-    public <E> Optional<E> get(Key<? extends BaseValue<E>> key) {
+    public <E> Optional<E> get(Key<? extends Value<E>> key) {
         return this.blockState.get(key);
     }
 
     @Override
-    public <E, V extends BaseValue<E>> Optional<V> getValue(Key<V> key) {
+    public <E, V extends Value<E>> Optional<V> getValue(Key<V> key) {
         return this.blockState.getValue(key);
     }
 
@@ -152,7 +152,7 @@ public class SpongeLocatableBlock implements LocatableBlock {
     }
 
     @Override
-    public <E> Optional<LocatableBlock> transform(Key<? extends BaseValue<E>> key, Function<E, E> function) {
+    public <E> Optional<LocatableBlock> transform(Key<? extends Value<E>> key, Function<E, E> function) {
         return this.blockState.transform(key, function)
                 .map(state -> LocatableBlock.builder()
                         .from(this)
@@ -161,7 +161,7 @@ public class SpongeLocatableBlock implements LocatableBlock {
     }
 
     @Override
-    public <E> Optional<LocatableBlock> with(Key<? extends BaseValue<E>> key, E value) {
+    public <E> Optional<LocatableBlock> with(Key<? extends Value<E>> key, E value) {
         return this.blockState.with(key, value)
                 .map(state -> LocatableBlock.builder()
                         .from(this)
@@ -170,7 +170,7 @@ public class SpongeLocatableBlock implements LocatableBlock {
     }
 
     @Override
-    public Optional<LocatableBlock> with(BaseValue<?> value) {
+    public Optional<LocatableBlock> with(Value<?> value) {
         return this.blockState.with(value)
                 .map(state -> LocatableBlock.builder()
                         .from(this)

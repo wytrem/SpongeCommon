@@ -26,12 +26,12 @@ package org.spongepowered.common.data.value.immutable;
 
 import com.google.common.collect.Iterables;
 import org.spongepowered.api.data.key.Key;
-import org.spongepowered.api.data.value.BaseValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.immutable.ImmutableWeightedCollectionValue;
-import org.spongepowered.api.data.value.mutable.WeightedCollectionValue;
+import org.spongepowered.api.data.value.mutable.MutableWeightedCollectionValue;
 import org.spongepowered.api.util.weighted.WeightedTable;
 import org.spongepowered.api.util.weighted.TableEntry;
-import org.spongepowered.common.data.value.mutable.SpongeWeightedCollectionValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableWeightedCollectionValue;
 
 import java.util.List;
 import java.util.Random;
@@ -42,10 +42,10 @@ import java.util.stream.Collectors;
 import javax.annotation.Nullable;
 
 public class ImmutableSpongeWeightedCollectionValue<E> extends ImmutableSpongeCollectionValue<TableEntry<E>,
-    WeightedTable<E>, ImmutableWeightedCollectionValue<E>, WeightedCollectionValue<E>> implements ImmutableWeightedCollectionValue<E> {
+    WeightedTable<E>, ImmutableWeightedCollectionValue<E>, MutableWeightedCollectionValue<E>> implements ImmutableWeightedCollectionValue<E> {
 
 
-    public ImmutableSpongeWeightedCollectionValue(Key<? extends BaseValue<WeightedTable<E>>> key, WeightedTable<E> actualValue) {
+    public ImmutableSpongeWeightedCollectionValue(Key<? extends Value<WeightedTable<E>>> key, WeightedTable<E> actualValue) {
         super(key, new WeightedTable<>(), actualValue.stream().collect(Collectors.toCollection(WeightedTable<E>::new)));
     }
 
@@ -110,8 +110,8 @@ public class ImmutableSpongeWeightedCollectionValue<E> extends ImmutableSpongeCo
     }
 
     @Override
-    public WeightedCollectionValue<E> asMutable() {
-        return new SpongeWeightedCollectionValue<>(this.getKey(), getAll());
+    public MutableWeightedCollectionValue<E> asMutable() {
+        return new SpongeMutableWeightedCollectionValue<>(this.getKey(), getAll());
     }
 
     @Nullable

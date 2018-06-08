@@ -27,11 +27,11 @@ package org.spongepowered.common.data.value.immutable;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import org.spongepowered.api.data.key.Key;
-import org.spongepowered.api.data.value.BaseValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.immutable.ImmutableOptionalValue;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.OptionalValue;
-import org.spongepowered.common.data.value.mutable.SpongeOptionalValue;
+import org.spongepowered.api.data.value.mutable.MutableOptionalValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableOptionalValue;
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -40,11 +40,11 @@ import javax.annotation.Nullable;
 
 public class ImmutableSpongeOptionalValue<E> extends ImmutableSpongeValue<Optional<E>> implements ImmutableOptionalValue<E> {
 
-    public ImmutableSpongeOptionalValue(Key<? extends BaseValue<Optional<E>>> key) {
+    public ImmutableSpongeOptionalValue(Key<? extends Value<Optional<E>>> key) {
         super(key, Optional.<E>empty());
     }
 
-    public ImmutableSpongeOptionalValue(Key<? extends BaseValue<Optional<E>>> key, Optional<E> actualValue) {
+    public ImmutableSpongeOptionalValue(Key<? extends Value<Optional<E>>> key, Optional<E> actualValue) {
         super(key, Optional.<E>empty(), actualValue);
     }
 
@@ -59,8 +59,8 @@ public class ImmutableSpongeOptionalValue<E> extends ImmutableSpongeValue<Option
     }
 
     @Override
-    public OptionalValue<E> asMutable() {
-        return new SpongeOptionalValue<>(getKey(), this.actualValue);
+    public MutableOptionalValue<E> asMutable() {
+        return new SpongeMutableOptionalValue<>(getKey(), this.actualValue);
     }
 
     @Override

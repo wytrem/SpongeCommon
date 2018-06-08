@@ -30,7 +30,7 @@ import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.OptionalValue;
+import org.spongepowered.api.data.value.mutable.MutableOptionalValue;
 import org.spongepowered.api.effect.potion.PotionEffectType;
 import org.spongepowered.common.data.processor.common.AbstractSpongeValueProcessor;
 import org.spongepowered.common.data.value.SpongeValueFactory;
@@ -39,14 +39,14 @@ import org.spongepowered.common.interfaces.IMixinTileEntityBeacon;
 import java.util.Optional;
 
 public class BeaconSecondaryEffectValueProcessor
-        extends AbstractSpongeValueProcessor<TileEntityBeacon, Optional<PotionEffectType>, OptionalValue<PotionEffectType>> {
+        extends AbstractSpongeValueProcessor<TileEntityBeacon, Optional<PotionEffectType>, MutableOptionalValue<PotionEffectType>> {
 
     public BeaconSecondaryEffectValueProcessor() {
         super(TileEntityBeacon.class, Keys.BEACON_SECONDARY_EFFECT);
     }
 
     @Override
-    protected OptionalValue<PotionEffectType> constructValue(Optional<PotionEffectType> actualValue) {
+    protected MutableOptionalValue<PotionEffectType> constructValue(Optional<PotionEffectType> actualValue) {
         return SpongeValueFactory.getInstance().createOptionalValue(Keys.BEACON_SECONDARY_EFFECT, actualValue.orElse(null));
     }
 

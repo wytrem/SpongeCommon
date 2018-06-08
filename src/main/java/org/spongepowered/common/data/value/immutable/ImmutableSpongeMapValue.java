@@ -32,10 +32,10 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;
 import org.spongepowered.api.data.key.Key;
-import org.spongepowered.api.data.value.BaseValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.immutable.ImmutableMapValue;
-import org.spongepowered.api.data.value.mutable.MapValue;
-import org.spongepowered.common.data.value.mutable.SpongeMapValue;
+import org.spongepowered.api.data.value.mutable.MutableMapValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableMapValue;
 
 import java.util.Map;
 import java.util.function.Function;
@@ -43,11 +43,11 @@ import java.util.function.Predicate;
 
 public class ImmutableSpongeMapValue<K, V> extends ImmutableSpongeValue<Map<K, V>> implements ImmutableMapValue<K, V> {
 
-    public ImmutableSpongeMapValue(Key<? extends BaseValue<Map<K, V>>> key) {
+    public ImmutableSpongeMapValue(Key<? extends Value<Map<K, V>>> key) {
         this(key, ImmutableMap.<K, V>of());
     }
 
-    public ImmutableSpongeMapValue(Key<? extends BaseValue<Map<K, V>>> key, Map<K, V> actualValue) {
+    public ImmutableSpongeMapValue(Key<? extends Value<Map<K, V>>> key, Map<K, V> actualValue) {
         super(key, ImmutableMap.<K, V>of(), ImmutableMap.copyOf(actualValue));
     }
 
@@ -62,10 +62,10 @@ public class ImmutableSpongeMapValue<K, V> extends ImmutableSpongeValue<Map<K, V
     }
 
     @Override
-    public MapValue<K, V> asMutable() {
+    public MutableMapValue<K, V> asMutable() {
         final Map<K, V> map = Maps.newHashMap();
         map.putAll(this.actualValue);
-        return new SpongeMapValue<>(getKey(), map);
+        return new SpongeMutableMapValue<>(getKey(), map);
     }
 
     @Override

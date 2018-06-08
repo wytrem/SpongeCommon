@@ -29,22 +29,22 @@ import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.processor.common.AbstractSpongeValueProcessor;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 import org.spongepowered.common.interfaces.block.tile.IMixinTileEntityEndGateway;
 
 import java.util.Optional;
 
-public class EndGatewayExactTeleportValueProcessor extends AbstractSpongeValueProcessor<TileEntityEndGateway, Boolean, Value<Boolean>> {
+public class EndGatewayExactTeleportValueProcessor extends AbstractSpongeValueProcessor<TileEntityEndGateway, Boolean, MutableValue<Boolean>> {
 
     public EndGatewayExactTeleportValueProcessor() {
         super(TileEntityEndGateway.class, Keys.EXACT_TELEPORT);
     }
 
     @Override
-    protected Value<Boolean> constructValue(Boolean actualValue) {
-        return new SpongeValue<>(Keys.EXACT_TELEPORT, actualValue);
+    protected MutableValue<Boolean> constructValue(Boolean actualValue) {
+        return new SpongeMutableValue<>(Keys.EXACT_TELEPORT, actualValue);
     }
 
     @Override

@@ -43,7 +43,7 @@ import org.spongepowered.api.data.DataRegistrationNotFoundException;
 import org.spongepowered.api.data.key.Key;
 import org.spongepowered.api.data.manipulator.DataManipulator;
 import org.spongepowered.api.data.manipulator.ImmutableDataManipulator;
-import org.spongepowered.api.data.value.BaseValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.plugin.PluginContainer;
 import org.spongepowered.api.registry.util.RegistrationDependency;
 import org.spongepowered.common.SpongeImpl;
@@ -91,7 +91,7 @@ public class SpongeManipulatorRegistry implements SpongeAdditionalCatalogRegistr
     private final Map<Class<? extends ImmutableDataManipulator<?, ?>>, DataProcessorDelegate<?, ?>> immutableDataProcessorDelegates =  new IdentityHashMap<>();
     private ImmutableTable<Class<? extends DataManipulator<?, ?>>, NbtDataType, NbtDataProcessor<?, ?>> nbtProcessorTable = ImmutableTable.of();
     private ImmutableTable<Key<?>, NbtDataType, NbtValueProcessor<?, ?>> nbtValueTable = ImmutableTable.of();
-    private final Map<Key<? extends BaseValue<?>>, ValueProcessorDelegate<?, ?>> valueDelegates = new IdentityHashMap<>();
+    private final Map<Key<? extends Value<?>>, ValueProcessorDelegate<?, ?>> valueDelegates = new IdentityHashMap<>();
 
     // This will be replaced with an immutable variant on #bake()
     private Multimap<PluginContainer, DataRegistration<?, ?>> pluginBasedRegistrations = ImmutableMultimap.of();
@@ -155,7 +155,7 @@ public class SpongeManipulatorRegistry implements SpongeAdditionalCatalogRegistr
             .concurrencyLevel(4)
             .makeMap();
 
-        private final Map<Key<? extends BaseValue<?>>, List<ValueProcessor<?, ?>>> valueProcessorMap = new MapMaker()
+        private final Map<Key<? extends Value<?>>, List<ValueProcessor<?, ?>>> valueProcessorMap = new MapMaker()
             .concurrencyLevel(4)
             .makeMap();
 
@@ -287,7 +287,7 @@ public class SpongeManipulatorRegistry implements SpongeAdditionalCatalogRegistr
         return this;
     }
 
-    public <E, V extends BaseValue<E>> void registerValueProcessor(Key<V> key, ValueProcessor<E, V> valueProcessor) {
+    public <E, V extends Value<E>> void registerValueProcessor(Key<V> key, ValueProcessor<E, V> valueProcessor) {
         checkState(this.tempRegistry != null);
         checkNotNull(valueProcessor);
         checkArgument(!(valueProcessor instanceof ValueProcessorDelegate), "Cannot register ValueProcessorDelegates! READ THE DOCS!");

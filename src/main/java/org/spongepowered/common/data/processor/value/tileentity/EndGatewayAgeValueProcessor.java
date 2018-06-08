@@ -29,22 +29,22 @@ import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.processor.common.AbstractSpongeValueProcessor;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 import org.spongepowered.common.interfaces.block.tile.IMixinTileEntityEndGateway;
 
 import java.util.Optional;
 
-public class EndGatewayAgeValueProcessor extends AbstractSpongeValueProcessor<TileEntityEndGateway, Long, Value<Long>> {
+public class EndGatewayAgeValueProcessor extends AbstractSpongeValueProcessor<TileEntityEndGateway, Long, MutableValue<Long>> {
 
     public EndGatewayAgeValueProcessor() {
         super(TileEntityEndGateway.class, Keys.END_GATEWAY_AGE);
     }
 
     @Override
-    protected Value<Long> constructValue(Long actualValue) {
-        return new SpongeValue<>(Keys.END_GATEWAY_AGE, actualValue);
+    protected MutableValue<Long> constructValue(Long actualValue) {
+        return new SpongeMutableValue<>(Keys.END_GATEWAY_AGE, actualValue);
     }
 
     @Override

@@ -32,18 +32,18 @@ import org.spongepowered.api.data.manipulator.mutable.entity.ArtData;
 import org.spongepowered.api.data.type.Art;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.ImmutableDataCachingUtil;
 import org.spongepowered.common.data.manipulator.mutable.entity.SpongeArtData;
 import org.spongepowered.common.data.processor.common.AbstractEntitySingleDataProcessor;
 import org.spongepowered.common.data.util.DataConstants;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 import org.spongepowered.common.entity.EntityUtil;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
 
 import java.util.Optional;
 
-public class ArtDataProcessor extends AbstractEntitySingleDataProcessor<EntityPainting, Art, Value<Art>, ArtData, ImmutableArtData> {
+public class ArtDataProcessor extends AbstractEntitySingleDataProcessor<EntityPainting, Art, MutableValue<Art>, ArtData, ImmutableArtData> {
 
     public ArtDataProcessor() {
         super(EntityPainting.class, Keys.ART);
@@ -73,8 +73,8 @@ public class ArtDataProcessor extends AbstractEntitySingleDataProcessor<EntityPa
     }
 
     @Override
-    protected Value<Art> constructValue(Art actualValue) {
-        return new SpongeValue<>(Keys.ART, DataConstants.Catalog.DEFAULT_ART, actualValue);
+    protected MutableValue<Art> constructValue(Art actualValue) {
+        return new SpongeMutableValue<>(Keys.ART, DataConstants.Catalog.DEFAULT_ART, actualValue);
     }
 
     @Override

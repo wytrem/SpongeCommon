@@ -33,11 +33,11 @@ import org.spongepowered.api.data.key.Key;
 import org.spongepowered.api.data.meta.PatternLayer;
 import org.spongepowered.api.data.type.BannerPatternShape;
 import org.spongepowered.api.data.type.DyeColor;
-import org.spongepowered.api.data.value.BaseValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.immutable.ImmutablePatternListValue;
-import org.spongepowered.api.data.value.mutable.PatternListValue;
+import org.spongepowered.api.data.value.mutable.PatternMutableListValue;
 import org.spongepowered.common.data.meta.SpongePatternLayer;
-import org.spongepowered.common.data.value.mutable.SpongePatternListValue;
+import org.spongepowered.common.data.value.mutable.SpongePatternMutableListValue;
 
 import java.util.List;
 import java.util.ListIterator;
@@ -46,12 +46,12 @@ import java.util.function.Predicate;
 
 public class ImmutableSpongePatternListValue extends ImmutableSpongeListValue<PatternLayer> implements ImmutablePatternListValue {
 
-    public ImmutableSpongePatternListValue(Key<? extends BaseValue<List<PatternLayer>>> key, List<PatternLayer> actualValue) {
+    public ImmutableSpongePatternListValue(Key<? extends Value<List<PatternLayer>>> key, List<PatternLayer> actualValue) {
         super(key, ImmutableList.copyOf(actualValue));
     }
 
     @Override
-    public ImmutablePatternListValue with(List<PatternLayer> value) {
+    public ImmutableSpongeListValue<PatternLayer> with(List<PatternLayer> value) {
         return new ImmutableSpongePatternListValue(getKey(), ImmutableList.copyOf(checkNotNull(value)));
     }
 
@@ -61,10 +61,10 @@ public class ImmutableSpongePatternListValue extends ImmutableSpongeListValue<Pa
     }
 
     @Override
-    public PatternListValue asMutable() {
+    public PatternMutableListValue asMutable() {
         final List<PatternLayer> list = Lists.newArrayList();
         list.addAll(this.actualValue);
-        return new SpongePatternListValue(getKey(), list);
+        return new SpongePatternMutableListValue(getKey(), list);
     }
 
     @Override

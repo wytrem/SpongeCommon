@@ -28,25 +28,25 @@ import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.WeightedCollectionValue;
+import org.spongepowered.api.data.value.mutable.MutableWeightedCollectionValue;
 import org.spongepowered.api.entity.EntityArchetype;
 import org.spongepowered.api.util.weighted.WeightedTable;
 import org.spongepowered.common.data.processor.common.AbstractSpongeValueProcessor;
 import org.spongepowered.common.data.processor.common.SpawnerUtils;
-import org.spongepowered.common.data.value.mutable.SpongeWeightedCollectionValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableWeightedCollectionValue;
 import org.spongepowered.common.interfaces.IMixinMobSpawner;
 
 import java.util.Optional;
 
-public class SpawnerEntitiesValueProcessor extends AbstractSpongeValueProcessor<IMixinMobSpawner, WeightedTable<EntityArchetype>, WeightedCollectionValue<EntityArchetype>> {
+public class SpawnerEntitiesValueProcessor extends AbstractSpongeValueProcessor<IMixinMobSpawner, WeightedTable<EntityArchetype>, MutableWeightedCollectionValue<EntityArchetype>> {
 
     public SpawnerEntitiesValueProcessor() {
         super(IMixinMobSpawner.class, Keys.SPAWNER_ENTITIES);
     }
 
     @Override
-    protected WeightedCollectionValue<EntityArchetype> constructValue(WeightedTable<EntityArchetype> actualValue) {
-        return new SpongeWeightedCollectionValue<>(this.key, actualValue);
+    protected MutableWeightedCollectionValue<EntityArchetype> constructValue(WeightedTable<EntityArchetype> actualValue) {
+        return new SpongeMutableWeightedCollectionValue<>(this.key, actualValue);
     }
 
     @Override

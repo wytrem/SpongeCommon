@@ -31,16 +31,16 @@ import org.spongepowered.api.data.manipulator.immutable.entity.ImmutablePlayingD
 import org.spongepowered.api.data.manipulator.mutable.entity.PlayingData;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.manipulator.mutable.entity.SpongePlayingData;
 import org.spongepowered.common.data.processor.common.AbstractEntitySingleDataProcessor;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
 import java.util.Optional;
 
 public class PlayingDataProcessor
-        extends AbstractEntitySingleDataProcessor<EntityVillager, Boolean, Value<Boolean>, PlayingData, ImmutablePlayingData> {
+        extends AbstractEntitySingleDataProcessor<EntityVillager, Boolean, MutableValue<Boolean>, PlayingData, ImmutablePlayingData> {
 
     public PlayingDataProcessor() {
         super(EntityVillager.class, Keys.IS_PLAYING);
@@ -58,8 +58,8 @@ public class PlayingDataProcessor
     }
 
     @Override
-    protected Value<Boolean> constructValue(Boolean value) {
-        return new SpongeValue<>(this.key, false, value);
+    protected MutableValue<Boolean> constructValue(Boolean value) {
+        return new SpongeMutableValue<>(this.key, false, value);
     }
 
     @Override

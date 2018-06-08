@@ -45,7 +45,7 @@ import org.spongepowered.api.data.key.Key;
 import org.spongepowered.api.data.manipulator.DataManipulator;
 import org.spongepowered.api.data.manipulator.ImmutableDataManipulator;
 import org.spongepowered.api.data.merge.MergeFunction;
-import org.spongepowered.api.data.value.BaseValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
 import org.spongepowered.api.util.Cycleable;
 import org.spongepowered.api.world.Location;
@@ -94,7 +94,7 @@ public abstract class MixinStateImplementation extends BlockStateBase implements
 
     @SuppressWarnings({"rawtypes", "unchecked"})
     @Override
-    public BlockState cycleValue(Key<? extends BaseValue<? extends Cycleable<?>>> key) {
+    public BlockState cycleValue(Key<? extends Value<? extends Cycleable<?>>> key) {
         final Optional<Cycleable<?>> optional = get((Key) key);
         return optional
             .map(Cycleable::cycleNext)
@@ -185,14 +185,14 @@ public abstract class MixinStateImplementation extends BlockStateBase implements
     }
 
     @Override
-    public <E> Optional<BlockState> transform(Key<? extends BaseValue<E>> key, Function<E, E> function) {
+    public <E> Optional<BlockState> transform(Key<? extends Value<E>> key, Function<E, E> function) {
         return this.get(checkNotNull(key, "Key cannot be null!")) // If we don't have a value for the key, we don't support it.
             .map(checkNotNull(function, "Function cannot be null!"))
             .map(newVal -> with(key, newVal).orElse(this)); // We can either return this value or the updated value, but not an empty
     }
 
     @Override
-    public <E> Optional<BlockState> with(Key<? extends BaseValue<E>> key, E value) {
+    public <E> Optional<BlockState> with(Key<? extends Value<E>> key, E value) {
         if (!supports(key)) {
             return Optional.empty();
         }
@@ -201,8 +201,8 @@ public abstract class MixinStateImplementation extends BlockStateBase implements
 
     @SuppressWarnings("unchecked")
     @Override
-    public Optional<BlockState> with(BaseValue<?> value) {
-        return with((Key<? extends BaseValue<Object>>) value.getKey(), value.get());
+    public Optional<BlockState> with(Value<?> value) {
+        return with((Key<? extends Value<Object>>) value.getKey(), value.get());
     }
 
     @SuppressWarnings({"unchecked"})
@@ -293,7 +293,7 @@ public abstract class MixinStateImplementation extends BlockStateBase implements
 
     @SuppressWarnings("unchecked")
     @Override
-    public <E> Optional<E> get(Key<? extends BaseValue<E>> key) {
+    public <E> Optional<E> get(Key<? extends Value<E>> key) {
         if(this.keyMap == null) {
             lazyLoadManipulatorsAndKeys();
         }
@@ -305,7 +305,7 @@ public abstract class MixinStateImplementation extends BlockStateBase implements
 
     @SuppressWarnings("unchecked")
     @Override
-    public <E, V extends BaseValue<E>> Optional<V> getValue(Key<V> key) {
+    public <E, V extends Value<E>> Optional<V> getValue(Key<V> key) {
         checkNotNull(key);
         for (ImmutableValue<?> value : this.getValues()) {
             if (value.getKey().equals(key)) {

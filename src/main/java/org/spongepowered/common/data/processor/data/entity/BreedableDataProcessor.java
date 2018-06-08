@@ -31,15 +31,15 @@ import org.spongepowered.api.data.manipulator.immutable.entity.ImmutableBreedabl
 import org.spongepowered.api.data.manipulator.mutable.entity.BreedableData;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.manipulator.mutable.entity.SpongeBreedableData;
 import org.spongepowered.common.data.processor.common.AbstractSingleDataSingleTargetProcessor;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
 import java.util.Optional;
 
-public class BreedableDataProcessor extends AbstractSingleDataSingleTargetProcessor<EntityAgeable, Boolean, Value<Boolean>, BreedableData, ImmutableBreedableData> {
+public class BreedableDataProcessor extends AbstractSingleDataSingleTargetProcessor<EntityAgeable, Boolean, MutableValue<Boolean>, BreedableData, ImmutableBreedableData> {
 
     public BreedableDataProcessor() {
         super(Keys.CAN_BREED, EntityAgeable.class);
@@ -74,8 +74,8 @@ public class BreedableDataProcessor extends AbstractSingleDataSingleTargetProces
     }
 
     @Override
-    protected Value<Boolean> constructValue(Boolean actualValue) {
-        return new SpongeValue<>(this.key, false, actualValue);
+    protected MutableValue<Boolean> constructValue(Boolean actualValue) {
+        return new SpongeMutableValue<>(this.key, false, actualValue);
     }
 
     @Override

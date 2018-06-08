@@ -30,29 +30,32 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
 import org.spongepowered.api.data.key.Key;
-import org.spongepowered.api.data.value.BaseValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.immutable.ImmutableSetValue;
-import org.spongepowered.api.data.value.mutable.SetValue;
-import org.spongepowered.common.data.value.mutable.SpongeSetValue;
+import org.spongepowered.api.data.value.mutable.MutableSetValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableSetValue;
 
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
-public class ImmutableSpongeSetValue<E> extends ImmutableSpongeCollectionValue<E, Set<E>, ImmutableSetValue<E>, SetValue<E>>
+public class ImmutableSpongeSetValue<E> extends ImmutableSpongeCollectionValue<E, Set<E>, ImmutableSetValue<E>, MutableSetValue<E>>
     implements ImmutableSetValue<E> {
 
-    public ImmutableSpongeSetValue(Key<? extends BaseValue<Set<E>>> key) {
+    public ImmutableSpongeSetValue(Key<? extends Value<Set<E>>> key) {
         super(key, ImmutableSet.<E>of());
     }
 
-    public ImmutableSpongeSetValue(Key<? extends BaseValue<Set<E>>> key, Set<E> actualValue) {
+    public ImmutableSpongeSetValue(Key<? extends Value<Set<E>>> key, Set<E> actualValue) {
         super(key, ImmutableSet.<E>of(), actualValue);
     }
 
     @Override
 
-    public ImmutableSetValue<E> with(Set<E> value) {
+    public ImmutableSpongeSetValue<E> with(Set<E> value) {
         return new ImmutableSpongeSetValue<>(getKey(), ImmutableSet.copyOf(value));
     }
 
@@ -93,6 +96,16 @@ public class ImmutableSpongeSetValue<E> extends ImmutableSpongeCollectionValue<E
     }
 
     @Override
+    public ImmutableSetValue<E> filter(Predicate<? super E> predicate) {
+        return new ImmutableSpongeSetValue<>(this.getKey(), this.actualValue.stream().filter(predicate).collect(Collectors.toSet()));
+    }
+
+    @Override
+    public Iterator<E> iterator() {
+        return this.actualValue.iterator();
+    }
+
+    @Override
     public Set<E> getAll() {
         final Set<E> set = Sets.newHashSet();
         set.addAll(this.actualValue);
@@ -100,9 +113,9 @@ public class ImmutableSpongeSetValue<E> extends ImmutableSpongeCollectionValue<E
     }
 
     @Override
-    public SetValue<E> asMutable() {
+    public MutableSetValue<E> asMutable() {
         final Set<E> set = Sets.newHashSet();
         set.addAll(this.actualValue);
-        return new SpongeSetValue<>(getKey(), set);
+        return new SpongeMutableSetValue<>(getKey(), set);
     }
 }

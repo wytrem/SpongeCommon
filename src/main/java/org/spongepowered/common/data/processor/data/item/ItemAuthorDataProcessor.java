@@ -32,19 +32,19 @@ import org.spongepowered.api.data.manipulator.immutable.item.ImmutableAuthorData
 import org.spongepowered.api.data.manipulator.mutable.item.AuthorData;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.serializer.TextSerializers;
 import org.spongepowered.common.data.manipulator.mutable.item.SpongeAuthorData;
 import org.spongepowered.common.data.processor.common.AbstractItemSingleDataProcessor;
 import org.spongepowered.common.data.util.NbtDataUtil;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 import org.spongepowered.common.text.SpongeTexts;
 
 import java.util.Optional;
 
-public class ItemAuthorDataProcessor extends AbstractItemSingleDataProcessor<Text, Value<Text>, AuthorData, ImmutableAuthorData> {
+public class ItemAuthorDataProcessor extends AbstractItemSingleDataProcessor<Text, MutableValue<Text>, AuthorData, ImmutableAuthorData> {
 
     public ItemAuthorDataProcessor() {
         super(input -> input.getItem() == Items.WRITABLE_BOOK || input.getItem() == Items.WRITTEN_BOOK, Keys.BOOK_AUTHOR);
@@ -77,8 +77,8 @@ public class ItemAuthorDataProcessor extends AbstractItemSingleDataProcessor<Tex
     }
 
     @Override
-    protected Value<Text> constructValue(Text actualValue) {
-        return new SpongeValue<>(Keys.BOOK_AUTHOR, Text.of(), actualValue);
+    protected MutableValue<Text> constructValue(Text actualValue) {
+        return new SpongeMutableValue<>(Keys.BOOK_AUTHOR, Text.of(), actualValue);
     }
 
     @Override

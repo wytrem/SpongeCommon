@@ -34,18 +34,18 @@ import org.spongepowered.api.data.manipulator.immutable.ImmutableRepresentedItem
 import org.spongepowered.api.data.manipulator.mutable.RepresentedItemData;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.api.item.inventory.ItemStackSnapshot;
 import org.spongepowered.common.data.manipulator.mutable.SpongeRepresentedItemData;
 import org.spongepowered.common.data.processor.common.AbstractEntitySingleDataProcessor;
 import org.spongepowered.common.data.util.EntityDataUtil;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
 import java.util.Optional;
 
 public class RepresentedItemDataProcessor extends
-        AbstractEntitySingleDataProcessor<Entity, ItemStackSnapshot, Value<ItemStackSnapshot>, RepresentedItemData, ImmutableRepresentedItemData> {
+        AbstractEntitySingleDataProcessor<Entity, ItemStackSnapshot, MutableValue<ItemStackSnapshot>, RepresentedItemData, ImmutableRepresentedItemData> {
 
     public RepresentedItemDataProcessor() {
         super(Entity.class, Keys.REPRESENTED_ITEM);
@@ -69,8 +69,8 @@ public class RepresentedItemDataProcessor extends
     }
 
     @Override
-    protected Value<ItemStackSnapshot> constructValue(ItemStackSnapshot defaultValue) {
-        return new SpongeValue<>(this.key, defaultValue);
+    protected MutableValue<ItemStackSnapshot> constructValue(ItemStackSnapshot defaultValue) {
+        return new SpongeMutableValue<>(this.key, defaultValue);
     }
 
     @Override

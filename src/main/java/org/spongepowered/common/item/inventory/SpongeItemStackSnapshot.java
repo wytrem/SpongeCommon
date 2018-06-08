@@ -41,7 +41,7 @@ import org.spongepowered.api.data.key.Key;
 import org.spongepowered.api.data.manipulator.DataManipulator;
 import org.spongepowered.api.data.manipulator.ImmutableDataManipulator;
 import org.spongepowered.api.data.merge.MergeFunction;
-import org.spongepowered.api.data.value.BaseValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
 import org.spongepowered.api.item.ItemType;
 import org.spongepowered.api.item.inventory.ItemStack;
@@ -222,7 +222,7 @@ public class SpongeItemStackSnapshot implements ItemStackSnapshot {
     }
 
     @Override
-    public <E> Optional<ItemStackSnapshot> transform(Key<? extends BaseValue<E>> key, Function<E, E> function) {
+    public <E> Optional<ItemStackSnapshot> transform(Key<? extends Value<E>> key, Function<E, E> function) {
         final ItemStack copy = this.privateStack.copy();
         final DataTransactionResult result = copy.transform(key, function);
         if (result.getType() != DataTransactionResult.Type.SUCCESS) {
@@ -232,7 +232,7 @@ public class SpongeItemStackSnapshot implements ItemStackSnapshot {
     }
 
     @Override
-    public <E> Optional<ItemStackSnapshot> with(Key<? extends BaseValue<E>> key, E value) {
+    public <E> Optional<ItemStackSnapshot> with(Key<? extends Value<E>> key, E value) {
         final ItemStack copy = this.privateStack.copy();
         final DataTransactionResult result = copy.offer(key, value);
         if (result.getType() != DataTransactionResult.Type.SUCCESS) {
@@ -242,8 +242,8 @@ public class SpongeItemStackSnapshot implements ItemStackSnapshot {
     }
 
     @Override
-    public Optional<ItemStackSnapshot> with(BaseValue<?> value) {
-        return with((Key<BaseValue<Object>>) value.getKey(), (Object) value.get());
+    public Optional<ItemStackSnapshot> with(Value<?> value) {
+        return with((Key<Value<Object>>) value.getKey(), (Object) value.get());
     }
 
     @Override
@@ -299,12 +299,12 @@ public class SpongeItemStackSnapshot implements ItemStackSnapshot {
     }
 
     @Override
-    public <E> Optional<E> get(Key<? extends BaseValue<E>> key) {
+    public <E> Optional<E> get(Key<? extends Value<E>> key) {
         return this.privateStack.get(key);
     }
 
     @Override
-    public <E, V extends BaseValue<E>> Optional<V> getValue(Key<V> key) {
+    public <E, V extends Value<E>> Optional<V> getValue(Key<V> key) {
         return this.privateStack.getValue(key);
     }
 

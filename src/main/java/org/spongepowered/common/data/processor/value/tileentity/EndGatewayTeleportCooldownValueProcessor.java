@@ -29,14 +29,14 @@ import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.processor.common.AbstractSpongeValueProcessor;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 import org.spongepowered.common.interfaces.block.tile.IMixinTileEntityEndGateway;
 
 import java.util.Optional;
 
-public class EndGatewayTeleportCooldownValueProcessor extends AbstractSpongeValueProcessor<TileEntityEndGateway, Integer, Value<Integer>> {
+public class EndGatewayTeleportCooldownValueProcessor extends AbstractSpongeValueProcessor<TileEntityEndGateway, Integer, MutableValue<Integer>> {
 
     public EndGatewayTeleportCooldownValueProcessor() {
         super(TileEntityEndGateway.class, Keys.END_GATEWAY_TELEPORT_COOLDOWN);
@@ -44,8 +44,8 @@ public class EndGatewayTeleportCooldownValueProcessor extends AbstractSpongeValu
 
 
     @Override
-    protected Value<Integer> constructValue(Integer actualValue) {
-        return new SpongeValue<>(Keys.END_GATEWAY_TELEPORT_COOLDOWN, actualValue);
+    protected MutableValue<Integer> constructValue(Integer actualValue) {
+        return new SpongeMutableValue<>(Keys.END_GATEWAY_TELEPORT_COOLDOWN, actualValue);
     }
 
     @Override

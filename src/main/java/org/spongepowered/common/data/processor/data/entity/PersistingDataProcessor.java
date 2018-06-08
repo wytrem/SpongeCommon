@@ -31,16 +31,16 @@ import org.spongepowered.api.data.manipulator.immutable.entity.ImmutablePersisti
 import org.spongepowered.api.data.manipulator.mutable.entity.PersistingData;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.manipulator.mutable.entity.SpongePersistingData;
 import org.spongepowered.common.data.processor.common.AbstractEntitySingleDataProcessor;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
 import java.util.Optional;
 
 public class PersistingDataProcessor
-        extends AbstractEntitySingleDataProcessor<EntityLiving, Boolean, Value<Boolean>, PersistingData, ImmutablePersistingData> {
+        extends AbstractEntitySingleDataProcessor<EntityLiving, Boolean, MutableValue<Boolean>, PersistingData, ImmutablePersistingData> {
 
     public PersistingDataProcessor() {
         super(EntityLiving.class, Keys.PERSISTS);
@@ -68,8 +68,8 @@ public class PersistingDataProcessor
     }
 
     @Override
-    protected Value<Boolean> constructValue(Boolean actualValue) {
-        return new SpongeValue<>(Keys.PERSISTS, actualValue);
+    protected MutableValue<Boolean> constructValue(Boolean actualValue) {
+        return new SpongeMutableValue<>(Keys.PERSISTS, actualValue);
     }
 
     @Override

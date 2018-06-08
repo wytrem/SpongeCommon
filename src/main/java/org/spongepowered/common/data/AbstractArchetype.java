@@ -39,9 +39,9 @@ import org.spongepowered.api.data.key.Key;
 import org.spongepowered.api.data.manipulator.DataManipulator;
 import org.spongepowered.api.data.merge.MergeFunction;
 import org.spongepowered.api.data.persistence.InvalidDataException;
-import org.spongepowered.api.data.value.BaseValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.SpongeImpl;
 import org.spongepowered.common.data.nbt.CustomDataNbtUtil;
 import org.spongepowered.common.data.nbt.NbtDataType;
@@ -116,7 +116,7 @@ public abstract class AbstractArchetype<C extends CatalogType, S extends Locatab
     }
 
     @Override
-    public <R> DataTransactionResult offer(Key<? extends BaseValue<R>> key, R value) {
+    public <R> DataTransactionResult offer(Key<? extends Value<R>> key, R value) {
         return DataUtil.getNbtProcessor(this.getDataType(), key)
                 .map(processor -> processor.offer(this.data, value))
                 .orElseGet(DataTransactionResult::failNoData);
@@ -187,13 +187,13 @@ public abstract class AbstractArchetype<C extends CatalogType, S extends Locatab
     }
 
     @Override
-    public <R> Optional<R> get(Key<? extends BaseValue<R>> key) {
+    public <R> Optional<R> get(Key<? extends Value<R>> key) {
         return DataUtil.getNbtProcessor(this.getDataType(), key)
                 .flatMap(processor -> processor.readValue(this.data));
     }
 
     @Override
-    public <R, V extends BaseValue<R>> Optional<V> getValue(Key<V> key) {
+    public <R, V extends Value<R>> Optional<V> getValue(Key<V> key) {
         return DataUtil.getNbtProcessor(this.getDataType(), key)
                 .flatMap(processor -> processor.readFrom(this.data));
     }
@@ -211,7 +211,7 @@ public abstract class AbstractArchetype<C extends CatalogType, S extends Locatab
                 .map(processor -> processor.readFrom(this.data))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
-                .map(BaseValue::getKey)
+                .map(Value::getKey)
                 .collect(Collectors.toSet());
     }
 
@@ -221,9 +221,9 @@ public abstract class AbstractArchetype<C extends CatalogType, S extends Locatab
                 .map(processor -> processor.readFrom(this.data))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
-                .filter(value -> value instanceof Value<?>)
-                .map(value -> (Value<?>) value)
-                .map(Value::asImmutable)
+                .filter(value -> value instanceof MutableValue<?>)
+                .map(value -> (MutableValue<?>) value)
+                .map(MutableValue::asImmutable)
                 .collect(Collectors.toSet());
     }
 

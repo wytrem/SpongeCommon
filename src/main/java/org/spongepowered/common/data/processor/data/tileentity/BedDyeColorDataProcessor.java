@@ -34,16 +34,16 @@ import org.spongepowered.api.data.type.DyeColor;
 import org.spongepowered.api.data.type.DyeColors;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.ImmutableDataCachingUtil;
 import org.spongepowered.common.data.manipulator.mutable.SpongeDyeableData;
 import org.spongepowered.common.data.processor.common.AbstractTileEntitySingleDataProcessor;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
 import java.util.Optional;
 
-public class BedDyeColorDataProcessor extends AbstractTileEntitySingleDataProcessor<TileEntityBed, DyeColor, Value<DyeColor>, DyeableData,
+public class BedDyeColorDataProcessor extends AbstractTileEntitySingleDataProcessor<TileEntityBed, DyeColor, MutableValue<DyeColor>, DyeableData,
         ImmutableDyeableData> {
 
     public BedDyeColorDataProcessor() {
@@ -67,9 +67,9 @@ public class BedDyeColorDataProcessor extends AbstractTileEntitySingleDataProces
     }
 
     @Override
-    protected Value<DyeColor> constructValue(DyeColor actualValue) {
+    protected MutableValue<DyeColor> constructValue(DyeColor actualValue) {
         // Beds are red by default, not white.
-        return new SpongeValue<>(Keys.DYE_COLOR, DyeColors.RED, actualValue);
+        return new SpongeMutableValue<>(Keys.DYE_COLOR, DyeColors.RED, actualValue);
     }
 
     @Override

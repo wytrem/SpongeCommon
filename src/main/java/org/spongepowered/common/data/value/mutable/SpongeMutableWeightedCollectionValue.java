@@ -25,9 +25,9 @@
 package org.spongepowered.common.data.value.mutable;
 
 import org.spongepowered.api.data.key.Key;
-import org.spongepowered.api.data.value.BaseValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.immutable.ImmutableWeightedCollectionValue;
-import org.spongepowered.api.data.value.mutable.WeightedCollectionValue;
+import org.spongepowered.api.data.value.mutable.MutableWeightedCollectionValue;
 import org.spongepowered.api.util.weighted.WeightedTable;
 import org.spongepowered.api.util.weighted.TableEntry;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeWeightedCollectionValue;
@@ -39,15 +39,15 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 
-public class SpongeWeightedCollectionValue<E> extends SpongeCollectionValue<TableEntry<E>,
-    WeightedTable<E>, WeightedCollectionValue<E>, ImmutableWeightedCollectionValue<E>> implements WeightedCollectionValue<E> {
+public class SpongeMutableWeightedCollectionValue<E> extends SpongeMutableCollectionValue<TableEntry<E>,
+    WeightedTable<E>, MutableWeightedCollectionValue<E>, ImmutableWeightedCollectionValue<E>> implements MutableWeightedCollectionValue<E> {
 
-    public SpongeWeightedCollectionValue(Key<? extends BaseValue<WeightedTable<E>>> key, WeightedTable<E> actualValue) {
+    public SpongeMutableWeightedCollectionValue(Key<? extends Value<WeightedTable<E>>> key, WeightedTable<E> actualValue) {
         super(key, new WeightedTable<>(), actualValue.stream().collect(Collectors.toCollection(WeightedTable<E>::new)));
     }
 
     @Override
-    public WeightedCollectionValue<E> filter(Predicate<? super TableEntry<E>> predicate) {
+    public MutableWeightedCollectionValue<E> filter(Predicate<? super TableEntry<E>> predicate) {
         return set(get().stream().filter(predicate).collect(Collectors.toCollection(WeightedTable<E>::new)));
     }
 
@@ -57,13 +57,13 @@ public class SpongeWeightedCollectionValue<E> extends SpongeCollectionValue<Tabl
     }
 
     @Override
-    public ImmutableWeightedCollectionValue<E> asImmutable() {
+    public I asImmutable() {
         return new ImmutableSpongeWeightedCollectionValue<>(getKey(), getAll());
     }
 
     @Override
-    public WeightedCollectionValue<E> copy() {
-        return new SpongeWeightedCollectionValue<>(getKey(), getAll());
+    public MutableWeightedCollectionValue<E> copy() {
+        return new SpongeMutableWeightedCollectionValue<>(getKey(), getAll());
     }
 
     @Nullable

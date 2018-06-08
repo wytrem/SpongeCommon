@@ -29,13 +29,13 @@ import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.processor.common.AbstractSpongeValueProcessor;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
 import java.util.Optional;
 
-public class EntityCommandValueProcessor extends AbstractSpongeValueProcessor<EntityMinecartCommandBlock, String, Value<String>> {
+public class EntityCommandValueProcessor extends AbstractSpongeValueProcessor<EntityMinecartCommandBlock, String, MutableValue<String>> {
 
     public EntityCommandValueProcessor() {
         super(EntityMinecartCommandBlock.class, Keys.COMMAND);
@@ -47,8 +47,8 @@ public class EntityCommandValueProcessor extends AbstractSpongeValueProcessor<En
     }
 
     @Override
-    protected Value<String> constructValue(String actualValue) {
-        return new SpongeValue<>(Keys.COMMAND, actualValue);
+    protected MutableValue<String> constructValue(String actualValue) {
+        return new SpongeMutableValue<>(Keys.COMMAND, actualValue);
     }
 
     @Override

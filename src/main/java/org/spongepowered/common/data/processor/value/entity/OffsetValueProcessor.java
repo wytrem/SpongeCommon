@@ -29,22 +29,22 @@ import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.processor.common.AbstractSpongeValueProcessor;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
 import java.util.Optional;
 
-public class OffsetValueProcessor extends AbstractSpongeValueProcessor<EntityMinecart, Integer, Value<Integer>> {
+public class OffsetValueProcessor extends AbstractSpongeValueProcessor<EntityMinecart, Integer, MutableValue<Integer>> {
 
     public OffsetValueProcessor() {
         super(EntityMinecart.class, Keys.OFFSET);
     }
 
     @Override
-    protected Value<Integer> constructValue(Integer value) {
-        return new SpongeValue<>(Keys.OFFSET, 6, value);
+    protected MutableValue<Integer> constructValue(Integer value) {
+        return new SpongeMutableValue<>(Keys.OFFSET, 6, value);
     }
 
     @Override

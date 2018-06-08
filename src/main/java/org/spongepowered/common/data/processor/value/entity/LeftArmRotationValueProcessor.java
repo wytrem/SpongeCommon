@@ -30,15 +30,15 @@ import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.processor.common.AbstractSpongeValueProcessor;
 import org.spongepowered.common.data.util.DataConstants;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 import org.spongepowered.common.util.VecHelper;
 
 import java.util.Optional;
 
-public class LeftArmRotationValueProcessor extends AbstractSpongeValueProcessor<EntityArmorStand, Vector3d, Value<Vector3d>> {
+public class LeftArmRotationValueProcessor extends AbstractSpongeValueProcessor<EntityArmorStand, Vector3d, MutableValue<Vector3d>> {
 
     public LeftArmRotationValueProcessor() {
         super(EntityArmorStand.class, Keys.LEFT_ARM_ROTATION);
@@ -50,8 +50,8 @@ public class LeftArmRotationValueProcessor extends AbstractSpongeValueProcessor<
     }
 
     @Override
-    protected Value<Vector3d> constructValue(Vector3d actualValue) {
-        return new SpongeValue<>(Keys.LEFT_ARM_ROTATION, DataConstants.DEFAULT_LEFT_ARM_ROTATION, actualValue);
+    protected MutableValue<Vector3d> constructValue(Vector3d actualValue) {
+        return new SpongeMutableValue<>(Keys.LEFT_ARM_ROTATION, DataConstants.DEFAULT_LEFT_ARM_ROTATION, actualValue);
     }
 
     @Override

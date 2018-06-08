@@ -34,7 +34,7 @@ import org.spongepowered.api.data.type.SkullType;
 import org.spongepowered.api.data.type.SkullTypes;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.SpongeImpl;
 import org.spongepowered.common.data.manipulator.mutable.SpongeSkullData;
 import org.spongepowered.common.data.processor.common.AbstractItemSingleDataProcessor;
@@ -42,12 +42,12 @@ import org.spongepowered.common.data.processor.common.SkullUtils;
 import org.spongepowered.common.data.type.SpongeSkullType;
 import org.spongepowered.common.data.util.DataUtil;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
 import java.util.Optional;
 
 public class ItemSkullDataProcessor
-        extends AbstractItemSingleDataProcessor<SkullType, Value<SkullType>, SkullData, ImmutableSkullData> {
+        extends AbstractItemSingleDataProcessor<SkullType, MutableValue<SkullType>, SkullData, ImmutableSkullData> {
 
     public ItemSkullDataProcessor() {
         super(SkullUtils::supportsObject, Keys.SKULL_TYPE);
@@ -76,8 +76,8 @@ public class ItemSkullDataProcessor
     }
 
     @Override
-    protected Value<SkullType> constructValue(SkullType defaultValue) {
-        return new SpongeValue<>(Keys.SKULL_TYPE, SkullTypes.SKELETON, defaultValue);
+    protected MutableValue<SkullType> constructValue(SkullType defaultValue) {
+        return new SpongeMutableValue<>(Keys.SKULL_TYPE, SkullTypes.SKELETON, defaultValue);
     }
 
     @Override

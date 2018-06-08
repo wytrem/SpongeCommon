@@ -30,13 +30,13 @@ import org.spongepowered.api.data.manipulator.immutable.block.ImmutableSandstone
 import org.spongepowered.api.data.manipulator.mutable.block.SandstoneData;
 import org.spongepowered.api.data.type.SandstoneType;
 import org.spongepowered.api.data.type.SandstoneTypes;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.api.item.ItemTypes;
 import org.spongepowered.common.data.manipulator.mutable.block.SpongeSandstoneData;
 import org.spongepowered.common.data.processor.common.AbstractCatalogDataProcessor;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
-public class SandstoneDataProcessor extends AbstractCatalogDataProcessor<SandstoneType, Value<SandstoneType>, SandstoneData, ImmutableSandstoneData> {
+public class SandstoneDataProcessor extends AbstractCatalogDataProcessor<SandstoneType, MutableValue<SandstoneType>, SandstoneData, ImmutableSandstoneData> {
 
     public SandstoneDataProcessor() {
         super(Keys.SANDSTONE_TYPE, input -> input.getItem() == ItemTypes.SANDSTONE || input.getItem() == ItemTypes.SANDSTONE_STAIRS
@@ -64,8 +64,8 @@ public class SandstoneDataProcessor extends AbstractCatalogDataProcessor<Sandsto
     }
 
     @Override
-    protected Value<SandstoneType> constructValue(SandstoneType actualValue) {
-        return new SpongeValue<>(this.key, getDefaultValue(), actualValue);
+    protected MutableValue<SandstoneType> constructValue(SandstoneType actualValue) {
+        return new SpongeMutableValue<>(this.key, getDefaultValue(), actualValue);
     }
 
 }

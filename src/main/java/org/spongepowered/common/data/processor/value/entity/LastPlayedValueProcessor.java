@@ -29,25 +29,25 @@ import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.processor.common.AbstractSpongeValueProcessor;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 import org.spongepowered.common.world.storage.SpongePlayerDataHandler;
 
 import java.time.Instant;
 import java.util.Optional;
 import java.util.UUID;
 
-public class LastPlayedValueProcessor extends AbstractSpongeValueProcessor<EntityPlayer, Instant, Value<Instant>> {
+public class LastPlayedValueProcessor extends AbstractSpongeValueProcessor<EntityPlayer, Instant, MutableValue<Instant>> {
 
     public LastPlayedValueProcessor() {
         super(EntityPlayer.class, Keys.LAST_DATE_PLAYED);
     }
 
     @Override
-    protected Value<Instant> constructValue(Instant actualValue) {
-        return new SpongeValue<>(Keys.LAST_DATE_PLAYED, Instant.now(), actualValue);
+    protected MutableValue<Instant> constructValue(Instant actualValue) {
+        return new SpongeMutableValue<>(Keys.LAST_DATE_PLAYED, Instant.now(), actualValue);
     }
 
     @Override

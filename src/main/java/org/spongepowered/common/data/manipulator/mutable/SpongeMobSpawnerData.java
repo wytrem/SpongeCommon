@@ -32,8 +32,8 @@ import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.ImmutableMobSpawnerData;
 import org.spongepowered.api.data.manipulator.mutable.MobSpawnerData;
 import org.spongepowered.api.data.value.mutable.MutableBoundedValue;
-import org.spongepowered.api.data.value.mutable.Value;
-import org.spongepowered.api.data.value.mutable.WeightedCollectionValue;
+import org.spongepowered.api.data.value.mutable.MutableValue;
+import org.spongepowered.api.data.value.mutable.MutableWeightedCollectionValue;
 import org.spongepowered.api.entity.EntityArchetype;
 import org.spongepowered.api.util.weighted.WeightedSerializableObject;
 import org.spongepowered.api.util.weighted.WeightedTable;
@@ -42,8 +42,8 @@ import org.spongepowered.common.data.manipulator.mutable.common.AbstractData;
 import org.spongepowered.common.data.util.DataConstants;
 import org.spongepowered.common.data.util.ImplementationRequiredForTest;
 import org.spongepowered.common.data.value.SpongeValueFactory;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
-import org.spongepowered.common.data.value.mutable.SpongeWeightedCollectionValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableWeightedCollectionValue;
 
 import java.util.stream.Collectors;
 
@@ -158,14 +158,14 @@ public class SpongeMobSpawnerData extends AbstractData<MobSpawnerData, Immutable
     }
 
     @Override
-    public Value<WeightedSerializableObject<EntityArchetype>> nextEntityToSpawn() {
-        return new SpongeValue<>(Keys.SPAWNER_NEXT_ENTITY_TO_SPAWN, DataConstants.DEFAULT_SPAWNER_NEXT_ENTITY_TO_SPAWN,
+    public MutableValue<WeightedSerializableObject<EntityArchetype>> nextEntityToSpawn() {
+        return new SpongeMutableValue<>(Keys.SPAWNER_NEXT_ENTITY_TO_SPAWN, DataConstants.DEFAULT_SPAWNER_NEXT_ENTITY_TO_SPAWN,
                 this.nextEntityToSpawn);
     }
 
     @Override
-    public WeightedCollectionValue<EntityArchetype> possibleEntitiesToSpawn() {
-        return new SpongeWeightedCollectionValue<>(Keys.SPAWNER_ENTITIES, this.entities);
+    public MutableWeightedCollectionValue<EntityArchetype> possibleEntitiesToSpawn() {
+        return new SpongeMutableWeightedCollectionValue<>(Keys.SPAWNER_ENTITIES, this.entities);
     }
 
     @Override

@@ -31,17 +31,17 @@ import org.spongepowered.api.data.manipulator.immutable.entity.ImmutableAffectsS
 import org.spongepowered.api.data.manipulator.mutable.entity.AffectsSpawningData;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.manipulator.mutable.entity.SpongeAffectsSpawningData;
 import org.spongepowered.common.data.processor.common.AbstractEntitySingleDataProcessor;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 import org.spongepowered.common.interfaces.entity.player.IMixinEntityPlayer;
 
 import java.util.Optional;
 
 public class AffectsSpawningDataProcessor extends
-        AbstractEntitySingleDataProcessor<EntityPlayerMP, Boolean, Value<Boolean>, AffectsSpawningData, ImmutableAffectsSpawningData> {
+        AbstractEntitySingleDataProcessor<EntityPlayerMP, Boolean, MutableValue<Boolean>, AffectsSpawningData, ImmutableAffectsSpawningData> {
 
     public AffectsSpawningDataProcessor() {
         super(EntityPlayerMP.class, Keys.AFFECTS_SPAWNING);
@@ -69,8 +69,8 @@ public class AffectsSpawningDataProcessor extends
     }
 
     @Override
-    protected Value<Boolean> constructValue(Boolean actualValue) {
-        return new SpongeValue<>(Keys.AFFECTS_SPAWNING, true, actualValue);
+    protected MutableValue<Boolean> constructValue(Boolean actualValue) {
+        return new SpongeMutableValue<>(Keys.AFFECTS_SPAWNING, true, actualValue);
     }
 
     @Override

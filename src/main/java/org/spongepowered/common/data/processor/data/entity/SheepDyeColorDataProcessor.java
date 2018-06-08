@@ -34,14 +34,14 @@ import org.spongepowered.api.data.type.DyeColor;
 import org.spongepowered.api.data.type.DyeColors;
 import org.spongepowered.api.data.value.ValueContainer;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.manipulator.mutable.SpongeDyeableData;
 import org.spongepowered.common.data.processor.common.AbstractEntitySingleDataProcessor;
 import org.spongepowered.common.data.value.SpongeValueFactory;
 
 import java.util.Optional;
 
-public class SheepDyeColorDataProcessor extends AbstractEntitySingleDataProcessor<EntitySheep, DyeColor, Value<DyeColor>, DyeableData,
+public class SheepDyeColorDataProcessor extends AbstractEntitySingleDataProcessor<EntitySheep, DyeColor, MutableValue<DyeColor>, DyeableData,
         ImmutableDyeableData> {
 
     public SheepDyeColorDataProcessor() {
@@ -49,7 +49,7 @@ public class SheepDyeColorDataProcessor extends AbstractEntitySingleDataProcesso
     }
 
     @Override
-    protected Value<DyeColor> constructValue(DyeColor actualValue) {
+    protected MutableValue<DyeColor> constructValue(DyeColor actualValue) {
         return SpongeValueFactory.getInstance().createValue(Keys.DYE_COLOR, actualValue, DyeColors.BLACK);
     }
 

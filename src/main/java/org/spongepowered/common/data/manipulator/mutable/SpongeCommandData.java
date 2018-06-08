@@ -32,14 +32,14 @@ import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.ImmutableCommandData;
 import org.spongepowered.api.data.manipulator.mutable.CommandData;
 import org.spongepowered.api.data.value.mutable.MutableBoundedValue;
-import org.spongepowered.api.data.value.mutable.OptionalValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
+import org.spongepowered.api.data.value.mutable.MutableOptionalValue;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.common.data.manipulator.immutable.ImmutableSpongeCommandData;
 import org.spongepowered.common.data.manipulator.mutable.common.AbstractData;
 import org.spongepowered.common.data.value.SpongeValueFactory;
-import org.spongepowered.common.data.value.mutable.SpongeOptionalValue;
-import org.spongepowered.common.data.value.mutable.SpongeValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableOptionalValue;
+import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
 import java.util.Optional;
 
@@ -59,8 +59,8 @@ public class SpongeCommandData extends AbstractData<CommandData, ImmutableComman
     }
 
     @Override
-    public Value<String> storedCommand() {
-        return new SpongeValue<>(Keys.COMMAND, getStoredCommand());
+    public MutableValue<String> storedCommand() {
+        return new SpongeMutableValue<>(Keys.COMMAND, getStoredCommand());
     }
 
     @Override
@@ -74,13 +74,13 @@ public class SpongeCommandData extends AbstractData<CommandData, ImmutableComman
     }
 
     @Override
-    public Value<Boolean> doesTrackOutput() {
-        return new SpongeValue<>(Keys.TRACKS_OUTPUT, this.tracks);
+    public MutableValue<Boolean> doesTrackOutput() {
+        return new SpongeMutableValue<>(Keys.TRACKS_OUTPUT, this.tracks);
     }
 
     @Override
-    public OptionalValue<Text> lastOutput() {
-        return new SpongeOptionalValue<>(Keys.LAST_COMMAND_OUTPUT, getLastOutput());
+    public MutableOptionalValue<Text> lastOutput() {
+        return new SpongeMutableOptionalValue<>(Keys.LAST_COMMAND_OUTPUT, getLastOutput());
     }
 
     @Override

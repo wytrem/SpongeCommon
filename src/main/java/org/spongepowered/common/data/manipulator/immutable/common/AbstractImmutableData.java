@@ -36,9 +36,9 @@ import org.spongepowered.api.data.Queries;
 import org.spongepowered.api.data.key.Key;
 import org.spongepowered.api.data.manipulator.DataManipulator;
 import org.spongepowered.api.data.manipulator.ImmutableDataManipulator;
-import org.spongepowered.api.data.value.BaseValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.DataProcessor;
 import org.spongepowered.common.data.ValueProcessor;
 import org.spongepowered.common.data.util.DataUtil;
@@ -63,7 +63,7 @@ import java.util.stream.Collectors;
  *
  * <p>Note: It is ABSOLUTELY REQUIRED to {@link #registerKeyValue(Key, Supplier)}
  * and {@link #registerFieldGetter(Key, Supplier)} for all possible
- * {@link Key}s and {@link Value}s the {@link DataManipulator} may provide as
+ * {@link Key}s and {@link MutableValue}s the {@link DataManipulator} may provide as
  * all of the implementation methods provided here are handled using those. This
  * was done to avoid having to override {@link #getKeys()} and {@link #getValues()},
  * let alone using {@link ValueProcessor}s for simple setters and getters. I believe
@@ -134,7 +134,7 @@ public abstract class AbstractImmutableData<I extends ImmutableDataManipulator<I
     protected abstract void registerGetters();
 
     @Override
-    public <E> Optional<I> with(Key<? extends BaseValue<E>> key, E value) {
+    public <E> Optional<I> with(Key<? extends Value<E>> key, E value) {
         // Basic stuff, getting the processor....
         final Optional<DataProcessor<M, I>> processor = DataUtil.getImmutableProcessor(this.immutableClass);
         // We actually need to check that the processor is available, otherwise
@@ -155,7 +155,7 @@ public abstract class AbstractImmutableData<I extends ImmutableDataManipulator<I
     // implementation required.
 
     @Override
-    public <E> Optional<E> get(Key<? extends BaseValue<E>> key) {
+    public <E> Optional<E> get(Key<? extends Value<E>> key) {
         if (!supports(key)) {
             return Optional.empty();
         }
@@ -163,7 +163,7 @@ public abstract class AbstractImmutableData<I extends ImmutableDataManipulator<I
     }
 
     @Override
-    public <E, V extends BaseValue<E>> Optional<V> getValue(Key<V> key) {
+    public <E, V extends Value<E>> Optional<V> getValue(Key<V> key) {
         if (!this.keyValueMap.containsKey(key)) {
             return Optional.empty();
         }

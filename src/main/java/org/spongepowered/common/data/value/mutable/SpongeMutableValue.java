@@ -25,43 +25,62 @@
 package org.spongepowered.common.data.value.mutable;
 
 import org.spongepowered.api.data.key.Key;
-import org.spongepowered.api.data.value.BaseValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.Value;
-import org.spongepowered.common.data.value.AbstractBaseValue;
+import org.spongepowered.api.data.value.mutable.MutableValue;
+import org.spongepowered.common.data.value.AbstractValue;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
 
 import java.util.function.Function;
 
-public class SpongeValue<E> extends AbstractBaseValue<E> implements Value<E> {
+@SuppressWarnings("unchecked")
+public class SpongeMutableValue<E, M extends MutableValue<E, M, I>, I extends ImmutableValue<E, I, M>> extends AbstractValue<E> implements MutableValue<E, M, I> {
 
-    public SpongeValue(Key<? extends BaseValue<E>> key, E defaultValue) {
+    public SpongeMutableValue(Key<? extends Value<E>> key, E defaultValue) {
         this(key, defaultValue, defaultValue);
     }
 
-    public SpongeValue(Key<? extends BaseValue<E>> key, E defaultValue, E actualValue) {
+    public SpongeMutableValue(Key<? extends Value<E>> key, E defaultValue, E actualValue) {
         super(key, defaultValue, actualValue);
     }
 
     @Override
-    public Value<E> set(E value) {
+    public M set(E value) {
         this.actualValue = value;
-        return this;
+        return (M) this;
     }
 
     @Override
-    public Value<E> transform(Function<E, E> function) {
+    public M transform(Function<E, E> function) {
         this.actualValue = function.apply(this.actualValue);
-        return this;
+        return (M) this;
     }
 
     @Override
-    public ImmutableValue<E> asImmutable() {
-        return ImmutableSpongeValue.cachedOf(this.getKey(), this.getDefault(), this.actualValue);
+    public M asMutable() {
+        return (M) this;
     }
 
     @Override
-    public Value<E> copy() {
-        return new SpongeValue<>(this.getKey(), this.getDefault(), this.actualValue);
+    public I asImmutable() {
+        return (I) ImmutableSpongeValue.cachedOf(this.getKey(), this.getDefault(), this.actualValue);
+    }
+
+    @Override
+    public M copy() {
+        return (M) new SpongeMutableValue<E, M, I>(this.getKey(), this.getDefault(), this.actualValue);
+    }
+
+    public static final class Single<E> extends SpongeMutableValue<E, MutableValue.Single<E>, ImmutableValue.Single<E>> implements MutableValue.Single<E> {
+
+        public Single(Key<? extends Value<E>> key, E defaultValue) {
+            super(key, defaultValue);
+        }
+
+        public Single(Key<? extends Value<E>> key, E defaultValue, E actualValue) {
+            super(key, defaultValue, actualValue);
+        }
+
+
     }
 }
