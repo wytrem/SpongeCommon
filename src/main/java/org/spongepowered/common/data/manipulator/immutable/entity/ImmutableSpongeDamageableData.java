@@ -44,8 +44,8 @@ public class ImmutableSpongeDamageableData extends AbstractImmutableData<Immutab
     @Nullable private final EntitySnapshot lastAttacker;
     @Nullable private final Double lastDamage;
 
-    private final OptionalValue.ImmutableOptionalValue<EntitySnapshot> lastAttackerValue;
-    private final OptionalValue.ImmutableOptionalValue<Double> lastDamageValue;
+    private final OptionalValue.Immutable<EntitySnapshot> lastAttackerValue;
+    private final OptionalValue.Immutable<Double> lastDamageValue;
 
     public ImmutableSpongeDamageableData() {
         this((EntitySnapshot) null, null);
@@ -64,12 +64,12 @@ public class ImmutableSpongeDamageableData extends AbstractImmutableData<Immutab
     }
 
     @Override
-    public OptionalValue.ImmutableOptionalValue<EntitySnapshot> lastAttacker() {
+    public OptionalValue.Immutable<EntitySnapshot> lastAttacker() {
         return this.lastAttackerValue;
     }
 
     @Override
-    public OptionalValue.ImmutableOptionalValue<Double> lastDamage() {
+    public OptionalValue.Immutable<Double> lastDamage() {
         return this.lastDamageValue;
     }
 

@@ -41,7 +41,7 @@ import java.util.function.Function;
  * @param <L> The type of Mutable collection value (SpongeMutableListValue)
  */
 public abstract class ImmutableSpongeCollectionValue<E, V extends Collection<E>, I extends CollectionValue.Immutable<E, V, I, L>,
-    L extends CollectionValue.Mutable<E, V, L, I>> extends ImmutableSpongeValue<V, I, L> implements
+    L extends CollectionValue.Mutable<E, V, L, I>> extends ImmutableSpongeValue<V> implements
     CollectionValue.Immutable<E, V, I, L> {
 
     ImmutableSpongeCollectionValue(Key<? extends Value<V>> key, V defaultValue) {

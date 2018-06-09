@@ -76,7 +76,7 @@ public class SpongeBeaconData extends AbstractData<BeaconData, ImmutableBeaconDa
     }
 
     @Override
-    public OptionalValue.MutableOptionalValue<PotionEffectType> primaryEffect() {
+    public OptionalValue.Mutable<PotionEffectType> primaryEffect() {
         return new SpongeMutableOptionalValue<>(Keys.BEACON_PRIMARY_EFFECT, Optional.ofNullable(this.primaryEffect));
     }
 
@@ -89,7 +89,7 @@ public class SpongeBeaconData extends AbstractData<BeaconData, ImmutableBeaconDa
     }
 
     @Override
-    public OptionalValue.MutableOptionalValue<PotionEffectType> secondaryEffect() {
+    public OptionalValue.Mutable<PotionEffectType> secondaryEffect() {
         return new SpongeMutableOptionalValue<>(Keys.BEACON_SECONDARY_EFFECT, Optional.ofNullable(this.secondaryEffect));
     }
 

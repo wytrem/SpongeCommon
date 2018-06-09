@@ -37,7 +37,7 @@ import org.spongepowered.common.text.SpongeTexts;
 
 import java.util.Optional;
 
-public class TileEntityLastCommandOutputValueProcessor extends AbstractSpongeValueProcessor<TileEntityCommandBlock, Optional<Text>, OptionalValue.MutableOptionalValue<Text>> {
+public class TileEntityLastCommandOutputValueProcessor extends AbstractSpongeValueProcessor<TileEntityCommandBlock, Optional<Text>, OptionalValue.Mutable<Text>> {
 
     public TileEntityLastCommandOutputValueProcessor() {
         super(TileEntityCommandBlock.class, Keys.LAST_COMMAND_OUTPUT);
@@ -49,7 +49,7 @@ public class TileEntityLastCommandOutputValueProcessor extends AbstractSpongeVal
     }
 
     @Override
-    protected OptionalValue.MutableOptionalValue<Text> constructValue(Optional<Text> actualValue) {
+    protected OptionalValue.Mutable<Text> constructValue(Optional<Text> actualValue) {
         return new SpongeMutableOptionalValue<>(Keys.LAST_COMMAND_OUTPUT, actualValue);
     }
 

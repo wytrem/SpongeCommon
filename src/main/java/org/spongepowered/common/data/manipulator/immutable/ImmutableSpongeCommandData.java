@@ -52,7 +52,7 @@ public class ImmutableSpongeCommandData extends AbstractImmutableData<ImmutableC
     private final Value.Immutable<String> storedValue;
     private final BoundedValue.Immutable<Integer> successValue;
     private final Value.Immutable<Boolean> tracksValue;
-    private final OptionalValue.ImmutableOptionalValue<Text> lastOutputValue;
+    private final OptionalValue.Immutable<Text> lastOutputValue;
 
     public ImmutableSpongeCommandData(String storedCommand, int success, boolean tracks, @Nullable Text lastOutput) {
         super(ImmutableCommandData.class);
@@ -91,7 +91,7 @@ public class ImmutableSpongeCommandData extends AbstractImmutableData<ImmutableC
     }
 
     @Override
-    public OptionalValue.ImmutableOptionalValue<Text> lastOutput() {
+    public OptionalValue.Immutable<Text> lastOutput() {
         return this.lastOutputValue;
     }
 

@@ -38,7 +38,7 @@ public class ImmutableSpongeExplosionRadiusData
         extends AbstractImmutableSingleData<Optional<Integer>, ImmutableExplosionRadiusData, ExplosionRadiusData>
         implements ImmutableExplosionRadiusData {
 
-    private final OptionalValue.ImmutableOptionalValue<Integer> value;
+    private final OptionalValue.Immutable<Integer> value;
 
     public ImmutableSpongeExplosionRadiusData(Optional<Integer> explosionRadius) {
         super(ImmutableExplosionRadiusData.class, explosionRadius, Keys.EXPLOSION_RADIUS);
@@ -46,7 +46,7 @@ public class ImmutableSpongeExplosionRadiusData
     }
 
     @Override
-    protected OptionalValue.ImmutableOptionalValue<Integer> getValueGetter() {
+    protected OptionalValue.Immutable<Integer> getValueGetter() {
         return explosionRadius();
     }
 
@@ -56,7 +56,7 @@ public class ImmutableSpongeExplosionRadiusData
     }
 
     @Override
-    public OptionalValue.ImmutableOptionalValue<Integer> explosionRadius() {
+    public OptionalValue.Immutable<Integer> explosionRadius() {
         return this.value;
     }
 

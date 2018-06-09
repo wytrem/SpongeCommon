@@ -44,7 +44,7 @@ public class ImmutableSpongeTameableData extends AbstractImmutableData<Immutable
     private static final ImmutableSpongeTameableData EMPTY_DATA = new ImmutableSpongeTameableData(null);
 
     @Nullable private final UUID owner;
-    private final OptionalValue.ImmutableOptionalValue<UUID> immutableValue;
+    private final OptionalValue.Immutable<UUID> immutableValue;
 
     public ImmutableSpongeTameableData(@Nullable UUID owner) {
         super(ImmutableTameableData.class);
@@ -58,7 +58,7 @@ public class ImmutableSpongeTameableData extends AbstractImmutableData<Immutable
     }
 
     @Override
-    public OptionalValue.ImmutableOptionalValue<UUID> owner() {
+    public OptionalValue.Immutable<UUID> owner() {
         return this.immutableValue;
     }
 

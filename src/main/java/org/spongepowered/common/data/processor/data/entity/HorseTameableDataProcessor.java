@@ -42,7 +42,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public class HorseTameableDataProcessor
-        extends AbstractEntitySingleDataProcessor<AbstractHorse, Optional<UUID>, OptionalValue.MutableOptionalValue<UUID>, TameableData, ImmutableTameableData> {
+        extends AbstractEntitySingleDataProcessor<AbstractHorse, Optional<UUID>, OptionalValue.Mutable<UUID>, TameableData, ImmutableTameableData> {
 
     public HorseTameableDataProcessor() {
         super(AbstractHorse.class, Keys.TAMED_OWNER);
@@ -79,7 +79,7 @@ public class HorseTameableDataProcessor
     }
 
     @Override
-    protected OptionalValue.MutableOptionalValue<UUID> constructValue(Optional<UUID> defaultValue) {
+    protected OptionalValue.Mutable<UUID> constructValue(Optional<UUID> defaultValue) {
         return new SpongeMutableOptionalValue<>(this.getKey(), defaultValue);
     }
 

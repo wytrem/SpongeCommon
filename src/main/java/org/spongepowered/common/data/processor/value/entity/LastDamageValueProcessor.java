@@ -36,14 +36,14 @@ import org.spongepowered.common.interfaces.entity.IMixinEntityLivingBase;
 
 import java.util.Optional;
 
-public class LastDamageValueProcessor extends AbstractSpongeValueProcessor<EntityLivingBase, Optional<Double>, OptionalValue.MutableOptionalValue<Double>> {
+public class LastDamageValueProcessor extends AbstractSpongeValueProcessor<EntityLivingBase, Optional<Double>, OptionalValue.Mutable<Double>> {
 
     public LastDamageValueProcessor() {
         super(EntityLivingBase.class, Keys.LAST_DAMAGE);
     }
 
     @Override
-    protected OptionalValue.MutableOptionalValue<Double> constructValue(Optional<Double> actualValue) {
+    protected OptionalValue.Mutable<Double> constructValue(Optional<Double> actualValue) {
         return SpongeValueFactory.getInstance().createOptionalValue(Keys.LAST_DAMAGE, actualValue.orElse(null));
     }
 

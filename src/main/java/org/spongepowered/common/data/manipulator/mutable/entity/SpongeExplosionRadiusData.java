@@ -47,7 +47,7 @@ public class SpongeExplosionRadiusData extends AbstractSingleData<Optional<Integ
     }
 
     @Override
-    protected OptionalValue.MutableOptionalValue<Integer> getValueGetter() {
+    protected OptionalValue.Mutable<Integer> getValueGetter() {
         return explosionRadius();
     }
 
@@ -62,14 +62,14 @@ public class SpongeExplosionRadiusData extends AbstractSingleData<Optional<Integ
     }
 
     @Override
-    public OptionalValue.MutableOptionalValue<Integer> explosionRadius() {
+    public OptionalValue.Mutable<Integer> explosionRadius() {
         return new SpongeMutableOptionalValue<>(Keys.EXPLOSION_RADIUS, getValue());
     }
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     public static int compare(ValueContainer dis, ValueContainer dat) {
-        Optional<Integer> value = ((OptionalValue.MutableOptionalValue<Integer>) dis.get(Keys.EXPLOSION_RADIUS).get()).get();
-        Optional<Integer> other = ((OptionalValue.MutableOptionalValue<Integer>) dat.get(Keys.EXPLOSION_RADIUS).get()).get();
+        Optional<Integer> value = ((OptionalValue.Mutable<Integer>) dis.get(Keys.EXPLOSION_RADIUS).get()).get();
+        Optional<Integer> other = ((OptionalValue.Mutable<Integer>) dat.get(Keys.EXPLOSION_RADIUS).get()).get();
         if (value.isPresent()) {
             if (other.isPresent()) {
                 return value.get() - other.get();

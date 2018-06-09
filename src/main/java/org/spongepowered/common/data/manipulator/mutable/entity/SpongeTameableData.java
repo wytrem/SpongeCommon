@@ -53,7 +53,7 @@ public class SpongeTameableData extends AbstractData<TameableData, ImmutableTame
     }
 
     @Override
-    public OptionalValue.MutableOptionalValue<UUID> owner() {
+    public OptionalValue.Mutable<UUID> owner() {
         return new SpongeMutableOptionalValue<>(Keys.TAMED_OWNER, Optional.ofNullable(this.owner));
     }
 

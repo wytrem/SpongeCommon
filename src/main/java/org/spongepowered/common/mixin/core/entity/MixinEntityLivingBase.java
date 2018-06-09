@@ -945,13 +945,13 @@ public abstract class MixinEntityLivingBase extends MixinEntity implements Livin
     }
 
     @Override
-    public OptionalValue.MutableOptionalValue<EntitySnapshot> lastAttacker() {
+    public OptionalValue.Mutable<EntitySnapshot> lastAttacker() {
         return new SpongeMutableOptionalValue<>(Keys.LAST_ATTACKER, Optional.empty(), Optional.ofNullable(this.revengeTarget == null ?
                                                                                                           null : ((Living) this.revengeTarget).createSnapshot()));
     }
 
     @Override
-    public OptionalValue.MutableOptionalValue<Double> lastDamage() {
+    public OptionalValue.Mutable<Double> lastDamage() {
         return new SpongeMutableOptionalValue<>(Keys.LAST_DAMAGE, Optional.empty(), Optional.ofNullable(this.revengeTarget == null ?
                                                                                                         null : (double) (this.lastDamage)));
     }

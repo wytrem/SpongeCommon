@@ -105,12 +105,12 @@ public class SpongeValueFactory implements ValueFactory {
     }
 
     @Override
-    public <E> OptionalValue.MutableOptionalValue<E> createOptionalValue(Key<OptionalValue.MutableOptionalValue<E>> key, @Nullable E element) {
+    public <E> OptionalValue.Mutable<E> createOptionalValue(Key<OptionalValue.Mutable<E>> key, @Nullable E element) {
         return new SpongeMutableOptionalValue<>(checkNotNull(key, "key"), Optional.<E>empty(), Optional.ofNullable(element));
     }
 
     @Override
-    public <E> OptionalValue.MutableOptionalValue<E> createOptionalValue(Key<OptionalValue.MutableOptionalValue<E>> key, @Nullable E element, E defaultElement) {
+    public <E> OptionalValue.Mutable<E> createOptionalValue(Key<OptionalValue.Mutable<E>> key, @Nullable E element, E defaultElement) {
         return new SpongeMutableOptionalValue<>(checkNotNull(key, "key"), Optional.of(defaultElement), Optional.ofNullable(element));
     }
 

@@ -41,14 +41,14 @@ import java.util.Optional;
 import javax.annotation.Nullable;
 
 public class LastAttackerValueProcessor
-        extends AbstractSpongeValueProcessor<EntityLivingBase, Optional<EntitySnapshot>, OptionalValue.MutableOptionalValue<EntitySnapshot>> {
+        extends AbstractSpongeValueProcessor<EntityLivingBase, Optional<EntitySnapshot>, OptionalValue.Mutable<EntitySnapshot>> {
 
     public LastAttackerValueProcessor() {
         super(EntityLivingBase.class, Keys.LAST_ATTACKER);
     }
 
     @Override
-    protected OptionalValue.MutableOptionalValue<EntitySnapshot> constructValue(Optional<EntitySnapshot> actualValue) {
+    protected OptionalValue.Mutable<EntitySnapshot> constructValue(Optional<EntitySnapshot> actualValue) {
         return SpongeValueFactory.getInstance().createOptionalValue(Keys.LAST_ATTACKER, actualValue.orElse(null));
     }
 

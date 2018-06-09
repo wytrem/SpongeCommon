@@ -32,8 +32,8 @@ import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
 import java.util.function.Function;
 
 @SuppressWarnings("unchecked")
-public class SpongeMutableValue<E, M extends Value.Mutable<E, M, I>, I extends Value.Immutable<E, I, M>> extends AbstractValue<E> implements
-    Value.Mutable<E, M, I> {
+public class SpongeMutableValue<E, M extends Value.Mutable<E>, I extends Value.Immutable<E>> extends AbstractValue<E> implements
+    Value.Mutable<E> {
 
     public SpongeMutableValue(Key<? extends Value<E>> key, E defaultValue) {
         this(key, defaultValue, defaultValue);
@@ -70,16 +70,4 @@ public class SpongeMutableValue<E, M extends Value.Mutable<E, M, I>, I extends V
         return (M) new SpongeMutableValue<>(this.getKey(), this.getDefault(), this.actualValue);
     }
 
-    public static final class Single<E> extends SpongeMutableValue<E, Mutable.Single<E>, Immutable.Single<E>> implements Mutable.Single<E> {
-
-        public Single(Key<? extends Value<E>> key, E defaultValue) {
-            super(key, defaultValue);
-        }
-
-        public Single(Key<? extends Value<E>> key, E defaultValue, E actualValue) {
-            super(key, defaultValue, actualValue);
-        }
-
-
-    }
 }

@@ -39,14 +39,14 @@ import org.spongepowered.common.interfaces.IMixinTileEntityBeacon;
 import java.util.Optional;
 
 public class BeaconSecondaryEffectValueProcessor
-        extends AbstractSpongeValueProcessor<TileEntityBeacon, Optional<PotionEffectType>, OptionalValue.MutableOptionalValue<PotionEffectType>> {
+        extends AbstractSpongeValueProcessor<TileEntityBeacon, Optional<PotionEffectType>, OptionalValue.Mutable<PotionEffectType>> {
 
     public BeaconSecondaryEffectValueProcessor() {
         super(TileEntityBeacon.class, Keys.BEACON_SECONDARY_EFFECT);
     }
 
     @Override
-    protected OptionalValue.MutableOptionalValue<PotionEffectType> constructValue(Optional<PotionEffectType> actualValue) {
+    protected OptionalValue.Mutable<PotionEffectType> constructValue(Optional<PotionEffectType> actualValue) {
         return SpongeValueFactory.getInstance().createOptionalValue(Keys.BEACON_SECONDARY_EFFECT, actualValue.orElse(null));
     }
 

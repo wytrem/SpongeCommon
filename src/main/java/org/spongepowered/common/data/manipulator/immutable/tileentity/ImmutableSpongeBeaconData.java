@@ -44,8 +44,8 @@ public class ImmutableSpongeBeaconData extends AbstractImmutableData<ImmutableBe
     private final PotionEffectType primaryEffect;
     @Nullable
     private final PotionEffectType secondaryEffect;
-    private final OptionalValue.ImmutableOptionalValue<PotionEffectType> primaryEffectValue;
-    private final OptionalValue.ImmutableOptionalValue<PotionEffectType> secondaryEffectValue;
+    private final OptionalValue.Immutable<PotionEffectType> primaryEffectValue;
+    private final OptionalValue.Immutable<PotionEffectType> secondaryEffectValue;
 
     public ImmutableSpongeBeaconData(@Nullable PotionEffectType primaryEffect, @Nullable PotionEffectType secondaryEffect) {
         super(ImmutableBeaconData.class);
@@ -70,7 +70,7 @@ public class ImmutableSpongeBeaconData extends AbstractImmutableData<ImmutableBe
     }
 
     @Override
-    public OptionalValue.ImmutableOptionalValue<PotionEffectType> primaryEffect() {
+    public OptionalValue.Immutable<PotionEffectType> primaryEffect() {
         return this.primaryEffectValue;
     }
 
@@ -79,7 +79,7 @@ public class ImmutableSpongeBeaconData extends AbstractImmutableData<ImmutableBe
     }
 
     @Override
-    public OptionalValue.ImmutableOptionalValue<PotionEffectType> secondaryEffect() {
+    public OptionalValue.Immutable<PotionEffectType> secondaryEffect() {
         return this.secondaryEffectValue;
     }
 

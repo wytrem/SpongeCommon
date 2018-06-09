@@ -36,7 +36,7 @@ import java.util.function.Function;
 
 import javax.annotation.Nullable;
 
-public class SpongeMutableOptionalValue<E> extends SpongeMutableValue<Optional<E>> implements OptionalValue.MutableOptionalValue<E> {
+public class SpongeMutableOptionalValue<E> extends SpongeMutableValue<Optional<E>> implements OptionalValue.Mutable<E> {
 
     public SpongeMutableOptionalValue(Key<? extends Value<Optional<E>>> key) {
         this(key, Optional.<E>empty());
@@ -51,34 +51,34 @@ public class SpongeMutableOptionalValue<E> extends SpongeMutableValue<Optional<E
     }
 
     @Override
-    public MutableOptionalValue<E> set(Optional<E> value) {
+    public OptionalValue.Mutable<E> set(Optional<E> value) {
         this.actualValue = checkNotNull(value);
         return this;
     }
 
     @Override
-    public MutableOptionalValue<E> transform(Function<Optional<E>, Optional<E>> function) {
+    public OptionalValue.Mutable<E> transform(Function<Optional<E>, Optional<E>> function) {
         this.actualValue = checkNotNull(function.apply(this.actualValue));
         return this;
     }
 
     @Override
-    public ImmutableOptionalValue<E> asImmutable() {
+    public OptionalValue.Immutable<E> asImmutable() {
         return new ImmutableSpongeOptionalValue<>(getKey(), this.actualValue);
     }
 
     @Override
-    public MutableOptionalValue<E> copy() {
+    public OptionalValue.Mutable<E> copy() {
         return new SpongeMutableOptionalValue<>(getKey(), this.actualValue);
     }
 
     @Override
-    public MutableOptionalValue<E> setTo(@Nullable E value) {
+    public OptionalValue.Mutable<E> setTo(@Nullable E value) {
         return set(Optional.ofNullable(value));
     }
 
     @Override
-    public Mutable<E> or(E defaultValue) { // TODO actually construct the keys
+    public Value.Mutable or(E defaultValue) { // TODO actually construct the keys
         return new SpongeMutableValue<>(null, null, get().isPresent() ? get().get() : checkNotNull(defaultValue));
     }
 }

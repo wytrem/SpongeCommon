@@ -79,7 +79,7 @@ public class SpongeCommandData extends AbstractData<CommandData, ImmutableComman
     }
 
     @Override
-    public OptionalValue.MutableOptionalValue<Text> lastOutput() {
+    public OptionalValue.Mutable<Text> lastOutput() {
         return new SpongeMutableOptionalValue<>(Keys.LAST_COMMAND_OUTPUT, getLastOutput());
     }
 

@@ -53,7 +53,7 @@ public abstract class AbstractBooleanData<M extends DataManipulator<M, I>, I ext
     }
 
     @Override
-    protected Value.Mutable.Single<Boolean> getValueGetter() {
+    protected Value.Mutable<Boolean> getValueGetter() {
         return new SpongeMutableValue<>(this.usedKey, this.defaultValue, this.getValue());
     }
 

@@ -38,7 +38,7 @@ import org.spongepowered.common.text.SpongeTexts;
 import java.util.Optional;
 
 public class EntityLastCommandOutputValueProcessor extends
-        AbstractSpongeValueProcessor<EntityMinecartCommandBlock, Optional<Text>, OptionalValue.MutableOptionalValue<Text>> {
+        AbstractSpongeValueProcessor<EntityMinecartCommandBlock, Optional<Text>, OptionalValue.Mutable<Text>> {
 
     public EntityLastCommandOutputValueProcessor() {
         super(EntityMinecartCommandBlock.class, Keys.LAST_COMMAND_OUTPUT);
@@ -50,7 +50,7 @@ public class EntityLastCommandOutputValueProcessor extends
     }
 
     @Override
-    protected OptionalValue.MutableOptionalValue<Text> constructValue(Optional<Text> actualValue) {
+    protected OptionalValue.Mutable<Text> constructValue(Optional<Text> actualValue) {
         return new SpongeMutableOptionalValue<>(Keys.LAST_COMMAND_OUTPUT, actualValue);
     }
 

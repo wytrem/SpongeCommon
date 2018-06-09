@@ -59,12 +59,12 @@ public class SpongeDamageableData extends AbstractData<DamageableData, Immutable
     }
 
     @Override
-    public OptionalValue.MutableOptionalValue<EntitySnapshot> lastAttacker() {
+    public OptionalValue.Mutable<EntitySnapshot> lastAttacker() {
         return new SpongeMutableOptionalValue<>(Keys.LAST_ATTACKER, Optional.empty(), Optional.ofNullable(this.lastAttacker));
     }
 
     @Override
-    public OptionalValue.MutableOptionalValue<Double> lastDamage() {
+    public OptionalValue.Mutable<Double> lastDamage() {
         return new SpongeMutableOptionalValue<>(Keys.LAST_DAMAGE, Optional.empty(), Optional.ofNullable(this.lastAttacker == null ? null : this.lastDamage));
     }
 

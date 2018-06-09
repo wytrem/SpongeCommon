@@ -36,7 +36,7 @@ import java.util.function.Function;
 
 import javax.annotation.Nullable;
 
-public class ImmutableSpongeOptionalValue<E> extends ImmutableSpongeValue<Optional<E>> implements OptionalValue.ImmutableOptionalValue<E> {
+public class ImmutableSpongeOptionalValue<E> extends ImmutableSpongeValue<Optional<E>> implements OptionalValue.Immutable<E> {
 
     public ImmutableSpongeOptionalValue(Key<? extends Value<Optional<E>>> key) {
         super(key, Optional.<E>empty());
@@ -47,27 +47,27 @@ public class ImmutableSpongeOptionalValue<E> extends ImmutableSpongeValue<Option
     }
 
     @Override
-    public ImmutableOptionalValue<E> with(Optional<E> value) {
+    public OptionalValue.Immutable<E> with(Optional<E> value) {
         return new ImmutableSpongeOptionalValue<>(getKey(), checkNotNull(value));
     }
 
     @Override
-    public ImmutableOptionalValue<E> transform(Function<Optional<E>, Optional<E>> function) {
+    public OptionalValue.Immutable<E> transform(Function<Optional<E>, Optional<E>> function) {
         return new ImmutableSpongeOptionalValue<>(getKey(), checkNotNull(function.apply(get())));
     }
 
     @Override
-    public MutableOptionalValue<E> asMutable() {
+    public OptionalValue.Mutable<E> asMutable() {
         return new SpongeMutableOptionalValue<>(getKey(), this.actualValue);
     }
 
     @Override
-    public ImmutableOptionalValue<E> instead(@Nullable E value) {
+    public OptionalValue.Immutable<E> instead(@Nullable E value) {
         return new ImmutableSpongeOptionalValue<>(getKey(), Optional.ofNullable(value));
     }
 
     @Override
-    public Immutable<E> or(E value) { // TODO actually construct a new key for this kind...
+    public Value.Immutable or(E value) { // TODO actually construct a new key for this kind...
         return new ImmutableSpongeValue<>(null, get().isPresent() ? get().get() : checkNotNull(value));
     }
 }

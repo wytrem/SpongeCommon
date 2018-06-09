@@ -42,7 +42,7 @@ import org.spongepowered.common.interfaces.entity.explosive.IMixinExplosive;
 
 import java.util.Optional;
 
-public class ExplosionRadiusDataProcessor extends AbstractSingleDataSingleTargetProcessor<Explosive, Optional<Integer>, OptionalValue.MutableOptionalValue<Integer>,
+public class ExplosionRadiusDataProcessor extends AbstractSingleDataSingleTargetProcessor<Explosive, Optional<Integer>, OptionalValue.Mutable<Integer>,
         ExplosionRadiusData, ImmutableExplosionRadiusData> {
 
     public ExplosionRadiusDataProcessor() {
@@ -67,7 +67,7 @@ public class ExplosionRadiusDataProcessor extends AbstractSingleDataSingleTarget
     }
 
     @Override
-    protected OptionalValue.MutableOptionalValue<Integer> constructValue(Optional<Integer> actualValue) {
+    protected OptionalValue.Mutable<Integer> constructValue(Optional<Integer> actualValue) {
         return new SpongeMutableOptionalValue<>(Keys.EXPLOSION_RADIUS, actualValue);
     }
 
