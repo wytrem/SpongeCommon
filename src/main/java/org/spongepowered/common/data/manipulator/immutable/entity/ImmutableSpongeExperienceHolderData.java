@@ -30,7 +30,7 @@ import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.entity.ImmutableExperienceHolderData;
 import org.spongepowered.api.data.manipulator.mutable.entity.ExperienceHolderData;
-import org.spongepowered.api.data.value.immutable.ImmutableBoundedValue;
+import org.spongepowered.api.data.value.BoundedValue;
 import org.spongepowered.common.data.manipulator.immutable.common.AbstractImmutableData;
 import org.spongepowered.common.data.manipulator.mutable.entity.SpongeExperienceHolderData;
 import org.spongepowered.common.data.processor.common.ExperienceHolderUtils;
@@ -43,10 +43,10 @@ public class ImmutableSpongeExperienceHolderData extends AbstractImmutableData<I
     private final int expSinceLevel;
     private final int expBetweenLevels;
 
-    private final ImmutableBoundedValue<Integer> levelValue;
-    private final ImmutableBoundedValue<Integer> totalExpValue;
-    private final ImmutableBoundedValue<Integer> expSinceLevelValue;
-    private final ImmutableBoundedValue<Integer> expBetweenLevelsValue;
+    private final BoundedValue.Immutable<Integer> levelValue;
+    private final BoundedValue.Immutable<Integer> totalExpValue;
+    private final BoundedValue.Immutable<Integer> expSinceLevelValue;
+    private final BoundedValue.Immutable<Integer> expBetweenLevelsValue;
 
     public ImmutableSpongeExperienceHolderData(int level, int totalExp, int expSinceLevel) {
         super(ImmutableExperienceHolderData.class);
@@ -104,22 +104,22 @@ public class ImmutableSpongeExperienceHolderData extends AbstractImmutableData<I
     }
 
     @Override
-    public ImmutableBoundedValue<Integer> level() {
+    public BoundedValue.Immutable<Integer> level() {
         return this.levelValue;
     }
 
     @Override
-    public ImmutableBoundedValue<Integer> totalExperience() {
+    public BoundedValue.Immutable<Integer> totalExperience() {
         return this.totalExpValue;
     }
 
     @Override
-    public ImmutableBoundedValue<Integer> experienceSinceLevel() {
+    public BoundedValue.Immutable<Integer> experienceSinceLevel() {
         return this.expSinceLevelValue;
     }
 
     @Override
-    public ImmutableBoundedValue<Integer> experienceBetweenLevels() {
+    public BoundedValue.Immutable<Integer> experienceBetweenLevels() {
         return this.expBetweenLevelsValue;
     }
 

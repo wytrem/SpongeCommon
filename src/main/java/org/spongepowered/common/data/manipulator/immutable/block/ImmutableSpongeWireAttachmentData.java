@@ -31,8 +31,8 @@ import org.spongepowered.api.data.manipulator.immutable.block.ImmutableWireAttac
 import org.spongepowered.api.data.manipulator.mutable.block.WireAttachmentData;
 import org.spongepowered.api.data.type.WireAttachmentType;
 import org.spongepowered.api.data.type.WireAttachmentTypes;
-import org.spongepowered.api.data.value.immutable.ImmutableMapValue;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
+import org.spongepowered.api.data.value.MapValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.util.Direction;
 import org.spongepowered.common.data.manipulator.immutable.common.AbstractImmutableData;
 import org.spongepowered.common.data.manipulator.mutable.block.SpongeWireAttachementData;
@@ -46,11 +46,11 @@ public class ImmutableSpongeWireAttachmentData extends AbstractImmutableData<Imm
 
     private final ImmutableMap<Direction, WireAttachmentType> wireAttachmentMap;
 
-    private final ImmutableMapValue<Direction, WireAttachmentType> wireAttachmentsValue;
-    private final ImmutableValue<WireAttachmentType> northValue;
-    private final ImmutableValue<WireAttachmentType> southValue;
-    private final ImmutableValue<WireAttachmentType> eastValue;
-    private final ImmutableValue<WireAttachmentType> westValue;
+    private final MapValue.Immutable<Direction, WireAttachmentType> wireAttachmentsValue;
+    private final Value.Immutable<WireAttachmentType> northValue;
+    private final Value.Immutable<WireAttachmentType> southValue;
+    private final Value.Immutable<WireAttachmentType> eastValue;
+    private final Value.Immutable<WireAttachmentType> westValue;
 
     public ImmutableSpongeWireAttachmentData(Map<Direction, WireAttachmentType> wireAttachmentMap) {
         super(ImmutableWireAttachmentData.class);
@@ -65,27 +65,27 @@ public class ImmutableSpongeWireAttachmentData extends AbstractImmutableData<Imm
     }
 
     @Override
-    public ImmutableMapValue<Direction, WireAttachmentType> wireAttachments() {
+    public MapValue.Immutable<Direction, WireAttachmentType> wireAttachments() {
         return this.wireAttachmentsValue;
     }
 
     @Override
-    public ImmutableValue<WireAttachmentType> wireAttachmentNorth() {
+    public Value.Immutable<WireAttachmentType> wireAttachmentNorth() {
         return this.northValue;
     }
 
     @Override
-    public ImmutableValue<WireAttachmentType> wireAttachmentSouth() {
+    public Value.Immutable<WireAttachmentType> wireAttachmentSouth() {
         return this.southValue;
     }
 
     @Override
-    public ImmutableValue<WireAttachmentType> wireAttachmentEast() {
+    public Value.Immutable<WireAttachmentType> wireAttachmentEast() {
         return this.eastValue;
     }
 
     @Override
-    public ImmutableValue<WireAttachmentType> wireAttachmentWest() {
+    public Value.Immutable<WireAttachmentType> wireAttachmentWest() {
         return this.westValue;
     }
 

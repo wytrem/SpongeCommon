@@ -33,8 +33,8 @@ import org.spongepowered.api.data.manipulator.immutable.tileentity.ImmutableBann
 import org.spongepowered.api.data.manipulator.mutable.tileentity.BannerData;
 import org.spongepowered.api.data.meta.PatternLayer;
 import org.spongepowered.api.data.type.DyeColor;
-import org.spongepowered.api.data.value.immutable.ImmutablePatternListValue;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
+import org.spongepowered.api.data.value.Value;
+import org.spongepowered.api.data.value.meta.PatternListValue;
 import org.spongepowered.common.data.manipulator.immutable.common.AbstractImmutableData;
 import org.spongepowered.common.data.manipulator.mutable.tileentity.SpongeBannerData;
 import org.spongepowered.common.data.util.DataConstants;
@@ -48,7 +48,7 @@ public class ImmutableSpongeBannerData extends AbstractImmutableData<ImmutableBa
     private final DyeColor base;
     private final List<PatternLayer> layers;
 
-    private final ImmutableValue<DyeColor> baseValue;
+    private final Value.Immutable<DyeColor> baseValue;
     private final ImmutableSpongePatternListValue layersValue;
 
     public ImmutableSpongeBannerData(DyeColor base, List<PatternLayer> layers) {
@@ -78,12 +78,12 @@ public class ImmutableSpongeBannerData extends AbstractImmutableData<ImmutableBa
     }
 
     @Override
-    public ImmutableValue<DyeColor> baseColor() {
+    public Value.Immutable<DyeColor> baseColor() {
         return this.baseValue;
     }
 
     @Override
-    public ImmutablePatternListValue patterns() {
+    public PatternListValue.Immutable patterns() {
         return this.layersValue;
     }
 

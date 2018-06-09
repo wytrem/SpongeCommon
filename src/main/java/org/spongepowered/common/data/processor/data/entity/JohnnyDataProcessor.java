@@ -29,9 +29,8 @@ import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.entity.ImmutableJohnnyData;
 import org.spongepowered.api.data.manipulator.mutable.entity.JohnnyData;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.manipulator.mutable.entity.SpongeJohnnyData;
 import org.spongepowered.common.data.processor.common.AbstractEntitySingleDataProcessor;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
@@ -40,7 +39,7 @@ import org.spongepowered.common.interfaces.entity.monster.IMixinVindicator;
 
 import java.util.Optional;
 
-public class JohnnyDataProcessor extends AbstractEntitySingleDataProcessor<EntityVindicator, Boolean, MutableValue<Boolean>, JohnnyData, ImmutableJohnnyData> {
+public class JohnnyDataProcessor extends AbstractEntitySingleDataProcessor<EntityVindicator, Boolean, Value.Mutable<Boolean>, JohnnyData, ImmutableJohnnyData> {
 
     public JohnnyDataProcessor() {
         super(EntityVindicator.class, Keys.IS_JOHNNY);
@@ -58,12 +57,12 @@ public class JohnnyDataProcessor extends AbstractEntitySingleDataProcessor<Entit
     }
 
     @Override
-    protected ImmutableValue<Boolean> constructImmutableValue(Boolean value) {
+    protected Value.Immutable<Boolean> constructImmutableValue(Boolean value) {
         return ImmutableSpongeValue.cachedOf(this.key, false, value);
     }
 
     @Override
-    protected MutableValue<Boolean> constructValue(Boolean actualValue) {
+    protected Value.Mutable<Boolean> constructValue(Boolean actualValue) {
         return new SpongeMutableValue<>(this.key, false, actualValue);
     }
 

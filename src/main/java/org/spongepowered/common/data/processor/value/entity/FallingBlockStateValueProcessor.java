@@ -29,23 +29,22 @@ import net.minecraft.entity.item.EntityFallingBlock;
 import org.spongepowered.api.block.BlockState;
 import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.processor.common.AbstractSpongeValueProcessor;
 import org.spongepowered.common.data.util.DataConstants;
 import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
 import java.util.Optional;
 
-public class FallingBlockStateValueProcessor extends AbstractSpongeValueProcessor<EntityFallingBlock, BlockState, MutableValue<BlockState>> {
+public class FallingBlockStateValueProcessor extends AbstractSpongeValueProcessor<EntityFallingBlock, BlockState, Value.Mutable<BlockState>> {
 
     public FallingBlockStateValueProcessor() {
         super(EntityFallingBlock.class, Keys.FALLING_BLOCK_STATE);
     }
 
     @Override
-    protected MutableValue<BlockState> constructValue(BlockState value) {
+    protected Value.Mutable<BlockState> constructValue(BlockState value) {
         return new SpongeMutableValue<>(Keys.FALLING_BLOCK_STATE, DataConstants.Catalog.DEFAULT_FALLING_BLOCK_BLOCKSTATE, value);
     }
 
@@ -61,7 +60,7 @@ public class FallingBlockStateValueProcessor extends AbstractSpongeValueProcesso
     }
 
     @Override
-    protected ImmutableValue<BlockState> constructImmutableValue(BlockState value) {
+    protected Value.Immutable<BlockState> constructImmutableValue(BlockState value) {
         return constructValue(value).asImmutable();
     }
 

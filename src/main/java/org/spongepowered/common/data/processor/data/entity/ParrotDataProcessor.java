@@ -31,9 +31,8 @@ import org.spongepowered.api.data.manipulator.immutable.entity.ImmutableParrotDa
 import org.spongepowered.api.data.manipulator.mutable.entity.ParrotData;
 import org.spongepowered.api.data.type.ParrotVariant;
 import org.spongepowered.api.data.type.ParrotVariants;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.manipulator.mutable.entity.SpongeParrotData;
 import org.spongepowered.common.data.processor.common.AbstractEntitySingleDataProcessor;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
@@ -44,7 +43,7 @@ import org.spongepowered.common.registry.type.entity.ParrotVariantRegistryModule
 import java.util.Optional;
 
 public class ParrotDataProcessor extends
-        AbstractEntitySingleDataProcessor<EntityParrot, ParrotVariant, MutableValue<ParrotVariant>, ParrotData, ImmutableParrotData> {
+        AbstractEntitySingleDataProcessor<EntityParrot, ParrotVariant, Value.Mutable<ParrotVariant>, ParrotData, ImmutableParrotData> {
 
     public ParrotDataProcessor() {
         super(EntityParrot.class, Keys.PARROT_VARIANT);
@@ -62,12 +61,12 @@ public class ParrotDataProcessor extends
     }
 
     @Override
-    protected ImmutableValue<ParrotVariant> constructImmutableValue(ParrotVariant value) {
+    protected Value.Immutable<ParrotVariant> constructImmutableValue(ParrotVariant value) {
         return ImmutableSpongeValue.cachedOf(this.key, ParrotVariants.RED, value);
     }
 
     @Override
-    protected MutableValue<ParrotVariant> constructValue(ParrotVariant actualValue) {
+    protected Value.Mutable<ParrotVariant> constructValue(ParrotVariant actualValue) {
         return new SpongeMutableValue<>(this.key, ParrotVariants.RED, actualValue);
     }
 

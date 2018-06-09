@@ -30,8 +30,6 @@ import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Key;
 import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.SpongeImpl;
 import org.spongepowered.common.data.ValueProcessor;
 
@@ -48,11 +46,11 @@ public abstract class AbstractSpongeValueProcessor<C, E, V extends Value<E>> imp
     }
 
     /**
-     * Builds a {@link MutableValue} of the type produced by this processor from an
+     * Builds a {@link Value.Mutable} of the type produced by this processor from an
      * input, actual value.
      *
      * @param actualValue The actual value
-     * @return The constructed {@link MutableValue}
+     * @return The constructed {@link Value.Mutable}
      */
     protected abstract V constructValue(E actualValue);
 
@@ -60,7 +58,7 @@ public abstract class AbstractSpongeValueProcessor<C, E, V extends Value<E>> imp
 
     protected abstract Optional<E> getVal(C container);
 
-    protected abstract ImmutableValue<E> constructImmutableValue(E value);
+    protected abstract Value.Immutable<E> constructImmutableValue(E value);
 
     protected boolean supports(C container) {
         return true;
@@ -105,7 +103,7 @@ public abstract class AbstractSpongeValueProcessor<C, E, V extends Value<E>> imp
     @SuppressWarnings("unchecked")
     @Override
     public DataTransactionResult offerToStore(ValueContainer<?> container, E value) {
-        final ImmutableValue<E> newValue = constructImmutableValue(value);
+        final Value.Immutable<E> newValue = constructImmutableValue(value);
         if (supports(container)) {
             final DataTransactionResult.Builder builder = DataTransactionResult.builder();
             final Optional<E> oldVal = getVal((C) container);

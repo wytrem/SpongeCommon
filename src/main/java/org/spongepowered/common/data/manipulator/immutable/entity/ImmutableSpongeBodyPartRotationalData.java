@@ -37,8 +37,8 @@ import org.spongepowered.api.data.manipulator.immutable.entity.ImmutableBodyPart
 import org.spongepowered.api.data.manipulator.mutable.entity.BodyPartRotationalData;
 import org.spongepowered.api.data.type.BodyPart;
 import org.spongepowered.api.data.type.BodyParts;
-import org.spongepowered.api.data.value.immutable.ImmutableMapValue;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
+import org.spongepowered.api.data.value.MapValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.common.data.manipulator.immutable.common.AbstractImmutableData;
 import org.spongepowered.common.data.manipulator.mutable.entity.SpongeBodyPartRotationalData;
 import org.spongepowered.common.data.util.DataConstants;
@@ -52,13 +52,13 @@ public class ImmutableSpongeBodyPartRotationalData extends AbstractImmutableData
         implements ImmutableBodyPartRotationalData {
 
     private final Map<BodyPart, Vector3d> rotations;
-    private final ImmutableMapValue<BodyPart, Vector3d> rotationsValue;
-    private final ImmutableValue<Vector3d> headRotationValue;
-    private final ImmutableValue<Vector3d> chestRotationValue;
-    private final ImmutableValue<Vector3d> leftArmRotationValue;
-    private final ImmutableValue<Vector3d> rightArmRotationValue;
-    private final ImmutableValue<Vector3d> leftLegRotationValue;
-    private final ImmutableValue<Vector3d> rightLegRotationValue;
+    private final MapValue.Immutable<BodyPart, Vector3d> rotationsValue;
+    private final Value.Immutable<Vector3d> headRotationValue;
+    private final Value.Immutable<Vector3d> chestRotationValue;
+    private final Value.Immutable<Vector3d> leftArmRotationValue;
+    private final Value.Immutable<Vector3d> rightArmRotationValue;
+    private final Value.Immutable<Vector3d> leftLegRotationValue;
+    private final Value.Immutable<Vector3d> rightLegRotationValue;
 
     public ImmutableSpongeBodyPartRotationalData(Map<BodyPart, Vector3d> rotations) {
         super(ImmutableBodyPartRotationalData.class);
@@ -118,37 +118,37 @@ public class ImmutableSpongeBodyPartRotationalData extends AbstractImmutableData
     }
 
     @Override
-    public ImmutableMapValue<BodyPart, Vector3d> partRotation() {
+    public MapValue.Immutable<BodyPart, Vector3d> partRotation() {
         return this.rotationsValue;
     }
 
     @Override
-    public ImmutableValue<Vector3d> headDirection() {
+    public Value.Immutable<Vector3d> headDirection() {
         return this.headRotationValue;
     }
 
     @Override
-    public ImmutableValue<Vector3d> bodyRotation() {
+    public Value.Immutable<Vector3d> bodyRotation() {
         return this.chestRotationValue;
     }
 
     @Override
-    public ImmutableValue<Vector3d> leftArmDirection() {
+    public Value.Immutable<Vector3d> leftArmDirection() {
         return this.leftArmRotationValue;
     }
 
     @Override
-    public ImmutableValue<Vector3d> rightArmDirection() {
+    public Value.Immutable<Vector3d> rightArmDirection() {
         return this.rightArmRotationValue;
     }
 
     @Override
-    public ImmutableValue<Vector3d> leftLegDirection() {
+    public Value.Immutable<Vector3d> leftLegDirection() {
         return this.leftLegRotationValue;
     }
 
     @Override
-    public ImmutableValue<Vector3d> rightLegDirection() {
+    public Value.Immutable<Vector3d> rightLegDirection() {
         return this.rightLegRotationValue;
     }
 

@@ -32,9 +32,9 @@ import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.item.ImmutableLoreData;
 import org.spongepowered.api.data.manipulator.mutable.item.LoreData;
+import org.spongepowered.api.data.value.ListValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableListValue;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.common.data.manipulator.mutable.item.SpongeLoreData;
 import org.spongepowered.common.data.processor.common.AbstractItemSingleDataProcessor;
@@ -47,7 +47,7 @@ import org.spongepowered.common.text.SpongeTexts;
 import java.util.List;
 import java.util.Optional;
 
-public class ItemLoreDataProcessor extends AbstractItemSingleDataProcessor<List<Text>, MutableListValue<Text>, LoreData, ImmutableLoreData> {
+public class ItemLoreDataProcessor extends AbstractItemSingleDataProcessor<List<Text>, ListValue.Mutable<Text>, LoreData, ImmutableLoreData> {
 
     public ItemLoreDataProcessor() {
         super(input -> true, Keys.ITEM_LORE);
@@ -98,12 +98,12 @@ public class ItemLoreDataProcessor extends AbstractItemSingleDataProcessor<List<
     }
 
     @Override
-    protected MutableListValue<Text> constructValue(List<Text> defaultValue) {
+    protected ListValue.Mutable<Text> constructValue(List<Text> defaultValue) {
         return new SpongeMutableListValue<>(Keys.ITEM_LORE, defaultValue);
     }
 
     @Override
-    protected ImmutableValue<List<Text>> constructImmutableValue(List<Text> value) {
+    protected Value.Immutable<List<Text>> constructImmutableValue(List<Text> value) {
         return new ImmutableSpongeListValue<>(Keys.ITEM_LORE, ImmutableList.copyOf(value));
     }
 

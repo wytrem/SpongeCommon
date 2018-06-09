@@ -29,7 +29,6 @@ import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Key;
 import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.ValueProcessor;
 
 import java.util.Optional;
@@ -112,8 +111,8 @@ public final class ValueProcessorDelegate<E, V extends Value<E>> implements Valu
                 final Optional<V> optional = processor.getApiValueFromContainer(container);
                 if (optional.isPresent()) {
                     V mutable = optional.get();
-                    ((MutableValue<E>) mutable).set(value);
-                    return DataTransactionResult.failResult(((MutableValue<E>) mutable).asImmutable());
+                    ((Value.Mutable<E>) mutable).set(value);
+                    return DataTransactionResult.failResult(((Value.Mutable<E>) mutable).asImmutable());
                 }
             }
         }

@@ -30,8 +30,8 @@ import com.google.common.collect.ImmutableList;
 import org.spongepowered.api.data.key.Key;
 import org.spongepowered.api.data.manipulator.immutable.ImmutableListData;
 import org.spongepowered.api.data.manipulator.mutable.ListData;
+import org.spongepowered.api.data.value.ListValue;
 import org.spongepowered.api.data.value.Value;
-import org.spongepowered.api.data.value.immutable.ImmutableListValue;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeListValue;
 import org.spongepowered.common.util.ReflectionUtil;
 
@@ -42,7 +42,7 @@ public abstract class AbstractImmutableListData<E, I extends ImmutableListData<E
         extends AbstractImmutableSingleData<List<E>, I, M> implements ImmutableListData<E, I, M> {
 
     private final Class<? extends M> mutable;
-    private final ImmutableListValue<E> listValue;
+    private final ListValue.Immutable<E> listValue;
 
     protected AbstractImmutableListData(Class<I> manipulatorClass, List<E> value,
                                               Key<? extends Value<List<E>>> usedKey,
@@ -55,7 +55,7 @@ public abstract class AbstractImmutableListData<E, I extends ImmutableListData<E
     }
 
     @Override
-    protected final ImmutableListValue<E> getValueGetter() {
+    protected final ListValue.Immutable<E> getValueGetter() {
         return this.listValue;
     }
 
@@ -70,7 +70,7 @@ public abstract class AbstractImmutableListData<E, I extends ImmutableListData<E
     }
 
     @Override
-    public ImmutableListValue<E> getListValue() {
+    public ListValue.Immutable<E> getListValue() {
         return getValueGetter();
     }
 

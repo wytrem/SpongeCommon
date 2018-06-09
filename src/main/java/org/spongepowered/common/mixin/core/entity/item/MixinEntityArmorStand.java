@@ -36,7 +36,7 @@ import org.spongepowered.api.data.manipulator.mutable.entity.ArmorStandData;
 import org.spongepowered.api.data.manipulator.mutable.entity.BodyPartRotationalData;
 import org.spongepowered.api.data.type.BodyPart;
 import org.spongepowered.api.data.type.BodyParts;
-import org.spongepowered.api.data.value.mutable.MutableValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.entity.living.ArmorStand;
 import org.spongepowered.api.event.CauseStackManager;
 import org.spongepowered.api.event.SpongeEventFactory;
@@ -83,22 +83,22 @@ public abstract class MixinEntityArmorStand extends MixinEntityLivingBase implem
     @Shadow protected abstract void damageArmorStand(float damage);
 
     @Override
-    public MutableValue<Boolean> marker() {
+    public Value.Mutable<Boolean> marker() {
         return new SpongeMutableValue<>(Keys.ARMOR_STAND_MARKER, false, this.hasMarker());
     }
 
     @Override
-    public MutableValue<Boolean> small() {
+    public Value.Mutable<Boolean> small() {
         return new SpongeMutableValue<>(Keys.ARMOR_STAND_IS_SMALL, false, this.shadow$isSmall());
     }
 
     @Override
-    public MutableValue<Boolean> basePlate() {
+    public Value.Mutable<Boolean> basePlate() {
         return new SpongeMutableValue<>(Keys.ARMOR_STAND_HAS_BASE_PLATE, true, !this.hasNoBasePlate());
     }
 
     @Override
-    public MutableValue<Boolean> arms() {
+    public Value.Mutable<Boolean> arms() {
         return new SpongeMutableValue<>(Keys.ARMOR_STAND_HAS_ARMS, false, this.getShowArms());
     }
 

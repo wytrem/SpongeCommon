@@ -37,9 +37,9 @@ import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.tileentity.ImmutableSignData;
 import org.spongepowered.api.data.manipulator.mutable.tileentity.SignData;
 import org.spongepowered.api.data.persistence.InvalidDataException;
+import org.spongepowered.api.data.value.ListValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableListValue;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.serializer.TextSerializers;
 import org.spongepowered.common.data.manipulator.mutable.tileentity.SpongeSignData;
@@ -52,7 +52,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class TileEntitySignDataProcessor
-        extends AbstractTileEntitySingleDataProcessor<TileEntitySign, List<Text>, MutableListValue<Text>, SignData, ImmutableSignData> {
+        extends AbstractTileEntitySingleDataProcessor<TileEntitySign, List<Text>, ListValue.Mutable<Text>, SignData, ImmutableSignData> {
 
     public TileEntitySignDataProcessor() {
         super(TileEntitySign.class, Keys.SIGN_LINES);
@@ -107,12 +107,12 @@ public class TileEntitySignDataProcessor
     }
 
     @Override
-    public MutableListValue<Text> constructValue(List<Text> defaultValue) {
+    public ListValue.Mutable<Text> constructValue(List<Text> defaultValue) {
         return new SpongeMutableListValue<>(Keys.SIGN_LINES, defaultValue);
     }
 
     @Override
-    protected ImmutableValue<List<Text>> constructImmutableValue(List<Text> value) {
+    protected Value.Immutable<List<Text>> constructImmutableValue(List<Text> value) {
         return new ImmutableSpongeListValue<>(Keys.SIGN_LINES, ImmutableList.copyOf(value));
     }
 

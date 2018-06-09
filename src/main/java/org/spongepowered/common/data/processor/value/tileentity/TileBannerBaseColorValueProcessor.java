@@ -28,9 +28,8 @@ import net.minecraft.tileentity.TileEntityBanner;
 import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.type.DyeColor;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.processor.common.AbstractSpongeValueProcessor;
 import org.spongepowered.common.data.util.DataConstants;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
@@ -39,14 +38,14 @@ import org.spongepowered.common.interfaces.block.tile.IMixinBanner;
 
 import java.util.Optional;
 
-public class TileBannerBaseColorValueProcessor extends AbstractSpongeValueProcessor<TileEntityBanner, DyeColor, MutableValue<DyeColor>> {
+public class TileBannerBaseColorValueProcessor extends AbstractSpongeValueProcessor<TileEntityBanner, DyeColor, Value.Mutable<DyeColor>> {
 
     public TileBannerBaseColorValueProcessor() {
         super(TileEntityBanner.class, Keys.BANNER_BASE_COLOR);
     }
 
     @Override
-    protected MutableValue<DyeColor> constructValue(DyeColor actualValue) {
+    protected Value.Mutable<DyeColor> constructValue(DyeColor actualValue) {
         return new SpongeMutableValue<>(Keys.BANNER_BASE_COLOR, DataConstants.Catalog.DEFAULT_BANNER_BASE, actualValue);
     }
 
@@ -65,7 +64,7 @@ public class TileBannerBaseColorValueProcessor extends AbstractSpongeValueProces
     }
 
     @Override
-    protected ImmutableValue<DyeColor> constructImmutableValue(DyeColor value) {
+    protected Value.Immutable<DyeColor> constructImmutableValue(DyeColor value) {
         return ImmutableSpongeValue.cachedOf(Keys.BANNER_BASE_COLOR, DataConstants.Catalog.DEFAULT_BANNER_BASE, value);
     }
 

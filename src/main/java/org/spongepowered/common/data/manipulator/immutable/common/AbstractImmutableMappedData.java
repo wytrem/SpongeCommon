@@ -31,8 +31,8 @@ import com.google.common.collect.ImmutableMap;
 import org.spongepowered.api.data.key.Key;
 import org.spongepowered.api.data.manipulator.immutable.ImmutableMappedData;
 import org.spongepowered.api.data.manipulator.mutable.MappedData;
+import org.spongepowered.api.data.value.MapValue;
 import org.spongepowered.api.data.value.Value;
-import org.spongepowered.api.data.value.immutable.ImmutableMapValue;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeMapValue;
 import org.spongepowered.common.util.ReflectionUtil;
 
@@ -45,7 +45,7 @@ public abstract class AbstractImmutableMappedData<K, V, I extends ImmutableMappe
     extends AbstractImmutableSingleData<Map<K, V>, I, M> implements ImmutableMappedData<K, V, I, M> {
 
     private final Class<? extends M> mutableClass;
-    private final ImmutableMapValue<K, V> mapValue;
+    private final MapValue.Immutable<K, V> mapValue;
 
     public AbstractImmutableMappedData(Class<I> immutableClass, Map<K, V> value,
                                           Key<? extends Value<Map<K, V>>> usedKey,
@@ -58,7 +58,7 @@ public abstract class AbstractImmutableMappedData<K, V, I extends ImmutableMappe
     }
 
     @Override
-    protected final ImmutableMapValue<K, V> getValueGetter() {
+    protected final MapValue.Immutable<K, V> getValueGetter() {
         return this.mapValue;
     }
 
@@ -83,7 +83,7 @@ public abstract class AbstractImmutableMappedData<K, V, I extends ImmutableMappe
     }
 
     @Override
-    public ImmutableMapValue<K, V> getMapValue() {
+    public MapValue.Immutable<K, V> getMapValue() {
         return this.mapValue;
     }
 }

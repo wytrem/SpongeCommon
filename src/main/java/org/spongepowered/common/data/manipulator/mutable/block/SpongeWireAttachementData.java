@@ -31,8 +31,8 @@ import org.spongepowered.api.data.manipulator.immutable.block.ImmutableWireAttac
 import org.spongepowered.api.data.manipulator.mutable.block.WireAttachmentData;
 import org.spongepowered.api.data.type.WireAttachmentType;
 import org.spongepowered.api.data.type.WireAttachmentTypes;
-import org.spongepowered.api.data.value.mutable.MutableMapValue;
-import org.spongepowered.api.data.value.mutable.MutableValue;
+import org.spongepowered.api.data.value.MapValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.util.Direction;
 import org.spongepowered.common.data.manipulator.immutable.block.ImmutableSpongeWireAttachmentData;
 import org.spongepowered.common.data.manipulator.mutable.common.AbstractData;
@@ -52,27 +52,27 @@ public class SpongeWireAttachementData extends AbstractData<WireAttachmentData, 
     }
 
     @Override
-    public MutableMapValue<Direction, WireAttachmentType> wireAttachments() {
+    public MapValue.Mutable<Direction, WireAttachmentType> wireAttachments() {
         return new SpongeMutableMapValue<>(Keys.WIRE_ATTACHMENTS, Maps.newHashMap(this.wireAttachmentMap));
     }
 
     @Override
-    public MutableValue<WireAttachmentType> wireAttachmentNorth() {
+    public Value.Mutable<WireAttachmentType> wireAttachmentNorth() {
         return new SpongeMutableValue<>(Keys.WIRE_ATTACHMENT_NORTH, WireAttachmentTypes.NONE, this.wireAttachmentMap.get(Direction.NORTH));
     }
 
     @Override
-    public MutableValue<WireAttachmentType> wireAttachmentSouth() {
+    public Value.Mutable<WireAttachmentType> wireAttachmentSouth() {
         return new SpongeMutableValue<>(Keys.WIRE_ATTACHMENT_SOUTH, WireAttachmentTypes.NONE, this.wireAttachmentMap.get(Direction.SOUTH));
     }
 
     @Override
-    public MutableValue<WireAttachmentType> wireAttachmentEast() {
+    public Value.Mutable<WireAttachmentType> wireAttachmentEast() {
         return new SpongeMutableValue<>(Keys.WIRE_ATTACHMENT_EAST, WireAttachmentTypes.NONE, this.wireAttachmentMap.get(Direction.EAST));
     }
 
     @Override
-    public MutableValue<WireAttachmentType> wireAttachmentWest() {
+    public Value.Mutable<WireAttachmentType> wireAttachmentWest() {
         return new SpongeMutableValue<>(Keys.WIRE_ATTACHMENT_WEST, WireAttachmentTypes.NONE, this.wireAttachmentMap.get(Direction.WEST));
     }
 

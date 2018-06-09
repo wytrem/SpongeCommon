@@ -30,10 +30,9 @@ import org.spongepowered.api.data.manipulator.DataManipulator;
 import org.spongepowered.api.data.manipulator.mutable.CommandData;
 import org.spongepowered.api.data.manipulator.mutable.MobSpawnerData;
 import org.spongepowered.api.data.manipulator.mutable.entity.HealthData;
+import org.spongepowered.api.data.value.CollectionValue;
 import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.mutable.MutableCollectionValue;
-import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.api.entity.Entity;
 
 import java.util.Optional;
@@ -41,7 +40,7 @@ import java.util.Optional;
 /**
  * An implementation processor for handling a particular {@link Value}.
  * Usually every {@linkplain ValueProcessor} will deal only with
- * {@link MutableValue}s associated with the key returned by {@link #getKey()}.
+ * {@link Value.Mutable}s associated with the key returned by {@link #getKey()}.
  *
  * @param <E> The type of element within the value
  * @param <V> The type of Value
@@ -84,11 +83,11 @@ public interface ValueProcessor<E, V extends Value<E>> {
      * is that a {@link ValueContainer} being mixed in to existing minecraft
      * classes will require a pseudo lookup of the {@link Key} to associate to
      * a field belonging to provided {@link ValueContainer}. Being that the
-     * {@link MutableValue} is very specific, the only assumption of mixed in
+     * {@link Value.Mutable} is very specific, the only assumption of mixed in
      * implementations will have no room for extra possibilities. Therefor,
      * this method serves as a "guarantee" that we've found the type of
-     * {@link MutableValue} we want to retrieve, and all we need to do is validate
-     * that the {@link MutableValue} is infact compatible with the provided
+     * {@link Value.Mutable} we want to retrieve, and all we need to do is validate
+     * that the {@link Value.Mutable} is infact compatible with the provided
      * {@link ValueContainer}.</p>
      *
      * <p>An example of this type of interaction is getting the health from an
@@ -106,12 +105,12 @@ public interface ValueProcessor<E, V extends Value<E>> {
      * instead of the {@link Entity} having a direct call.</p>
      *
      * <p>The cases where this type of value usage is not preferable is with
-     * more complex {@link MutableValue}s, such as {@link MutableCollectionValue},
+     * more complex {@link Value.Mutable}s, such as {@link CollectionValue.Mutable},
      * values found for {@link MobSpawnerData} and {@link CommandData}. Using
      * the {@link ValueContainer#get(Key)} and
      * {@link DataManipulator#set(Key, Object)} remains to be the optimal methods
      * to use as they do not rely on the implementation attempting to guess which
-     * {@link Key}, {@link MutableValue} and {@link ValueProcessor} is needed to
+     * {@link Key}, {@link Value.Mutable} and {@link ValueProcessor} is needed to
      * manipulate the data.</p>
      *
      * @param container The value container to retrieve the value froms
@@ -120,13 +119,13 @@ public interface ValueProcessor<E, V extends Value<E>> {
     Optional<E> getValueFromContainer(ValueContainer<?> container);
 
     /**
-     * Gets the actual {@link MutableValue} object wrapping around the underlying value
+     * Gets the actual {@link Value.Mutable} object wrapping around the underlying value
      * desired from the provided {@link ValueContainer}. This is very similar to
      * {@link #getValueFromContainer(ValueContainer)} except that instead of an
-     * actual value, a {@link MutableValue} or extension there of is returned.
+     * actual value, a {@link Value.Mutable} or extension there of is returned.
      *
      * @param container The container to get the API value from
-     * @return The {@link MutableValue} typed value
+     * @return The {@link Value.Mutable} typed value
      */
     Optional<V> getApiValueFromContainer(ValueContainer<?> container);
 

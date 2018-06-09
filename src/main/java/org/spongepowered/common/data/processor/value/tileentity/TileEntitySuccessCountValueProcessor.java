@@ -27,15 +27,15 @@ package org.spongepowered.common.data.processor.value.tileentity;
 import net.minecraft.tileentity.TileEntityCommandBlock;
 import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
+import org.spongepowered.api.data.value.BoundedValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableBoundedValue;
 import org.spongepowered.common.data.processor.common.AbstractSpongeValueProcessor;
 import org.spongepowered.common.data.value.SpongeValueFactory;
 
 import java.util.Optional;
 
-public class TileEntitySuccessCountValueProcessor extends AbstractSpongeValueProcessor<TileEntityCommandBlock, Integer, MutableBoundedValue<Integer>> {
+public class TileEntitySuccessCountValueProcessor extends AbstractSpongeValueProcessor<TileEntityCommandBlock, Integer, BoundedValue.Mutable<Integer>> {
 
     public TileEntitySuccessCountValueProcessor() {
         super(TileEntityCommandBlock.class, Keys.SUCCESS_COUNT);
@@ -47,7 +47,7 @@ public class TileEntitySuccessCountValueProcessor extends AbstractSpongeValuePro
     }
 
     @Override
-    protected MutableBoundedValue<Integer> constructValue(Integer actualValue) {
+    protected BoundedValue.Mutable<Integer> constructValue(Integer actualValue) {
         return SpongeValueFactory.boundedBuilder(Keys.SUCCESS_COUNT)
                 .minimum(0)
                 .maximum(Integer.MAX_VALUE)
@@ -70,7 +70,7 @@ public class TileEntitySuccessCountValueProcessor extends AbstractSpongeValuePro
     }
 
     @Override
-    protected ImmutableValue<Integer> constructImmutableValue(Integer value) {
+    protected Value.Immutable<Integer> constructImmutableValue(Integer value) {
         return constructValue(value).asImmutable();
     }
 

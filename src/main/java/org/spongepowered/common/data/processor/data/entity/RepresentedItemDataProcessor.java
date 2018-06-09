@@ -32,9 +32,8 @@ import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.ImmutableRepresentedItemData;
 import org.spongepowered.api.data.manipulator.mutable.RepresentedItemData;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.api.item.inventory.ItemStackSnapshot;
 import org.spongepowered.common.data.manipulator.mutable.SpongeRepresentedItemData;
 import org.spongepowered.common.data.processor.common.AbstractEntitySingleDataProcessor;
@@ -45,7 +44,7 @@ import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 import java.util.Optional;
 
 public class RepresentedItemDataProcessor extends
-        AbstractEntitySingleDataProcessor<Entity, ItemStackSnapshot, MutableValue<ItemStackSnapshot>, RepresentedItemData, ImmutableRepresentedItemData> {
+        AbstractEntitySingleDataProcessor<Entity, ItemStackSnapshot, Value.Mutable<ItemStackSnapshot>, RepresentedItemData, ImmutableRepresentedItemData> {
 
     public RepresentedItemDataProcessor() {
         super(Entity.class, Keys.REPRESENTED_ITEM);
@@ -69,12 +68,12 @@ public class RepresentedItemDataProcessor extends
     }
 
     @Override
-    protected MutableValue<ItemStackSnapshot> constructValue(ItemStackSnapshot defaultValue) {
+    protected Value.Mutable<ItemStackSnapshot> constructValue(ItemStackSnapshot defaultValue) {
         return new SpongeMutableValue<>(this.key, defaultValue);
     }
 
     @Override
-    protected ImmutableValue<ItemStackSnapshot> constructImmutableValue(ItemStackSnapshot value) {
+    protected Value.Immutable<ItemStackSnapshot> constructImmutableValue(ItemStackSnapshot value) {
         return new ImmutableSpongeValue<>(this.key, value);
     }
 
@@ -88,7 +87,7 @@ public class RepresentedItemDataProcessor extends
         if (container instanceof EntityItemFrame) {
             EntityItemFrame frame = (EntityItemFrame) container;
             if (!frame.getDisplayedItem().isEmpty()) {
-                final ImmutableValue<ItemStackSnapshot> old = constructImmutableValue(getVal(frame).get());
+                final Value.Immutable<ItemStackSnapshot> old = constructImmutableValue(getVal(frame).get());
                 frame.setDisplayedItem(ItemStack.EMPTY);
                 return DataTransactionResult.successRemove(old);
             }

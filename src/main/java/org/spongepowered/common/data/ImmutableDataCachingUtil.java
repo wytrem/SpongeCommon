@@ -32,7 +32,6 @@ import org.spongepowered.api.CatalogType;
 import org.spongepowered.api.data.key.Key;
 import org.spongepowered.api.data.manipulator.ImmutableDataManipulator;
 import org.spongepowered.api.data.value.Value;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
 import org.spongepowered.common.SpongeImpl;
 
 import java.lang.reflect.InvocationTargetException;
@@ -53,7 +52,7 @@ public final class ImmutableDataCachingUtil {
         .concurrencyLevel(4)
         .build();
 
-    private static final Cache<String, ImmutableValue<?>> valueCache = CacheBuilder.newBuilder()
+    private static final Cache<String, Value.Immutable<?>> valueCache = CacheBuilder.newBuilder()
         .concurrencyLevel(4)
         .maximumSize(VALUE_CACHE_LIMIT)
         .build();
@@ -95,23 +94,23 @@ public final class ImmutableDataCachingUtil {
     }
 
     @SuppressWarnings("unchecked")
-    public static <E, V extends ImmutableValue<?>, T extends ImmutableValue<E>> T getValue(final Class<V> valueClass,
+    public static <E, V extends Value.Immutable<?>, T extends Value.Immutable<E>> T getValue(final Class<V> valueClass,
             final Key<? extends Value<E>> usedKey, final E defaultArg, final E arg, final Object... extraArgs) {
         final String key = getKey(valueClass, usedKey.getQuery().asString('.'), arg.getClass(), arg);
         try {
-            return (T) ImmutableDataCachingUtil.valueCache.get(key, (Callable<ImmutableValue<?>>) () -> {
+            return (T) ImmutableDataCachingUtil.valueCache.get(key, (Callable<Value.Immutable<?>>) () -> {
                     try {
                         if (extraArgs == null || extraArgs.length == 0) {
                             return createUnsafeInstance(valueClass, usedKey, defaultArg, arg);
                         }
                         return createUnsafeInstance(valueClass, usedKey, defaultArg, arg, extraArgs);
                     } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-                        SpongeImpl.getLogger().error("Could not construct an ImmutableValue: " + valueClass.getCanonicalName(), e);
+                        SpongeImpl.getLogger().error("Could not construct an Immutable: " + valueClass.getCanonicalName(), e);
                     }
-                    throw new UnsupportedOperationException("Could not construct the ImmutableValue: " + valueClass.getName());
+                    throw new UnsupportedOperationException("Could not construct the Immutable: " + valueClass.getName());
             });
         } catch (ExecutionException e) {
-            throw new UnsupportedOperationException("Could not construct the ImmutableValue: " + valueClass.getName(), e);
+            throw new UnsupportedOperationException("Could not construct the Immutable: " + valueClass.getName(), e);
         }
     }
 

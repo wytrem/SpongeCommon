@@ -29,13 +29,13 @@ import org.spongepowered.api.data.manipulator.immutable.block.ImmutableRailDirec
 import org.spongepowered.api.data.manipulator.mutable.block.RailDirectionData;
 import org.spongepowered.api.data.type.RailDirection;
 import org.spongepowered.api.data.type.RailDirections;
-import org.spongepowered.api.data.value.mutable.MutableValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.common.data.manipulator.mutable.block.SpongeRailDirectionData;
 import org.spongepowered.common.data.processor.common.AbstractBlockOnlyDataProcessor;
 import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
 public class RailDirectionDataProcessor extends
-        AbstractBlockOnlyDataProcessor<RailDirection, MutableValue<RailDirection>, RailDirectionData, ImmutableRailDirectionData> {
+        AbstractBlockOnlyDataProcessor<RailDirection, Value.Mutable<RailDirection>, RailDirectionData, ImmutableRailDirectionData> {
 
     public RailDirectionDataProcessor() {
         super(Keys.RAIL_DIRECTION);
@@ -52,7 +52,7 @@ public class RailDirectionDataProcessor extends
     }
 
     @Override
-    protected MutableValue<RailDirection> constructValue(RailDirection actualValue) {
+    protected Value.Mutable<RailDirection> constructValue(RailDirection actualValue) {
         return new SpongeMutableValue<>(this.key, getDefaultValue(), actualValue);
     }
 

@@ -27,15 +27,15 @@ package org.spongepowered.common.data.processor.value.entity;
 import net.minecraft.entity.player.EntityPlayer;
 import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
+import org.spongepowered.api.data.value.BoundedValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableBoundedValue;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
 import org.spongepowered.common.data.processor.common.AbstractSpongeValueProcessor;
 import org.spongepowered.common.data.value.SpongeValueFactory;
 
 import java.util.Optional;
 
-public class ExperienceFromStartOfLevelValueProcessor extends AbstractSpongeValueProcessor<EntityPlayer, Integer, ImmutableBoundedValue<Integer>> {
+public class ExperienceFromStartOfLevelValueProcessor extends AbstractSpongeValueProcessor<EntityPlayer, Integer, BoundedValue.Immutable<Integer>> {
 
     public ExperienceFromStartOfLevelValueProcessor() {
         super(EntityPlayer.class, Keys.EXPERIENCE_FROM_START_OF_LEVEL);
@@ -53,7 +53,7 @@ public class ExperienceFromStartOfLevelValueProcessor extends AbstractSpongeValu
     }
 
     @Override
-    public ImmutableBoundedValue<Integer> constructValue(Integer defaultValue) {
+    public BoundedValue.Immutable<Integer> constructValue(Integer defaultValue) {
         return SpongeValueFactory.boundedBuilder(Keys.EXPERIENCE_FROM_START_OF_LEVEL)
             .defaultValue(0)
             .actualValue(defaultValue)
@@ -74,7 +74,7 @@ public class ExperienceFromStartOfLevelValueProcessor extends AbstractSpongeValu
     }
 
     @Override
-    protected ImmutableValue<Integer> constructImmutableValue(Integer value) {
+    protected Value.Immutable<Integer> constructImmutableValue(Integer value) {
         return constructValue(value);
     }
 

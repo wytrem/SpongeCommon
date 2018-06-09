@@ -61,7 +61,7 @@ import net.minecraft.world.GameType;
 import net.minecraft.world.World;
 import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.scoreboard.TeamMember;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.common.SpongeImpl;
@@ -379,7 +379,7 @@ public class EntityHuman extends EntityCreature implements TeamMember, IRangedAt
             return DataTransactionResult.successNoData();
         }
         this.fakeProfile.getProperties().removeAll("textures");
-        ImmutableValue<?> oldValue = new ImmutableSpongeValue<>(Keys.SKIN_UNIQUE_ID, this.skinUuid);
+        Value.Immutable<?> oldValue = new ImmutableSpongeValue<>(Keys.SKIN_UNIQUE_ID, this.skinUuid);
         this.skinUuid = null;
         if (this.isAliveAndInWorld()) {
             this.respawnOnClient();

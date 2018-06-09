@@ -28,23 +28,22 @@ import com.flowpowered.math.vector.Vector3i;
 import net.minecraft.tileentity.TileEntityEndGateway;
 import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.processor.common.AbstractSpongeValueProcessor;
 import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 import org.spongepowered.common.interfaces.block.tile.IMixinTileEntityEndGateway;
 
 import java.util.Optional;
 
-public class EndGatewayExitPositionValueProcessor extends AbstractSpongeValueProcessor<TileEntityEndGateway, Vector3i, MutableValue<Vector3i>> {
+public class EndGatewayExitPositionValueProcessor extends AbstractSpongeValueProcessor<TileEntityEndGateway, Vector3i, Value.Mutable<Vector3i>> {
 
     public EndGatewayExitPositionValueProcessor() {
         super(TileEntityEndGateway.class, Keys.EXIT_POSITION);
     }
 
     @Override
-    protected MutableValue<Vector3i> constructValue(Vector3i actualValue) {
+    protected Value.Mutable<Vector3i> constructValue(Vector3i actualValue) {
         return new SpongeMutableValue<>(Keys.EXIT_POSITION, actualValue);
     }
 
@@ -60,7 +59,7 @@ public class EndGatewayExitPositionValueProcessor extends AbstractSpongeValuePro
     }
 
     @Override
-    protected ImmutableValue<Vector3i> constructImmutableValue(Vector3i value) {
+    protected Value.Immutable<Vector3i> constructImmutableValue(Vector3i value) {
         return constructValue(value).asImmutable();
     }
 

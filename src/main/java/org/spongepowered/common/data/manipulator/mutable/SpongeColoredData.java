@@ -28,7 +28,7 @@ import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.ImmutableColoredData;
 import org.spongepowered.api.data.manipulator.mutable.ColoredData;
-import org.spongepowered.api.data.value.mutable.MutableValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.util.Color;
 import org.spongepowered.common.data.manipulator.immutable.ImmutableSpongeColoredData;
 import org.spongepowered.common.data.manipulator.mutable.common.AbstractSingleData;
@@ -51,7 +51,7 @@ public class SpongeColoredData extends AbstractSingleData<Color, ColoredData, Im
     }
 
     @Override
-    protected MutableValue<?> getValueGetter() {
+    protected Value.Mutable<?> getValueGetter() {
         return color();
     }
 
@@ -67,7 +67,7 @@ public class SpongeColoredData extends AbstractSingleData<Color, ColoredData, Im
     }
 
     @Override
-    public MutableValue<Color> color() {
+    public Value.Mutable<Color> color() {
         return new SpongeMutableValue<>(Keys.COLOR, Color.BLACK, getValue());
     }
 }

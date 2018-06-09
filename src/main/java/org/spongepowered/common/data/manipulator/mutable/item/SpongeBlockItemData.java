@@ -29,7 +29,7 @@ import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.item.ImmutableBlockItemData;
 import org.spongepowered.api.data.manipulator.mutable.item.BlockItemData;
-import org.spongepowered.api.data.value.mutable.MutableValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.common.data.manipulator.immutable.item.ImmutableSpongeBlockItemData;
 import org.spongepowered.common.data.manipulator.mutable.common.AbstractSingleData;
 import org.spongepowered.common.data.util.DataConstants;
@@ -57,12 +57,12 @@ public class SpongeBlockItemData extends AbstractSingleData<BlockState, BlockIte
     }
 
     @Override
-    public MutableValue<BlockState> state() {
+    public Value.Mutable<BlockState> state() {
         return new SpongeMutableValue<>(Keys.ITEM_BLOCKSTATE, DataConstants.Catalog.DEFAULT_BLOCK_STATE, this.getValue());
     }
 
     @Override
-    protected MutableValue<?> getValueGetter() {
+    protected Value.Mutable<?> getValueGetter() {
         return state();
     }
 

@@ -29,9 +29,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import org.spongepowered.api.data.key.Key;
+import org.spongepowered.api.data.value.ListValue;
 import org.spongepowered.api.data.value.Value;
-import org.spongepowered.api.data.value.immutable.ImmutableListValue;
-import org.spongepowered.api.data.value.mutable.MutableListValue;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeListValue;
 
 import java.util.Iterator;
@@ -40,8 +39,8 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class SpongeMutableListValue<E> extends SpongeMutableCollectionValue<E, List<E>, MutableListValue<E>, ImmutableListValue<E>>
-    implements MutableListValue<E> {
+public class SpongeMutableListValue<E> extends SpongeMutableCollectionValue<E, List<E>, ListValue.Mutable<E>, ListValue.Immutable<E>>
+    implements ListValue.Mutable<E> {
 
     public SpongeMutableListValue(Key<? extends Value<List<E>>> key) {
         super(key, Lists.<E>newArrayList());
@@ -56,13 +55,13 @@ public class SpongeMutableListValue<E> extends SpongeMutableCollectionValue<E, L
     }
 
     @Override
-    public MutableListValue<E> transform(Function<List<E>, List<E>> function) {
+    public ListValue.Mutable<E> transform(Function<List<E>, List<E>> function) {
         this.actualValue = Lists.newArrayList(checkNotNull(function.apply(this.actualValue)));
         return this;
     }
 
     @Override
-    public MutableListValue<E> filter(Predicate<? super E> predicate) {
+    public ListValue.Mutable<E> filter(Predicate<? super E> predicate) {
         final List<E> list = Lists.newArrayList();
         list.addAll(this.actualValue.stream().filter(element -> checkNotNull(predicate).test(element)).collect(Collectors.toList()));
         return new SpongeMutableListValue<>(getKey(), list);
@@ -79,7 +78,7 @@ public class SpongeMutableListValue<E> extends SpongeMutableCollectionValue<E, L
     }
 
     @Override
-    public MutableListValue<E> copy() {
+    public ListValue.Mutable<E> copy() {
         return new SpongeMutableListValue<>(getKey(), this.getDefault(), Lists.newArrayList(this.actualValue));
     }
 
@@ -94,13 +93,13 @@ public class SpongeMutableListValue<E> extends SpongeMutableCollectionValue<E, L
     }
 
     @Override
-    public MutableListValue<E> add(int index, E value) {
+    public ListValue.Mutable<E> add(int index, E value) {
         this.actualValue.add(index, checkNotNull(value));
         return this;
     }
 
     @Override
-    public MutableListValue<E> add(int index, Iterable<E> values) {
+    public ListValue.Mutable<E> add(int index, Iterable<E> values) {
         int count = 0;
         for (Iterator<E> iterator = values.iterator(); iterator.hasNext(); count++) {
             this.actualValue.add(index + count, checkNotNull(iterator.next()));
@@ -109,13 +108,13 @@ public class SpongeMutableListValue<E> extends SpongeMutableCollectionValue<E, L
     }
 
     @Override
-    public MutableListValue<E> remove(int index) {
+    public ListValue.Mutable<E> remove(int index) {
         this.actualValue.remove(index);
         return this;
     }
 
     @Override
-    public MutableListValue<E> set(int index, E element) {
+    public ListValue.Mutable<E> set(int index, E element) {
         this.actualValue.set(index, checkNotNull(element));
         return this;
     }

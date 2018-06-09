@@ -31,9 +31,9 @@ import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.ImmutableMobSpawnerData;
 import org.spongepowered.api.data.manipulator.mutable.MobSpawnerData;
-import org.spongepowered.api.data.value.immutable.ImmutableBoundedValue;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.immutable.ImmutableWeightedCollectionValue;
+import org.spongepowered.api.data.value.BoundedValue;
+import org.spongepowered.api.data.value.Value;
+import org.spongepowered.api.data.value.WeightedCollectionValue;
 import org.spongepowered.api.entity.EntityArchetype;
 import org.spongepowered.api.util.weighted.WeightedSerializableObject;
 import org.spongepowered.api.util.weighted.WeightedTable;
@@ -57,15 +57,15 @@ public class ImmutableSpongeMobSpawnerData extends AbstractImmutableData<Immutab
     private final WeightedSerializableObject<EntityArchetype> nextToSpawn;
     private final WeightedTable<EntityArchetype> entitiesToSpawn;
 
-    private final ImmutableBoundedValue<Short> remainingValue;
-    private final ImmutableBoundedValue<Short> minValue;
-    private final ImmutableBoundedValue<Short> maxValue;
-    private final ImmutableBoundedValue<Short> countValue;
-    private final ImmutableBoundedValue<Short> nearbyValue;
-    private final ImmutableBoundedValue<Short> playerRangeValue;
-    private final ImmutableBoundedValue<Short> spawnRangeValue;
-    private final ImmutableValue<WeightedSerializableObject<EntityArchetype>> nextValue;
-    private final ImmutableWeightedCollectionValue<EntityArchetype> toSpawnValue;
+    private final BoundedValue.Immutable<Short> remainingValue;
+    private final BoundedValue.Immutable<Short> minValue;
+    private final BoundedValue.Immutable<Short> maxValue;
+    private final BoundedValue.Immutable<Short> countValue;
+    private final BoundedValue.Immutable<Short> nearbyValue;
+    private final BoundedValue.Immutable<Short> playerRangeValue;
+    private final BoundedValue.Immutable<Short> spawnRangeValue;
+    private final Value.Immutable<WeightedSerializableObject<EntityArchetype>> nextValue;
+    private final WeightedCollectionValue.Immutable<EntityArchetype> toSpawnValue;
 
     public ImmutableSpongeMobSpawnerData() {
         this(DataConstants.DEFAULT_SPAWNER_REMAINING_DELAY, DataConstants.DEFAULT_SPAWNER_MINIMUM_SPAWN_DELAY,
@@ -145,47 +145,47 @@ public class ImmutableSpongeMobSpawnerData extends AbstractImmutableData<Immutab
     }
 
     @Override
-    public ImmutableBoundedValue<Short> remainingDelay() {
+    public BoundedValue.Immutable<Short> remainingDelay() {
         return this.remainingValue;
     }
 
     @Override
-    public ImmutableBoundedValue<Short> minimumSpawnDelay() {
+    public BoundedValue.Immutable<Short> minimumSpawnDelay() {
         return this.minValue;
     }
 
     @Override
-    public ImmutableBoundedValue<Short> maximumSpawnDelay() {
+    public BoundedValue.Immutable<Short> maximumSpawnDelay() {
         return this.maxValue;
     }
 
     @Override
-    public ImmutableBoundedValue<Short> spawnCount() {
+    public BoundedValue.Immutable<Short> spawnCount() {
         return this.countValue;
     }
 
     @Override
-    public ImmutableBoundedValue<Short> maximumNearbyEntities() {
+    public BoundedValue.Immutable<Short> maximumNearbyEntities() {
         return this.nearbyValue;
     }
 
     @Override
-    public ImmutableBoundedValue<Short> requiredPlayerRange() {
+    public BoundedValue.Immutable<Short> requiredPlayerRange() {
         return this.playerRangeValue;
     }
 
     @Override
-    public ImmutableBoundedValue<Short> spawnRange() {
+    public BoundedValue.Immutable<Short> spawnRange() {
         return this.spawnRangeValue;
     }
 
     @Override
-    public ImmutableValue<WeightedSerializableObject<EntityArchetype>> nextEntityToSpawn() {
+    public Value.Immutable<WeightedSerializableObject<EntityArchetype>> nextEntityToSpawn() {
         return this.nextValue;
     }
 
     @Override
-    public ImmutableWeightedCollectionValue<EntityArchetype> possibleEntitiesToSpawn() {
+    public WeightedCollectionValue.Immutable<EntityArchetype> possibleEntitiesToSpawn() {
         return this.toSpawnValue;
     }
 

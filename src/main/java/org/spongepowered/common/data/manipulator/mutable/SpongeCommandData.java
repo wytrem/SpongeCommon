@@ -31,9 +31,9 @@ import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.ImmutableCommandData;
 import org.spongepowered.api.data.manipulator.mutable.CommandData;
-import org.spongepowered.api.data.value.mutable.MutableBoundedValue;
-import org.spongepowered.api.data.value.mutable.MutableValue;
-import org.spongepowered.api.data.value.mutable.MutableOptionalValue;
+import org.spongepowered.api.data.value.BoundedValue;
+import org.spongepowered.api.data.value.OptionalValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.common.data.manipulator.immutable.ImmutableSpongeCommandData;
 import org.spongepowered.common.data.manipulator.mutable.common.AbstractData;
@@ -59,12 +59,12 @@ public class SpongeCommandData extends AbstractData<CommandData, ImmutableComman
     }
 
     @Override
-    public MutableValue<String> storedCommand() {
+    public Value.Mutable<String> storedCommand() {
         return new SpongeMutableValue<>(Keys.COMMAND, getStoredCommand());
     }
 
     @Override
-    public MutableBoundedValue<Integer> successCount() {
+    public BoundedValue.Mutable<Integer> successCount() {
         return SpongeValueFactory.boundedBuilder(Keys.SUCCESS_COUNT)
                 .actualValue(this.success)
                 .defaultValue(0)
@@ -74,12 +74,12 @@ public class SpongeCommandData extends AbstractData<CommandData, ImmutableComman
     }
 
     @Override
-    public MutableValue<Boolean> doesTrackOutput() {
+    public Value.Mutable<Boolean> doesTrackOutput() {
         return new SpongeMutableValue<>(Keys.TRACKS_OUTPUT, this.tracks);
     }
 
     @Override
-    public MutableOptionalValue<Text> lastOutput() {
+    public OptionalValue.MutableOptionalValue<Text> lastOutput() {
         return new SpongeMutableOptionalValue<>(Keys.LAST_COMMAND_OUTPUT, getLastOutput());
     }
 

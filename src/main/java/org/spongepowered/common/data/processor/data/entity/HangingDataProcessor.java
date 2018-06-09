@@ -28,9 +28,8 @@ import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.block.ImmutableDirectionalData;
 import org.spongepowered.api.data.manipulator.mutable.block.DirectionalData;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.api.util.Direction;
 import org.spongepowered.common.data.manipulator.mutable.block.SpongeDirectionalData;
 import org.spongepowered.common.data.processor.common.AbstractSingleDataSingleTargetProcessor;
@@ -40,7 +39,7 @@ import org.spongepowered.common.interfaces.entity.IMixinEntityHanging;
 
 import java.util.Optional;
 
-public class HangingDataProcessor extends AbstractSingleDataSingleTargetProcessor<IMixinEntityHanging, Direction, MutableValue<Direction>, DirectionalData, ImmutableDirectionalData> {
+public class HangingDataProcessor extends AbstractSingleDataSingleTargetProcessor<IMixinEntityHanging, Direction, Value.Mutable<Direction>, DirectionalData, ImmutableDirectionalData> {
 
     public HangingDataProcessor() {
         super(Keys.DIRECTION, IMixinEntityHanging.class);
@@ -63,12 +62,12 @@ public class HangingDataProcessor extends AbstractSingleDataSingleTargetProcesso
     }
 
     @Override
-    protected ImmutableValue<Direction> constructImmutableValue(Direction value) {
+    protected Value.Immutable<Direction> constructImmutableValue(Direction value) {
         return ImmutableSpongeValue.cachedOf(this.key, Direction.NONE, value);
     }
 
     @Override
-    protected MutableValue<Direction> constructValue(Direction actualValue) {
+    protected Value.Mutable<Direction> constructValue(Direction actualValue) {
         return new SpongeMutableValue<>(this.key, Direction.NONE, actualValue);
     }
 

@@ -26,8 +26,7 @@ package org.spongepowered.common.data.value.mutable;
 
 import org.spongepowered.api.data.key.Key;
 import org.spongepowered.api.data.value.Value;
-import org.spongepowered.api.data.value.immutable.ImmutableWeightedCollectionValue;
-import org.spongepowered.api.data.value.mutable.MutableWeightedCollectionValue;
+import org.spongepowered.api.data.value.WeightedCollectionValue;
 import org.spongepowered.api.util.weighted.WeightedTable;
 import org.spongepowered.api.util.weighted.TableEntry;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeWeightedCollectionValue;
@@ -40,14 +39,15 @@ import java.util.stream.Collectors;
 import javax.annotation.Nullable;
 
 public class SpongeMutableWeightedCollectionValue<E> extends SpongeMutableCollectionValue<TableEntry<E>,
-    WeightedTable<E>, MutableWeightedCollectionValue<E>, ImmutableWeightedCollectionValue<E>> implements MutableWeightedCollectionValue<E> {
+    WeightedTable<E>, WeightedCollectionValue.Mutable<E>, WeightedCollectionValue.Immutable<E>> implements
+    WeightedCollectionValue.Mutable<E> {
 
     public SpongeMutableWeightedCollectionValue(Key<? extends Value<WeightedTable<E>>> key, WeightedTable<E> actualValue) {
         super(key, new WeightedTable<>(), actualValue.stream().collect(Collectors.toCollection(WeightedTable<E>::new)));
     }
 
     @Override
-    public MutableWeightedCollectionValue<E> filter(Predicate<? super TableEntry<E>> predicate) {
+    public WeightedCollectionValue.Mutable<E> filter(Predicate<? super TableEntry<E>> predicate) {
         return set(get().stream().filter(predicate).collect(Collectors.toCollection(WeightedTable<E>::new)));
     }
 
@@ -62,7 +62,7 @@ public class SpongeMutableWeightedCollectionValue<E> extends SpongeMutableCollec
     }
 
     @Override
-    public MutableWeightedCollectionValue<E> copy() {
+    public WeightedCollectionValue.Mutable<E> copy() {
         return new SpongeMutableWeightedCollectionValue<>(getKey(), getAll());
     }
 

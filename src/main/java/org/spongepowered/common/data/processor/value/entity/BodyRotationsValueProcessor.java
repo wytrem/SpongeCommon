@@ -31,9 +31,9 @@ import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.type.BodyPart;
 import org.spongepowered.api.data.type.BodyParts;
+import org.spongepowered.api.data.value.MapValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableMapValue;
 import org.spongepowered.common.data.processor.common.AbstractSpongeValueProcessor;
 import org.spongepowered.common.data.value.mutable.SpongeMutableMapValue;
 import org.spongepowered.common.util.VecHelper;
@@ -41,7 +41,7 @@ import org.spongepowered.common.util.VecHelper;
 import java.util.Map;
 import java.util.Optional;
 
-public class BodyRotationsValueProcessor extends AbstractSpongeValueProcessor<EntityArmorStand, Map<BodyPart, Vector3d>, MutableMapValue<BodyPart, Vector3d>> {
+public class BodyRotationsValueProcessor extends AbstractSpongeValueProcessor<EntityArmorStand, Map<BodyPart, Vector3d>, MapValue.Mutable<BodyPart, Vector3d>> {
 
     public BodyRotationsValueProcessor() {
         super(EntityArmorStand.class, Keys.BODY_ROTATIONS);
@@ -53,7 +53,7 @@ public class BodyRotationsValueProcessor extends AbstractSpongeValueProcessor<En
     }
 
     @Override
-    protected MutableMapValue<BodyPart, Vector3d> constructValue(Map<BodyPart, Vector3d> actualValue) {
+    protected MapValue.Mutable<BodyPart, Vector3d> constructValue(Map<BodyPart, Vector3d> actualValue) {
         return new SpongeMutableMapValue<>(Keys.BODY_ROTATIONS, actualValue);
     }
 
@@ -82,7 +82,7 @@ public class BodyRotationsValueProcessor extends AbstractSpongeValueProcessor<En
     }
 
     @Override
-    protected ImmutableValue<Map<BodyPart, Vector3d>> constructImmutableValue(Map<BodyPart, Vector3d> value) {
+    protected Value.Immutable<Map<BodyPart, Vector3d>> constructImmutableValue(Map<BodyPart, Vector3d> value) {
         return constructValue(value).asImmutable();
     }
 

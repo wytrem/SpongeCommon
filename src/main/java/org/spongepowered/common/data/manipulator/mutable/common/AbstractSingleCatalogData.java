@@ -33,7 +33,6 @@ import org.spongepowered.api.data.key.Key;
 import org.spongepowered.api.data.manipulator.immutable.ImmutableVariantData;
 import org.spongepowered.api.data.manipulator.mutable.VariantData;
 import org.spongepowered.api.data.value.Value;
-import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.ImmutableDataCachingUtil;
 import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 import org.spongepowered.common.util.ReflectionUtil;
@@ -59,7 +58,7 @@ public abstract class AbstractSingleCatalogData<T extends CatalogType, M extends
     }
 
     @Override
-    protected MutableValue<?> getValueGetter() {
+    protected Value.Mutable<?> getValueGetter() {
         return type();
     }
 
@@ -69,7 +68,7 @@ public abstract class AbstractSingleCatalogData<T extends CatalogType, M extends
     }
 
     @Override
-    public MutableValue<T> type() {
+    public Value.Mutable<T> type() {
         return new SpongeMutableValue<>(this.usedKey, this.getValue(), this.getValue());
     }
 

@@ -41,8 +41,6 @@ import org.spongepowered.api.data.merge.MergeFunction;
 import org.spongepowered.api.data.persistence.InvalidDataException;
 import org.spongepowered.api.data.property.PropertyStore;
 import org.spongepowered.api.data.value.Value;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.api.util.Direction;
 import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
@@ -194,8 +192,8 @@ public abstract class MixinWorld_Data implements World {
     }
 
     @Override
-    public Set<ImmutableValue<?>> getValues(int x, int y, int z) {
-        final ImmutableSet.Builder<ImmutableValue<?>> builder = ImmutableSet.builder();
+    public Set<Value.Immutable<?>> getValues(int x, int y, int z) {
+        final ImmutableSet.Builder<Value.Immutable<?>> builder = ImmutableSet.builder();
         final BlockState blockState = getBlock(x, y, z).withExtendedProperties(new Location<>(this, x, y, z));
         builder.addAll(blockState.getValues());
         final Optional<TileEntity> tileEntity = getTileEntity(x, y, z);
@@ -209,9 +207,9 @@ public abstract class MixinWorld_Data implements World {
     public <E> DataTransactionResult offer(int x, int y, int z, Key<? extends Value<E>> key, E value) {
         final BlockState blockState = getBlock(x, y, z).withExtendedProperties(new Location<>(this, x, y, z));
         if (blockState.supports(key)) {
-            ImmutableValue<E> old = ((MutableValue<E>) getValue(x, y, z, (Key) key).get()).asImmutable();
+            Value.Immutable<E> old = ((Value.Mutable<E>) getValue(x, y, z, (Key) key).get()).asImmutable();
             setBlock(x, y, z, blockState.with(key, value).get());
-            ImmutableValue<E> newVal = ((MutableValue<E>) getValue(x, y, z, (Key) key).get()).asImmutable();
+            Value.Immutable<E> newVal = ((Value.Mutable<E>) getValue(x, y, z, (Key) key).get()).asImmutable();
             return DataTransactionResult.successReplaceResult(newVal, old);
         }
         return getTileEntity(x, y, z)
@@ -224,7 +222,7 @@ public abstract class MixinWorld_Data implements World {
         final BlockState blockState = getBlock(x, y, z).withExtendedProperties(new Location<>(this, x, y, z));
         final ImmutableDataManipulator<?, ?> immutableDataManipulator = manipulator.asImmutable();
         if (blockState.supports((Class) immutableDataManipulator.getClass())) {
-            final List<ImmutableValue<?>> old = new ArrayList<>(blockState.getValues());
+            final List<Value.Immutable<?>> old = new ArrayList<>(blockState.getValues());
             final BlockState newState = blockState.with(immutableDataManipulator).get();
             old.removeAll(newState.getValues());
             setBlock(x, y, z, newState);

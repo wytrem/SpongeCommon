@@ -30,17 +30,15 @@ import static com.google.common.base.Preconditions.checkState;
 import org.spongepowered.api.data.key.Key;
 import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.BoundedValue;
-import org.spongepowered.api.data.value.immutable.ImmutableBoundedValue;
-import org.spongepowered.api.data.value.mutable.MutableBoundedValue;
 import org.spongepowered.common.data.ImmutableDataCachingUtil;
 import org.spongepowered.common.data.value.SpongeValueFactory;
 
 import java.util.Comparator;
 import java.util.function.Function;
 
-public class ImmutableSpongeBoundedValue<E> extends ImmutableSpongeValue<E> implements ImmutableBoundedValue<E> {
+public class ImmutableSpongeBoundedValue<E> extends ImmutableSpongeValue<E> implements BoundedValue.Immutable<E> {
 
-    public static <T> ImmutableBoundedValue<T> cachedOf(Key<? extends Value<T>> key, T defaultValue, T actualValue, Comparator<T>
+    public static <T> BoundedValue.Immutable<T> cachedOf(Key<? extends Value<T>> key, T defaultValue, T actualValue, Comparator<T>
             comparator, T minimum, T maximum) {
         return ImmutableDataCachingUtil.getValue(ImmutableSpongeBoundedValue.class, key, defaultValue, actualValue, comparator, minimum, maximum);
     }
@@ -66,7 +64,7 @@ public class ImmutableSpongeBoundedValue<E> extends ImmutableSpongeValue<E> impl
     }
 
     @Override
-    public ImmutableBoundedValue<E> with(E value) {
+    public BoundedValue.Immutable<E> with(E value) {
         if (this.comparator.compare(value, this.minimum) >= 0 && this.comparator.compare(value, this.maximum) <= 0) {
             return new ImmutableSpongeBoundedValue<>(getKey(), getDefault(), value,  getComparator(), getMinValue(), getMaxValue());
         }
@@ -74,13 +72,13 @@ public class ImmutableSpongeBoundedValue<E> extends ImmutableSpongeValue<E> impl
     }
 
     @Override
-    public ImmutableBoundedValue<E> transform(Function<E, E> function) {
+    public BoundedValue.Immutable<E> transform(Function<E, E> function) {
         return with(checkNotNull(checkNotNull(function).apply(get())));
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public MutableBoundedValue<E> asMutable() {
+    public BoundedValue.Mutable<E> asMutable() {
         return SpongeValueFactory.boundedBuilder((Key<? extends BoundedValue<E>>) getKey())
             .defaultValue(getDefault())
             .minimum(getMinValue())

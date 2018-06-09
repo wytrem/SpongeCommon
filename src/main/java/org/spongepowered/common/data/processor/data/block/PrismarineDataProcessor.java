@@ -30,14 +30,14 @@ import org.spongepowered.api.data.manipulator.immutable.block.ImmutablePrismarin
 import org.spongepowered.api.data.manipulator.mutable.block.PrismarineData;
 import org.spongepowered.api.data.type.PrismarineType;
 import org.spongepowered.api.data.type.PrismarineTypes;
-import org.spongepowered.api.data.value.mutable.MutableValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.item.ItemTypes;
 import org.spongepowered.common.data.manipulator.mutable.block.SpongePrismarineData;
 import org.spongepowered.common.data.processor.common.AbstractCatalogDataProcessor;
 import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
 public class PrismarineDataProcessor extends
-        AbstractCatalogDataProcessor<PrismarineType, MutableValue<PrismarineType>, PrismarineData, ImmutablePrismarineData> {
+        AbstractCatalogDataProcessor<PrismarineType, Value.Mutable<PrismarineType>, PrismarineData, ImmutablePrismarineData> {
 
     public PrismarineDataProcessor() {
         super(Keys.PRISMARINE_TYPE, input -> input.getItem() == ItemTypes.PRISMARINE);
@@ -64,7 +64,7 @@ public class PrismarineDataProcessor extends
     }
 
     @Override
-    protected MutableValue<PrismarineType> constructValue(PrismarineType actualValue) {
+    protected Value.Mutable<PrismarineType> constructValue(PrismarineType actualValue) {
         return new SpongeMutableValue<>(this.key, getDefaultValue(), actualValue);
     }
 

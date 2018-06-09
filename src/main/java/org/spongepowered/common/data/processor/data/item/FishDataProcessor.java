@@ -33,9 +33,8 @@ import org.spongepowered.api.data.manipulator.immutable.item.ImmutableFishData;
 import org.spongepowered.api.data.manipulator.mutable.item.FishData;
 import org.spongepowered.api.data.type.Fish;
 import org.spongepowered.api.data.type.Fishes;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.manipulator.mutable.item.SpongeFishData;
 import org.spongepowered.common.data.processor.common.AbstractItemSingleDataProcessor;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
@@ -43,7 +42,7 @@ import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
 import java.util.Optional;
 
-public class FishDataProcessor extends AbstractItemSingleDataProcessor<Fish, MutableValue<Fish>, FishData, ImmutableFishData> {
+public class FishDataProcessor extends AbstractItemSingleDataProcessor<Fish, Value.Mutable<Fish>, FishData, ImmutableFishData> {
 
     public FishDataProcessor() {
         super(stack -> stack.getItem().equals(Items.FISH), Keys.FISH_TYPE);
@@ -66,12 +65,12 @@ public class FishDataProcessor extends AbstractItemSingleDataProcessor<Fish, Mut
     }
 
     @Override
-    protected MutableValue<Fish> constructValue(Fish actualValue) {
+    protected Value.Mutable<Fish> constructValue(Fish actualValue) {
         return new SpongeMutableValue<>(Keys.FISH_TYPE, Fishes.COD, actualValue);
     }
 
     @Override
-    protected ImmutableValue<Fish> constructImmutableValue(Fish value) {
+    protected Value.Immutable<Fish> constructImmutableValue(Fish value) {
         return ImmutableSpongeValue.cachedOf(Keys.FISH_TYPE, Fishes.COD, value);
     }
 

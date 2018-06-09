@@ -28,9 +28,9 @@ import net.minecraft.potion.Potion;
 import net.minecraft.tileentity.TileEntityBeacon;
 import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
+import org.spongepowered.api.data.value.OptionalValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableOptionalValue;
 import org.spongepowered.api.effect.potion.PotionEffectType;
 import org.spongepowered.common.data.processor.common.AbstractSpongeValueProcessor;
 import org.spongepowered.common.data.value.SpongeValueFactory;
@@ -39,14 +39,14 @@ import org.spongepowered.common.interfaces.IMixinTileEntityBeacon;
 import java.util.Optional;
 
 public class BeaconSecondaryEffectValueProcessor
-        extends AbstractSpongeValueProcessor<TileEntityBeacon, Optional<PotionEffectType>, MutableOptionalValue<PotionEffectType>> {
+        extends AbstractSpongeValueProcessor<TileEntityBeacon, Optional<PotionEffectType>, OptionalValue.MutableOptionalValue<PotionEffectType>> {
 
     public BeaconSecondaryEffectValueProcessor() {
         super(TileEntityBeacon.class, Keys.BEACON_SECONDARY_EFFECT);
     }
 
     @Override
-    protected MutableOptionalValue<PotionEffectType> constructValue(Optional<PotionEffectType> actualValue) {
+    protected OptionalValue.MutableOptionalValue<PotionEffectType> constructValue(Optional<PotionEffectType> actualValue) {
         return SpongeValueFactory.getInstance().createOptionalValue(Keys.BEACON_SECONDARY_EFFECT, actualValue.orElse(null));
     }
 
@@ -73,7 +73,7 @@ public class BeaconSecondaryEffectValueProcessor
     }
 
     @Override
-    protected ImmutableValue<Optional<PotionEffectType>> constructImmutableValue(Optional<PotionEffectType> value) {
+    protected Value.Immutable<Optional<PotionEffectType>> constructImmutableValue(Optional<PotionEffectType> value) {
         return constructValue(value).asImmutable();
     }
 

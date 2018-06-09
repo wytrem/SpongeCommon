@@ -34,9 +34,9 @@ import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.item.ImmutablePagedData;
 import org.spongepowered.api.data.manipulator.mutable.item.PagedData;
+import org.spongepowered.api.data.value.ListValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableListValue;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.common.data.manipulator.mutable.item.SpongePagedData;
 import org.spongepowered.common.data.processor.common.AbstractItemSingleDataProcessor;
@@ -49,7 +49,7 @@ import org.spongepowered.common.text.SpongeTexts;
 import java.util.List;
 import java.util.Optional;
 
-public class ItemPagedDataProcessor extends AbstractItemSingleDataProcessor<List<Text>, MutableListValue<Text>, PagedData, ImmutablePagedData> {
+public class ItemPagedDataProcessor extends AbstractItemSingleDataProcessor<List<Text>, ListValue.Mutable<Text>, PagedData, ImmutablePagedData> {
 
     public ItemPagedDataProcessor() {
         super(input -> input.getItem() == Items.WRITABLE_BOOK || input.getItem() == Items.WRITTEN_BOOK, Keys.BOOK_PAGES);
@@ -96,12 +96,12 @@ public class ItemPagedDataProcessor extends AbstractItemSingleDataProcessor<List
     }
 
     @Override
-    protected MutableListValue<Text> constructValue(List<Text> actualValue) {
+    protected ListValue.Mutable<Text> constructValue(List<Text> actualValue) {
         return new SpongeMutableListValue<>(Keys.BOOK_PAGES, actualValue);
     }
 
     @Override
-    protected ImmutableValue<List<Text>> constructImmutableValue(List<Text> value) {
+    protected Value.Immutable<List<Text>> constructImmutableValue(List<Text> value) {
         return new ImmutableSpongeListValue<>(Keys.BOOK_PAGES, ImmutableList.copyOf(value));
     }
 

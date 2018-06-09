@@ -28,7 +28,7 @@ import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.item.ImmutableAuthorData;
 import org.spongepowered.api.data.manipulator.mutable.item.AuthorData;
-import org.spongepowered.api.data.value.mutable.MutableValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.serializer.TextSerializers;
 import org.spongepowered.common.data.manipulator.immutable.item.ImmutableSpongeAuthorData;
@@ -57,12 +57,12 @@ public class SpongeAuthorData extends AbstractSingleData<Text, AuthorData, Immut
     }
 
     @Override
-    public MutableValue<Text> author() {
+    public Value.Mutable<Text> author() {
         return new SpongeMutableValue<>(Keys.BOOK_AUTHOR, Text.of(), this.getValue());
     }
 
     @Override
-    protected MutableValue<?> getValueGetter() {
+    protected Value.Mutable<?> getValueGetter() {
         return author();
     }
 

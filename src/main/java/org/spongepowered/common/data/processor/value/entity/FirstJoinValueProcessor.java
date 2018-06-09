@@ -27,9 +27,8 @@ package org.spongepowered.common.data.processor.value.entity;
 import net.minecraft.entity.player.EntityPlayer;
 import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.processor.common.AbstractSpongeValueProcessor;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
 import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
@@ -39,14 +38,14 @@ import java.time.Instant;
 import java.util.Optional;
 import java.util.UUID;
 
-public class FirstJoinValueProcessor extends AbstractSpongeValueProcessor<EntityPlayer, Instant, MutableValue<Instant>> {
+public class FirstJoinValueProcessor extends AbstractSpongeValueProcessor<EntityPlayer, Instant, Value.Mutable<Instant>> {
 
     public FirstJoinValueProcessor() {
         super(EntityPlayer.class, Keys.FIRST_DATE_PLAYED);
     }
 
     @Override
-    protected MutableValue<Instant> constructValue(Instant actualValue) {
+    protected Value.Mutable<Instant> constructValue(Instant actualValue) {
         return new SpongeMutableValue<>(Keys.FIRST_DATE_PLAYED, Instant.now(), actualValue);
     }
 
@@ -64,7 +63,7 @@ public class FirstJoinValueProcessor extends AbstractSpongeValueProcessor<Entity
     }
 
     @Override
-    protected ImmutableValue<Instant> constructImmutableValue(Instant value) {
+    protected Value.Immutable<Instant> constructImmutableValue(Instant value) {
         return new ImmutableSpongeValue<Instant>(Keys.FIRST_DATE_PLAYED, Instant.now(), value);
     }
 

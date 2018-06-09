@@ -29,9 +29,8 @@ import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.entity.ImmutableGriefingData;
 import org.spongepowered.api.data.manipulator.mutable.entity.GriefingData;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.manipulator.mutable.entity.SpongeGriefingData;
 import org.spongepowered.common.data.processor.common.AbstractEntitySingleDataProcessor;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
@@ -40,7 +39,7 @@ import org.spongepowered.common.interfaces.entity.IMixinGriefer;
 
 import java.util.Optional;
 
-public class GriefingDataProcessor extends AbstractEntitySingleDataProcessor<Entity, Boolean, MutableValue<Boolean>, GriefingData,
+public class GriefingDataProcessor extends AbstractEntitySingleDataProcessor<Entity, Boolean, Value.Mutable<Boolean>, GriefingData,
         ImmutableGriefingData> {
 
     public GriefingDataProcessor() {
@@ -53,7 +52,7 @@ public class GriefingDataProcessor extends AbstractEntitySingleDataProcessor<Ent
     }
 
     @Override
-    protected MutableValue<Boolean> constructValue(Boolean actualValue) {
+    protected Value.Mutable<Boolean> constructValue(Boolean actualValue) {
         return new SpongeMutableValue<>(Keys.CAN_GRIEF, true, actualValue);
     }
 
@@ -69,7 +68,7 @@ public class GriefingDataProcessor extends AbstractEntitySingleDataProcessor<Ent
     }
 
     @Override
-    protected ImmutableValue<Boolean> constructImmutableValue(Boolean value) {
+    protected Value.Immutable<Boolean> constructImmutableValue(Boolean value) {
         return ImmutableSpongeValue.cachedOf(Keys.CAN_GRIEF, true, value);
     }
 

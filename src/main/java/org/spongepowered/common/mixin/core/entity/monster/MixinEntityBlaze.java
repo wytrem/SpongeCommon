@@ -27,7 +27,7 @@ package org.spongepowered.common.mixin.core.entity.monster;
 import net.minecraft.entity.monster.EntityBlaze;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.DataManipulator;
-import org.spongepowered.api.data.value.mutable.MutableValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.entity.living.monster.Blaze;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -42,7 +42,7 @@ public abstract class MixinEntityBlaze extends MixinEntityMob implements Blaze {
     @Shadow public abstract boolean isBurning();
 
     @Override
-    public MutableValue<Boolean> aflame() {
+    public Value.Mutable<Boolean> aflame() {
         return new SpongeMutableValue<>(Keys.IS_AFLAME, false, this.isBurning());
     }
 

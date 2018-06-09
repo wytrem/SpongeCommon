@@ -31,7 +31,7 @@ import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.entity.ImmutableVehicleData;
 import org.spongepowered.api.data.manipulator.mutable.entity.VehicleData;
-import org.spongepowered.api.data.value.mutable.MutableValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.entity.EntitySnapshot;
 import org.spongepowered.common.data.manipulator.immutable.entity.ImmutableSpongeVehicleData;
@@ -63,14 +63,14 @@ public class SpongeVehicleData extends AbstractData<VehicleData, ImmutableVehicl
     }
 
     @Override
-    public MutableValue<EntitySnapshot> vehicle() {
+    public Value.Mutable<EntitySnapshot> vehicle() {
         checkState(this.vehicle != null, "Vehicle cannot be null!");
         checkState(this.baseVehicle != null, "Base Vehicle cannot be null!");
         return new SpongeMutableValue<>(Keys.VEHICLE, this.vehicle);
     }
 
     @Override
-    public MutableValue<EntitySnapshot> baseVehicle() {
+    public Value.Mutable<EntitySnapshot> baseVehicle() {
         checkState(this.vehicle != null, "Vehicle cannot be null!");
         checkState(this.baseVehicle != null, "Base Vehicle cannot be null!");
         return new SpongeMutableValue<>(Keys.BASE_VEHICLE, this.baseVehicle);

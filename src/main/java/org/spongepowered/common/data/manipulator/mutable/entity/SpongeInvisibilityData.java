@@ -28,7 +28,7 @@ import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.entity.ImmutableInvisibilityData;
 import org.spongepowered.api.data.manipulator.mutable.entity.InvisibilityData;
-import org.spongepowered.api.data.value.mutable.MutableValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.common.data.ImmutableDataCachingUtil;
 import org.spongepowered.common.data.manipulator.immutable.entity.ImmutableSpongeInvisibilityData;
 import org.spongepowered.common.data.manipulator.mutable.common.AbstractData;
@@ -55,22 +55,22 @@ public class SpongeInvisibilityData extends AbstractData<InvisibilityData, Immut
     }
 
     @Override
-    public MutableValue<Boolean> invisible() {
+    public Value.Mutable<Boolean> invisible() {
         return new SpongeMutableValue<>(Keys.INVISIBLE, false, this.invisible);
     }
 
     @Override
-    public MutableValue<Boolean> vanish() {
+    public Value.Mutable<Boolean> vanish() {
         return new SpongeMutableValue<>(Keys.VANISH, false, this.vanish);
     }
 
     @Override
-    public MutableValue<Boolean> ignoresCollisionDetection() {
+    public Value.Mutable<Boolean> ignoresCollisionDetection() {
         return new SpongeMutableValue<>(Keys.VANISH_IGNORES_COLLISION, false, this.collision);
     }
 
     @Override
-    public MutableValue<Boolean> untargetable() {
+    public Value.Mutable<Boolean> untargetable() {
         return new SpongeMutableValue<>(Keys.VANISH_PREVENTS_TARGETING, false, this.untargetable);
     }
 

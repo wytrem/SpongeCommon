@@ -28,7 +28,7 @@ import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.ImmutableDisplayNameData;
 import org.spongepowered.api.data.manipulator.mutable.DisplayNameData;
-import org.spongepowered.api.data.value.mutable.MutableValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.serializer.TextSerializers;
 import org.spongepowered.common.data.manipulator.immutable.ImmutableSpongeDisplayNameData;
@@ -46,7 +46,7 @@ public class SpongeDisplayNameData extends AbstractSingleData<Text, DisplayNameD
     }
 
     @Override
-    protected MutableValue<?> getValueGetter() {
+    protected Value.Mutable<?> getValueGetter() {
         return this.displayName();
     }
 
@@ -61,7 +61,7 @@ public class SpongeDisplayNameData extends AbstractSingleData<Text, DisplayNameD
     }
 
     @Override
-    public MutableValue<Text> displayName() {
+    public Value.Mutable<Text> displayName() {
         return new SpongeMutableValue<>(this.usedKey, Text.of(), this.getValue());
     }
 

@@ -28,15 +28,14 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 
 import org.spongepowered.api.data.key.Key;
+import org.spongepowered.api.data.value.BoundedValue;
 import org.spongepowered.api.data.value.Value;
-import org.spongepowered.api.data.value.immutable.ImmutableBoundedValue;
-import org.spongepowered.api.data.value.mutable.MutableBoundedValue;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeBoundedValue;
 
 import java.util.Comparator;
 import java.util.function.Function;
 
-public class SpongeBoundedValue<E> extends SpongeMutableValue<E> implements MutableBoundedValue<E> {
+public class SpongeBoundedValue<E> extends SpongeMutableValue<E> implements BoundedValue.Mutable<E> {
 
     private final Comparator<E> comparator;
     private final E minimum;
@@ -71,7 +70,7 @@ public class SpongeBoundedValue<E> extends SpongeMutableValue<E> implements Muta
     }
 
     @Override
-    public MutableBoundedValue<E> set(E value) {
+    public BoundedValue.Mutable<E> set(E value) {
         if (this.comparator.compare(value, this.minimum) >= 0 && this.comparator.compare(value, this.maximum) <= 0) {
             this.actualValue = checkNotNull(value);
         }
@@ -79,17 +78,17 @@ public class SpongeBoundedValue<E> extends SpongeMutableValue<E> implements Muta
     }
 
     @Override
-    public MutableBoundedValue<E> transform(Function<E, E> function) {
+    public BoundedValue.Mutable<E> transform(Function<E, E> function) {
         return set(checkNotNull(checkNotNull(function).apply(get())));
     }
 
     @Override
-    public ImmutableBoundedValue<E> asImmutable() {
+    public BoundedValue.Immutable<E> asImmutable() {
         return new ImmutableSpongeBoundedValue<>(getKey(), this.getDefault(), this.actualValue, this.comparator, this.minimum, this.maximum);
     }
 
     @Override
-    public MutableBoundedValue<E> copy() {
+    public BoundedValue.Mutable<E> copy() {
         return new SpongeBoundedValue<>(this.getKey(), this.getDefault(), this.comparator, this.minimum, this.maximum, this.actualValue);
     }
 }

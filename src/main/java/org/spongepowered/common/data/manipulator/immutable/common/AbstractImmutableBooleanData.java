@@ -32,7 +32,6 @@ import org.spongepowered.api.data.key.Key;
 import org.spongepowered.api.data.manipulator.DataManipulator;
 import org.spongepowered.api.data.manipulator.ImmutableDataManipulator;
 import org.spongepowered.api.data.value.Value;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
 import org.spongepowered.common.util.ReflectionUtil;
 
@@ -43,7 +42,7 @@ public abstract class AbstractImmutableBooleanData<I extends ImmutableDataManipu
 
     private final Class<? extends M> mutableClass;
     private final boolean defaultValue;
-    private final ImmutableValue<Boolean> immutableValue;
+    private final Value.Immutable<Boolean> immutableValue;
 
     public AbstractImmutableBooleanData(Class<I> immutableClass, boolean value, Key<? extends Value<Boolean>> usedKey,
                                         Class<? extends M> mutableClass, boolean defaultValue) {
@@ -56,7 +55,7 @@ public abstract class AbstractImmutableBooleanData<I extends ImmutableDataManipu
     }
 
     @Override
-    protected final ImmutableValue<Boolean> getValueGetter() {
+    protected final Value.Immutable<Boolean> getValueGetter() {
         return this.immutableValue;
     }
 

@@ -46,7 +46,6 @@ import org.spongepowered.api.data.manipulator.DataManipulator;
 import org.spongepowered.api.data.manipulator.ImmutableDataManipulator;
 import org.spongepowered.api.data.merge.MergeFunction;
 import org.spongepowered.api.data.value.Value;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
 import org.spongepowered.api.util.Cycleable;
 import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
@@ -85,7 +84,7 @@ public abstract class MixinStateImplementation extends BlockStateBase implements
     // implementation can pose during start up, or whether game state
     // can affect the various systems in place (i.e. we sometimes can't load certain
     // systems before other registries have finished registering their stuff)
-    @Nullable private ImmutableSet<ImmutableValue<?>> values;
+    @Nullable private ImmutableSet<Value.Immutable<?>> values;
     @Nullable private ImmutableSet<Key<?>> keys;
     @Nullable private ImmutableList<ImmutableDataManipulator<?, ?>> manipulators;
     @Nullable private ImmutableMap<Key<?>, Object> keyMap;
@@ -142,9 +141,9 @@ public abstract class MixinStateImplementation extends BlockStateBase implements
         if (this.keyMap == null) {
             ImmutableMap.Builder<Key<?>, Object> builder = ImmutableMap.builder();
             ImmutableSet.Builder<Key<?>> keyBuilder = ImmutableSet.builder();
-            ImmutableSet.Builder<ImmutableValue<?>> valueBuilder = ImmutableSet.builder();
+            ImmutableSet.Builder<Value.Immutable<?>> valueBuilder = ImmutableSet.builder();
             for (ImmutableDataManipulator<?, ?> manipulator : this.manipulators) {
-                for (ImmutableValue<?> value : manipulator.getValues()) {
+                for (Value.Immutable<?> value : manipulator.getValues()) {
                     builder.put(value.getKey(), value.get());
                     valueBuilder.add(value);
                     keyBuilder.add(value.getKey());
@@ -307,7 +306,7 @@ public abstract class MixinStateImplementation extends BlockStateBase implements
     @Override
     public <E, V extends Value<E>> Optional<V> getValue(Key<V> key) {
         checkNotNull(key);
-        for (ImmutableValue<?> value : this.getValues()) {
+        for (Value.Immutable<?> value : this.getValues()) {
             if (value.getKey().equals(key)) {
                 return Optional.of((V) value.asMutable());
             }
@@ -334,7 +333,7 @@ public abstract class MixinStateImplementation extends BlockStateBase implements
     }
 
     @Override
-    public Set<ImmutableValue<?>> getValues() {
+    public Set<Value.Immutable<?>> getValues() {
         if (this.values == null) {
             lazyLoadManipulatorsAndKeys();
         }

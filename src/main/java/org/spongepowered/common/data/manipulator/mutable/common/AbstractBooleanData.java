@@ -32,7 +32,6 @@ import org.spongepowered.api.data.key.Key;
 import org.spongepowered.api.data.manipulator.DataManipulator;
 import org.spongepowered.api.data.manipulator.ImmutableDataManipulator;
 import org.spongepowered.api.data.value.Value;
-import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.ImmutableDataCachingUtil;
 import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 import org.spongepowered.common.util.ReflectionUtil;
@@ -54,7 +53,7 @@ public abstract class AbstractBooleanData<M extends DataManipulator<M, I>, I ext
     }
 
     @Override
-    protected MutableValue.Single<Boolean> getValueGetter() {
+    protected Value.Mutable.Single<Boolean> getValueGetter() {
         return new SpongeMutableValue<>(this.usedKey, this.defaultValue, this.getValue());
     }
 

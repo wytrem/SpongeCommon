@@ -32,9 +32,8 @@ import org.spongepowered.api.data.manipulator.immutable.ImmutableSkullData;
 import org.spongepowered.api.data.manipulator.mutable.SkullData;
 import org.spongepowered.api.data.type.SkullType;
 import org.spongepowered.api.data.type.SkullTypes;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.SpongeImpl;
 import org.spongepowered.common.data.manipulator.mutable.SpongeSkullData;
 import org.spongepowered.common.data.processor.common.AbstractTileEntitySingleDataProcessor;
@@ -47,7 +46,7 @@ import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 import java.util.Optional;
 
 public class TileEntitySkullDataProcessor
-        extends AbstractTileEntitySingleDataProcessor<TileEntitySkull, SkullType, MutableValue<SkullType>, SkullData, ImmutableSkullData> {
+        extends AbstractTileEntitySingleDataProcessor<TileEntitySkull, SkullType, Value.Mutable<SkullType>, SkullData, ImmutableSkullData> {
 
     public TileEntitySkullDataProcessor() {
         super(TileEntitySkull.class, Keys.SKULL_TYPE);
@@ -81,12 +80,12 @@ public class TileEntitySkullDataProcessor
     }
 
     @Override
-    protected MutableValue<SkullType> constructValue(SkullType value) {
+    protected Value.Mutable<SkullType> constructValue(SkullType value) {
         return new SpongeMutableValue<>(Keys.SKULL_TYPE, SkullTypes.SKELETON, value);
     }
 
     @Override
-    protected ImmutableValue<SkullType> constructImmutableValue(SkullType value) {
+    protected Value.Immutable<SkullType> constructImmutableValue(SkullType value) {
         return ImmutableSpongeValue.cachedOf(Keys.SKULL_TYPE, SkullTypes.SKELETON, value);
     }
 

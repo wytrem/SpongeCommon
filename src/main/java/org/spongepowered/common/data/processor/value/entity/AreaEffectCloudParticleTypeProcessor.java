@@ -28,9 +28,8 @@ import net.minecraft.entity.EntityAreaEffectCloud;
 import net.minecraft.util.EnumParticleTypes;
 import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.api.effect.particle.ParticleType;
 import org.spongepowered.api.effect.particle.ParticleTypes;
 import org.spongepowered.common.data.processor.common.AbstractSpongeValueProcessor;
@@ -39,14 +38,14 @@ import org.spongepowered.common.effect.particle.SpongeParticleType;
 
 import java.util.Optional;
 
-public class AreaEffectCloudParticleTypeProcessor extends AbstractSpongeValueProcessor<EntityAreaEffectCloud, ParticleType, MutableValue<ParticleType>> {
+public class AreaEffectCloudParticleTypeProcessor extends AbstractSpongeValueProcessor<EntityAreaEffectCloud, ParticleType, Value.Mutable<ParticleType>> {
 
     public AreaEffectCloudParticleTypeProcessor() {
         super(EntityAreaEffectCloud.class, Keys.AREA_EFFECT_CLOUD_PARTICLE_TYPE);
     }
 
     @Override
-    protected MutableValue<ParticleType> constructValue(ParticleType actualValue) {
+    protected Value.Mutable<ParticleType> constructValue(ParticleType actualValue) {
         return new SpongeMutableValue<ParticleType>(Keys.AREA_EFFECT_CLOUD_PARTICLE_TYPE, ParticleTypes.MOB_SPELL, actualValue);
     }
 
@@ -67,7 +66,7 @@ public class AreaEffectCloudParticleTypeProcessor extends AbstractSpongeValuePro
     }
 
     @Override
-    protected ImmutableValue<ParticleType> constructImmutableValue(ParticleType value) {
+    protected Value.Immutable<ParticleType> constructImmutableValue(ParticleType value) {
         return constructValue(value).asImmutable();
     }
 

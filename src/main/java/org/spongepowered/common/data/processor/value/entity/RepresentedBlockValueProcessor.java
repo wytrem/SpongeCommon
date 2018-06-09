@@ -30,23 +30,22 @@ import net.minecraft.init.Blocks;
 import org.spongepowered.api.block.BlockState;
 import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.processor.common.AbstractSpongeValueProcessor;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
 import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
 import java.util.Optional;
 
-public class RepresentedBlockValueProcessor extends AbstractSpongeValueProcessor<EntityMinecart, BlockState, MutableValue<BlockState>> {
+public class RepresentedBlockValueProcessor extends AbstractSpongeValueProcessor<EntityMinecart, BlockState, Value.Mutable<BlockState>> {
 
     public RepresentedBlockValueProcessor() {
         super(EntityMinecart.class, Keys.REPRESENTED_BLOCK);
     }
 
     @Override
-    protected MutableValue<BlockState> constructValue(BlockState value) {
+    protected Value.Mutable<BlockState> constructValue(BlockState value) {
         return new SpongeMutableValue<>(Keys.REPRESENTED_BLOCK, (BlockState) Blocks.AIR.getDefaultState(), value);
     }
 
@@ -63,7 +62,7 @@ public class RepresentedBlockValueProcessor extends AbstractSpongeValueProcessor
     }
 
     @Override
-    protected ImmutableValue<BlockState> constructImmutableValue(BlockState value) {
+    protected Value.Immutable<BlockState> constructImmutableValue(BlockState value) {
         return new ImmutableSpongeValue<>(Keys.REPRESENTED_BLOCK, (BlockState) Blocks.AIR.getDefaultState(), value);
     }
 
@@ -71,7 +70,7 @@ public class RepresentedBlockValueProcessor extends AbstractSpongeValueProcessor
     public DataTransactionResult removeFrom(ValueContainer<?> container) {
         if(container instanceof EntityMinecart) {
             EntityMinecart cart = (EntityMinecart) container;
-            ImmutableValue<BlockState> block = new ImmutableSpongeValue<>(Keys.REPRESENTED_BLOCK, (BlockState) cart.getDisplayTile());
+            Value.Immutable<BlockState> block = new ImmutableSpongeValue<>(Keys.REPRESENTED_BLOCK, (BlockState) cart.getDisplayTile());
             cart.setHasDisplayTile(false);
             return DataTransactionResult.builder().replace(block).build();
         }

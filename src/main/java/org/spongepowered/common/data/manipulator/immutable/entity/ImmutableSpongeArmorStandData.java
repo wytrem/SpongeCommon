@@ -28,7 +28,7 @@ import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.entity.ImmutableArmorStandData;
 import org.spongepowered.api.data.manipulator.mutable.entity.ArmorStandData;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.common.data.manipulator.immutable.common.AbstractImmutableData;
 import org.spongepowered.common.data.manipulator.mutable.entity.SpongeArmorStandData;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
@@ -39,10 +39,10 @@ public class ImmutableSpongeArmorStandData extends AbstractImmutableData<Immutab
     private final boolean small;
     private final boolean arms;
     private final boolean basePlate;
-    private final ImmutableValue<Boolean> markerValue;
-    private final ImmutableValue<Boolean> smallValue;
-    private final ImmutableValue<Boolean> armsValue;
-    private final ImmutableValue<Boolean> basePlateValue;
+    private final Value.Immutable<Boolean> markerValue;
+    private final Value.Immutable<Boolean> smallValue;
+    private final Value.Immutable<Boolean> armsValue;
+    private final Value.Immutable<Boolean> basePlateValue;
 
     public ImmutableSpongeArmorStandData() {
         this(false, false, false, true);
@@ -78,22 +78,22 @@ public class ImmutableSpongeArmorStandData extends AbstractImmutableData<Immutab
     }
 
     @Override
-    public ImmutableValue<Boolean> marker() {
+    public Value.Immutable<Boolean> marker() {
         return this.markerValue;
     }
 
     @Override
-    public ImmutableValue<Boolean> small() {
+    public Value.Immutable<Boolean> small() {
         return this.smallValue;
     }
 
     @Override
-    public ImmutableValue<Boolean> arms() {
+    public Value.Immutable<Boolean> arms() {
         return this.armsValue;
     }
 
     @Override
-    public ImmutableValue<Boolean> basePlate() {
+    public Value.Immutable<Boolean> basePlate() {
         return this.basePlateValue;
     }
 

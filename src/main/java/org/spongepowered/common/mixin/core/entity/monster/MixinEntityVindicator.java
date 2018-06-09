@@ -27,7 +27,7 @@ package org.spongepowered.common.mixin.core.entity.monster;
 import net.minecraft.entity.monster.EntityVindicator;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.DataManipulator;
-import org.spongepowered.api.data.value.mutable.MutableValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.entity.living.monster.Vindicator;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -43,7 +43,7 @@ public abstract class MixinEntityVindicator extends MixinEntityMob implements IM
     @Shadow private boolean johnny;
 
     @Override
-    public MutableValue<Boolean> johnny() {
+    public Value.Mutable<Boolean> johnny() {
         return new SpongeMutableValue<>(Keys.IS_JOHNNY, false, this.johnny);
     }
 

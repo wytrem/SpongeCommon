@@ -29,7 +29,7 @@ import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.DataManipulator;
 import org.spongepowered.api.data.manipulator.mutable.entity.ArtData;
 import org.spongepowered.api.data.type.Art;
-import org.spongepowered.api.data.value.mutable.MutableValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.entity.hanging.Painting;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -51,7 +51,7 @@ public abstract class MixinEntityPainting extends MixinEntityHanging implements 
     }
 
     @Override
-    public MutableValue<Art> art() {
+    public Value.Mutable<Art> art() {
         return new SpongeMutableValue<>(Keys.ART, DataConstants.Catalog.DEFAULT_ART, (Art) (Object) this.art);
     }
 

@@ -35,7 +35,7 @@ import org.spongepowered.api.Sponge;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.DataManipulator;
 import org.spongepowered.api.data.manipulator.mutable.block.DirectionalData;
-import org.spongepowered.api.data.value.mutable.MutableValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.entity.hanging.Hanging;
 import org.spongepowered.api.event.CauseStackManager;
 import org.spongepowered.api.event.SpongeEventFactory;
@@ -147,7 +147,7 @@ public abstract class MixinEntityHanging extends MixinEntity implements Hanging,
     }
 
     @Override
-    public MutableValue<Direction> direction() {
+    public Value.Mutable<Direction> direction() {
         return new SpongeMutableValue<>(Keys.DIRECTION, getDirection());
     }
 

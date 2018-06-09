@@ -28,7 +28,7 @@ import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.entity.ImmutableCriticalHitData;
 import org.spongepowered.api.data.manipulator.mutable.entity.CriticalHitData;
-import org.spongepowered.api.data.value.mutable.MutableValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.common.data.manipulator.immutable.entity.ImmutableSpongeCriticalHitData;
 import org.spongepowered.common.data.manipulator.mutable.common.AbstractSingleData;
 import org.spongepowered.common.data.value.SpongeValueFactory;
@@ -54,7 +54,7 @@ public class SpongeCriticalHitData extends AbstractSingleData<Boolean, CriticalH
     }
 
     @Override
-    public MutableValue<Boolean> criticalHit() {
+    public Value.Mutable<Boolean> criticalHit() {
         return SpongeValueFactory.getInstance().createValue(Keys.CRITICAL_HIT, getValue(), false);
     }
 
@@ -65,7 +65,7 @@ public class SpongeCriticalHitData extends AbstractSingleData<Boolean, CriticalH
     }
 
     @Override
-    protected MutableValue<?> getValueGetter() {
+    protected Value.Mutable<?> getValueGetter() {
         return criticalHit();
     }
 }

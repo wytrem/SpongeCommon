@@ -32,7 +32,6 @@ import org.spongepowered.api.data.key.Key;
 import org.spongepowered.api.data.manipulator.DataManipulator;
 import org.spongepowered.api.data.manipulator.ImmutableDataManipulator;
 import org.spongepowered.api.data.value.Value;
-import org.spongepowered.api.data.value.mutable.MutableValue;
 
 import java.util.Optional;
 
@@ -68,7 +67,7 @@ public abstract class AbstractSingleData<T, M extends DataManipulator<M, I>, I e
         registerKeyValue(this.usedKey, AbstractSingleData.this::getValueGetter);
     }
 
-    protected abstract MutableValue<?> getValueGetter();
+    protected abstract Value.Mutable<?> getValueGetter();
 
     @Override
     public <E> Optional<E> get(Key<? extends Value<E>> key) {

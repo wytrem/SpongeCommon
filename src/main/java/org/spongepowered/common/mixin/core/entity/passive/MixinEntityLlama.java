@@ -28,8 +28,8 @@ import net.minecraft.entity.passive.EntityLlama;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.type.LlamaVariant;
 import org.spongepowered.api.data.type.LlamaVariants;
-import org.spongepowered.api.data.value.mutable.MutableBoundedValue;
-import org.spongepowered.api.data.value.mutable.MutableValue;
+import org.spongepowered.api.data.value.BoundedValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.entity.living.animal.Llama;
 import org.spongepowered.asm.mixin.Implements;
 import org.spongepowered.asm.mixin.Interface;
@@ -48,7 +48,7 @@ public abstract class MixinEntityLlama extends MixinAbstractHorse implements Lla
     @Shadow public abstract void setVariant(int p_190710_1_);
 
     @Override
-    public MutableValue<LlamaVariant> llamaVariant() {
+    public Value.Mutable<LlamaVariant> llamaVariant() {
         final int i = getVariant();
         final LlamaVariant variant;
         if (i == 0) {
@@ -67,7 +67,7 @@ public abstract class MixinEntityLlama extends MixinAbstractHorse implements Lla
     }
 
     @Override
-    public MutableBoundedValue<Integer> strength() {
+    public BoundedValue.Mutable<Integer> strength() {
         return SpongeValueFactory.getInstance()
                 .createBoundedValueBuilder(Keys.LLAMA_STRENGTH)
                 .defaultValue(DataConstants.Llama.DEFAULT_STRENGTH)

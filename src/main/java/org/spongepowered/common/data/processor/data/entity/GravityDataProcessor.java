@@ -29,9 +29,8 @@ import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.entity.ImmutableGravityData;
 import org.spongepowered.api.data.manipulator.mutable.entity.GravityData;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.api.util.OptBool;
 import org.spongepowered.common.data.manipulator.mutable.entity.SpongeGravityData;
 import org.spongepowered.common.data.processor.common.AbstractEntitySingleDataProcessor;
@@ -41,14 +40,14 @@ import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
 import java.util.Optional;
 
-public class GravityDataProcessor extends AbstractEntitySingleDataProcessor<Entity, Boolean, MutableValue<Boolean>, GravityData, ImmutableGravityData> {
+public class GravityDataProcessor extends AbstractEntitySingleDataProcessor<Entity, Boolean, Value.Mutable<Boolean>, GravityData, ImmutableGravityData> {
 
     public GravityDataProcessor() {
         super(Entity.class, Keys.HAS_GRAVITY);
     }
 
     @Override
-    protected MutableValue<Boolean> constructValue(Boolean actualValue) {
+    protected Value.Mutable<Boolean> constructValue(Boolean actualValue) {
         return new SpongeMutableValue<>(this.key, DataConstants.DEFAULT_HAS_GRAVITY, actualValue);
     }
 
@@ -69,7 +68,7 @@ public class GravityDataProcessor extends AbstractEntitySingleDataProcessor<Enti
     }
 
     @Override
-    protected ImmutableValue<Boolean> constructImmutableValue(Boolean value) {
+    protected Value.Immutable<Boolean> constructImmutableValue(Boolean value) {
         return ImmutableSpongeValue.cachedOf(this.key, DataConstants.DEFAULT_HAS_GRAVITY, value);
     }
 

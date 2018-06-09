@@ -38,7 +38,6 @@ import org.spongepowered.api.data.key.Key;
 import org.spongepowered.api.data.manipulator.ImmutableDataManipulator;
 import org.spongepowered.api.data.merge.MergeFunction;
 import org.spongepowered.api.data.value.Value;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
 import org.spongepowered.api.util.Cycleable;
 import org.spongepowered.api.util.Direction;
 import org.spongepowered.api.world.Location;
@@ -280,7 +279,7 @@ public interface MixinIBlockState extends IBlockState, BlockState {
     }
 
     @Override
-    default Set<ImmutableValue<?>> getValues() {
+    default Set<Value.Immutable<?>> getValues() {
         return Collections.emptySet();
     }
 }

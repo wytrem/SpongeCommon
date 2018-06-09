@@ -31,8 +31,8 @@ import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.block.ImmutableConnectedDirectionData;
 import org.spongepowered.api.data.manipulator.mutable.block.ConnectedDirectionData;
-import org.spongepowered.api.data.value.mutable.MutableValue;
-import org.spongepowered.api.data.value.mutable.MutableSetValue;
+import org.spongepowered.api.data.value.SetValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.util.Direction;
 import org.spongepowered.common.data.manipulator.immutable.block.ImmutableSpongeConnectedDirectionData;
 import org.spongepowered.common.data.manipulator.mutable.common.AbstractData;
@@ -57,27 +57,27 @@ public class SpongeConnectedDirectionData extends AbstractData<ConnectedDirectio
     }
 
     @Override
-    public MutableSetValue<Direction> connectedDirections() {
+    public SetValue.Mutable<Direction> connectedDirections() {
         return new SpongeMutableSetValue<>(Keys.CONNECTED_DIRECTIONS, this.connectedDirections);
     }
 
     @Override
-    public MutableValue<Boolean> connectedNorth() {
+    public Value.Mutable<Boolean> connectedNorth() {
         return new SpongeMutableValue<>(Keys.CONNECTED_NORTH, this.connectedDirections.contains(Direction.NORTH));
     }
 
     @Override
-    public MutableValue<Boolean> connectedSouth() {
+    public Value.Mutable<Boolean> connectedSouth() {
         return new SpongeMutableValue<>(Keys.CONNECTED_SOUTH, this.connectedDirections.contains(Direction.SOUTH));
     }
 
     @Override
-    public MutableValue<Boolean> connectedEast() {
+    public Value.Mutable<Boolean> connectedEast() {
         return new SpongeMutableValue<>(Keys.CONNECTED_EAST, this.connectedDirections.contains(Direction.EAST));
     }
 
     @Override
-    public MutableValue<Boolean> connectedWest() {
+    public Value.Mutable<Boolean> connectedWest() {
         return new SpongeMutableValue<>(Keys.CONNECTED_WEST, this.connectedDirections.contains(Direction.WEST));
     }
 

@@ -29,9 +29,8 @@ import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.ImmutableWetData;
 import org.spongepowered.api.data.manipulator.mutable.WetData;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.manipulator.mutable.SpongeWetData;
 import org.spongepowered.common.data.processor.common.AbstractEntitySingleDataProcessor;
 import org.spongepowered.common.data.util.DataConstants;
@@ -40,7 +39,7 @@ import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
 import java.util.Optional;
 
-public class WolfWetDataProcessor extends AbstractEntitySingleDataProcessor<EntityWolf, Boolean, MutableValue<Boolean>, WetData, ImmutableWetData> {
+public class WolfWetDataProcessor extends AbstractEntitySingleDataProcessor<EntityWolf, Boolean, Value.Mutable<Boolean>, WetData, ImmutableWetData> {
 
     public WolfWetDataProcessor() {
         super(EntityWolf.class, Keys.IS_WET);
@@ -69,12 +68,12 @@ public class WolfWetDataProcessor extends AbstractEntitySingleDataProcessor<Enti
     }
 
     @Override
-    protected MutableValue<Boolean> constructValue(Boolean actualValue) {
+    protected Value.Mutable<Boolean> constructValue(Boolean actualValue) {
         return new SpongeMutableValue<>(Keys.IS_WET, DataConstants.IS_WET_DEFAULT, actualValue);
     }
 
     @Override
-    protected ImmutableValue<Boolean> constructImmutableValue(Boolean value) {
+    protected Value.Immutable<Boolean> constructImmutableValue(Boolean value) {
         return ImmutableSpongeValue.cachedOf(Keys.IS_WET, DataConstants.IS_WET_DEFAULT, value);
     }
 

@@ -32,7 +32,7 @@ import org.spongepowered.api.data.type.HorseColor;
 import org.spongepowered.api.data.type.HorseColors;
 import org.spongepowered.api.data.type.HorseStyle;
 import org.spongepowered.api.data.type.HorseStyles;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.common.data.manipulator.immutable.common.AbstractImmutableData;
 import org.spongepowered.common.data.manipulator.mutable.entity.SpongeHorseData;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
@@ -42,8 +42,8 @@ public class ImmutableSpongeHorseData extends AbstractImmutableData<ImmutableHor
     private final HorseColor horseColor;
     private final HorseStyle horseStyle;
 
-    private final ImmutableValue<HorseColor> colorValue;
-    private final ImmutableValue<HorseStyle> styleValue;
+    private final Value.Immutable<HorseColor> colorValue;
+    private final Value.Immutable<HorseStyle> styleValue;
 
     public ImmutableSpongeHorseData(HorseColor horseColor, HorseStyle horseStyle) {
         super(ImmutableHorseData.class);
@@ -67,12 +67,12 @@ public class ImmutableSpongeHorseData extends AbstractImmutableData<ImmutableHor
     }
 
     @Override
-    public ImmutableValue<HorseColor> color() {
+    public Value.Immutable<HorseColor> color() {
         return this.colorValue;
     }
 
     @Override
-    public ImmutableValue<HorseStyle> style() {
+    public Value.Immutable<HorseStyle> style() {
         return this.styleValue;
     }
 

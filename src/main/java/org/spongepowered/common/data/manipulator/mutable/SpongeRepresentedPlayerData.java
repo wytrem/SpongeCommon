@@ -29,7 +29,7 @@ import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.ImmutableRepresentedPlayerData;
 import org.spongepowered.api.data.manipulator.mutable.RepresentedPlayerData;
-import org.spongepowered.api.data.value.mutable.MutableValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.profile.GameProfile;
 import org.spongepowered.api.profile.property.ProfileProperty;
 import org.spongepowered.common.data.manipulator.immutable.ImmutableSpongeRepresentedPlayerData;
@@ -89,7 +89,7 @@ public class SpongeRepresentedPlayerData extends AbstractSingleData<GameProfile,
     }
 
     @Override
-    public MutableValue<GameProfile> owner() {
+    public Value.Mutable<GameProfile> owner() {
         return new SpongeMutableValue<>(this.usedKey, this.getValue());
     }
 
@@ -111,7 +111,7 @@ public class SpongeRepresentedPlayerData extends AbstractSingleData<GameProfile,
     }
 
     @Override
-    protected MutableValue<?> getValueGetter() {
+    protected Value.Mutable<?> getValueGetter() {
         return this.owner();
     }
 

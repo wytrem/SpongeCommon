@@ -48,7 +48,6 @@ import org.spongepowered.api.data.manipulator.DataManipulator;
 import org.spongepowered.api.data.merge.MergeFunction;
 import org.spongepowered.api.data.persistence.InvalidDataException;
 import org.spongepowered.api.data.value.Value;
-import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.api.item.ItemType;
 import org.spongepowered.api.item.inventory.ItemStack;
 import org.spongepowered.api.item.inventory.ItemStackSnapshot;
@@ -438,9 +437,9 @@ public abstract class MixinItemStack implements DataHolder, IMixinItemStack, IMi
         for (DataManipulator<?, ?> manipulator : this.manipulators) {
             if (manipulator.supports(key)) {
                 final DataTransactionResult.Builder builder = DataTransactionResult.builder();
-                builder.replace(((MutableValue) manipulator.getValue((Key) key).get()).asImmutable());
+                builder.replace(((Value.Mutable) manipulator.getValue((Key) key).get()).asImmutable());
                 manipulator.set(key, value);
-                builder.success(((MutableValue) manipulator.getValue((Key) key).get()).asImmutable());
+                builder.success(((Value.Mutable) manipulator.getValue((Key) key).get()).asImmutable());
                 resyncCustomToTag();
                 return builder.result(DataTransactionResult.Type.SUCCESS).build();
             }

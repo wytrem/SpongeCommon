@@ -69,7 +69,7 @@ import org.spongepowered.api.data.manipulator.DataManipulator;
 import org.spongepowered.api.data.manipulator.mutable.entity.IgniteableData;
 import org.spongepowered.api.data.manipulator.mutable.entity.VehicleData;
 import org.spongepowered.api.data.persistence.InvalidDataException;
-import org.spongepowered.api.data.value.mutable.MutableValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.entity.EntityArchetype;
 import org.spongepowered.api.entity.EntitySnapshot;
@@ -1336,7 +1336,7 @@ public abstract class MixinEntity implements IMixinEntity {
     }
 
     @Override
-    public MutableValue<Boolean> gravity() {
+    public Value.Mutable<Boolean> gravity() {
         return this.getValue(Keys.HAS_GRAVITY).get();
     }
 

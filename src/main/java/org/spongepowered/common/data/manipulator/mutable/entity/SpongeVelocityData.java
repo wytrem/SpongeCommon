@@ -29,7 +29,7 @@ import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.entity.ImmutableVelocityData;
 import org.spongepowered.api.data.manipulator.mutable.entity.VelocityData;
-import org.spongepowered.api.data.value.mutable.MutableValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.common.data.manipulator.immutable.entity.ImmutableSpongeVelocityData;
 import org.spongepowered.common.data.manipulator.mutable.common.AbstractSingleData;
 import org.spongepowered.common.data.util.DataQueries;
@@ -46,7 +46,7 @@ public class SpongeVelocityData extends AbstractSingleData<Vector3d, VelocityDat
     }
 
     @Override
-    protected MutableValue<?> getValueGetter() {
+    protected Value.Mutable<?> getValueGetter() {
         return velocity();
     }
 
@@ -71,7 +71,7 @@ public class SpongeVelocityData extends AbstractSingleData<Vector3d, VelocityDat
     }
 
     @Override
-    public MutableValue<Vector3d> velocity() {
+    public Value.Mutable<Vector3d> velocity() {
         return new SpongeMutableValue<>(Keys.VELOCITY, Vector3d.ZERO, this.getValue());
     }
 }

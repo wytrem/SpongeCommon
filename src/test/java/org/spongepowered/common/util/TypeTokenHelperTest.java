@@ -35,7 +35,6 @@ import org.spongepowered.api.data.DataRegistration;
 import org.spongepowered.api.data.key.Key;
 import org.spongepowered.api.data.manipulator.mutable.item.LoreData;
 import org.spongepowered.api.data.value.Value;
-import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.api.entity.living.Living;
 import org.spongepowered.api.entity.living.complex.EnderDragon;
 import org.spongepowered.api.entity.living.monster.Slime;
@@ -114,16 +113,16 @@ public final class TypeTokenHelperTest {
         // Enclosing classes testing
 
         assertTrue(TypeTokenHelper.isAssignable(
-                new TypeToken<A<Object>.B<MutableValue<Double>>>() {},
-                new TypeToken<A<Object>.B<MutableValue<? extends Number>>>() {}));
+                new TypeToken<A<Object>.B<Value.Mutable<Double>>>() {},
+                new TypeToken<A<Object>.B<Value.Mutable<? extends Number>>>() {}));
 
         assertFalse(TypeTokenHelper.isAssignable(
-                new TypeToken<A<Key<Value<EnderDragon>>>.B<MutableValue<Double>>>() {},
-                new TypeToken<A<Key<Value<Slime>>>.B<MutableValue<? extends Number>>>() {}));
+                new TypeToken<A<Key<Value<EnderDragon>>>.B<Value.Mutable<Double>>>() {},
+                new TypeToken<A<Key<Value<Slime>>>.B<Value.Mutable<? extends Number>>>() {}));
 
         assertTrue(TypeTokenHelper.isAssignable(
-                new TypeToken<A<Key<Value<EnderDragon>>>.B<MutableValue<Double>>>() {},
-                new TypeToken<A<Key<Value<? extends Living>>>.B<MutableValue<? extends Number>>>() {}));
+                new TypeToken<A<Key<Value<EnderDragon>>>.B<Value.Mutable<Double>>>() {},
+                new TypeToken<A<Key<Value<? extends Living>>>.B<Value.Mutable<? extends Number>>>() {}));
     }
 
     @Test

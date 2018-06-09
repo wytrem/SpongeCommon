@@ -28,7 +28,7 @@ import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.tileentity.ImmutableLockableData;
 import org.spongepowered.api.data.manipulator.mutable.tileentity.LockableData;
-import org.spongepowered.api.data.value.mutable.MutableValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.common.data.manipulator.immutable.tileentity.ImmutableSpongeLockableData;
 import org.spongepowered.common.data.manipulator.mutable.common.AbstractSingleData;
 import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
@@ -44,12 +44,12 @@ public class SpongeLockableData extends AbstractSingleData<String, LockableData,
     }
 
     @Override
-    public MutableValue<String> lockToken() {
+    public Value.Mutable<String> lockToken() {
         return this.getValueGetter();
     }
 
     @Override
-    protected MutableValue<String> getValueGetter() {
+    protected Value.Mutable<String> getValueGetter() {
         return new SpongeMutableValue<String>(Keys.LOCK_TOKEN, "", this.getValue());
     }
 

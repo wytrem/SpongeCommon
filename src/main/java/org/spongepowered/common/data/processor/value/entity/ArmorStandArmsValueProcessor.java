@@ -27,23 +27,22 @@ package org.spongepowered.common.data.processor.value.entity;
 import net.minecraft.entity.item.EntityArmorStand;
 import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.processor.common.AbstractSpongeValueProcessor;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
 import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
 import java.util.Optional;
 
-public class ArmorStandArmsValueProcessor extends AbstractSpongeValueProcessor<EntityArmorStand, Boolean, MutableValue<Boolean>> {
+public class ArmorStandArmsValueProcessor extends AbstractSpongeValueProcessor<EntityArmorStand, Boolean, Value.Mutable<Boolean>> {
 
     public ArmorStandArmsValueProcessor() {
         super(EntityArmorStand.class, Keys.ARMOR_STAND_HAS_ARMS);
     }
 
     @Override
-    protected MutableValue<Boolean> constructValue(Boolean actualValue) {
+    protected Value.Mutable<Boolean> constructValue(Boolean actualValue) {
         return new SpongeMutableValue<>(this.key, false, actualValue);
     }
 
@@ -59,7 +58,7 @@ public class ArmorStandArmsValueProcessor extends AbstractSpongeValueProcessor<E
     }
 
     @Override
-    protected ImmutableValue<Boolean> constructImmutableValue(Boolean value) {
+    protected Value.Immutable<Boolean> constructImmutableValue(Boolean value) {
         return ImmutableSpongeValue.cachedOf(this.key, false, value);
     }
 

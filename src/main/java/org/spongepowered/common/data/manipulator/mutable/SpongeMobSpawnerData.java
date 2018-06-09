@@ -31,9 +31,9 @@ import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.ImmutableMobSpawnerData;
 import org.spongepowered.api.data.manipulator.mutable.MobSpawnerData;
-import org.spongepowered.api.data.value.mutable.MutableBoundedValue;
-import org.spongepowered.api.data.value.mutable.MutableValue;
-import org.spongepowered.api.data.value.mutable.MutableWeightedCollectionValue;
+import org.spongepowered.api.data.value.BoundedValue;
+import org.spongepowered.api.data.value.Value;
+import org.spongepowered.api.data.value.WeightedCollectionValue;
 import org.spongepowered.api.entity.EntityArchetype;
 import org.spongepowered.api.util.weighted.WeightedSerializableObject;
 import org.spongepowered.api.util.weighted.WeightedTable;
@@ -88,7 +88,7 @@ public class SpongeMobSpawnerData extends AbstractData<MobSpawnerData, Immutable
 
 
     @Override
-    public MutableBoundedValue<Short> remainingDelay() {
+    public BoundedValue.Mutable<Short> remainingDelay() {
         return SpongeValueFactory.boundedBuilder(Keys.SPAWNER_REMAINING_DELAY)
             .minimum((short) 0)
             .maximum(this.maximumDelay)
@@ -98,7 +98,7 @@ public class SpongeMobSpawnerData extends AbstractData<MobSpawnerData, Immutable
     }
 
     @Override
-    public MutableBoundedValue<Short> minimumSpawnDelay() {
+    public BoundedValue.Mutable<Short> minimumSpawnDelay() {
         return SpongeValueFactory.boundedBuilder(Keys.SPAWNER_MINIMUM_DELAY)
             .minimum((short) 0)
             .maximum(Short.MAX_VALUE)
@@ -108,7 +108,7 @@ public class SpongeMobSpawnerData extends AbstractData<MobSpawnerData, Immutable
     }
 
     @Override
-    public MutableBoundedValue<Short> maximumSpawnDelay() {
+    public BoundedValue.Mutable<Short> maximumSpawnDelay() {
         return SpongeValueFactory.boundedBuilder(Keys.SPAWNER_MAXIMUM_DELAY)
             .minimum(DataConstants.MINIMUM_SPAWNER_MAXIMUM_SPAWN_DELAY)
             .maximum(Short.MAX_VALUE)
@@ -118,7 +118,7 @@ public class SpongeMobSpawnerData extends AbstractData<MobSpawnerData, Immutable
     }
 
     @Override
-    public MutableBoundedValue<Short> spawnCount() {
+    public BoundedValue.Mutable<Short> spawnCount() {
         return SpongeValueFactory.boundedBuilder(Keys.SPAWNER_SPAWN_COUNT)
             .minimum((short) 0)
             .maximum(Short.MAX_VALUE)
@@ -128,7 +128,7 @@ public class SpongeMobSpawnerData extends AbstractData<MobSpawnerData, Immutable
     }
 
     @Override
-    public MutableBoundedValue<Short> maximumNearbyEntities() {
+    public BoundedValue.Mutable<Short> maximumNearbyEntities() {
         return SpongeValueFactory.boundedBuilder(Keys.SPAWNER_MAXIMUM_NEARBY_ENTITIES)
             .minimum((short) 0)
             .maximum(Short.MAX_VALUE)
@@ -138,7 +138,7 @@ public class SpongeMobSpawnerData extends AbstractData<MobSpawnerData, Immutable
     }
 
     @Override
-    public MutableBoundedValue<Short> requiredPlayerRange() {
+    public BoundedValue.Mutable<Short> requiredPlayerRange() {
         return SpongeValueFactory.boundedBuilder(Keys.SPAWNER_REQUIRED_PLAYER_RANGE)
             .minimum((short) 0)
             .maximum(Short.MAX_VALUE)
@@ -148,7 +148,7 @@ public class SpongeMobSpawnerData extends AbstractData<MobSpawnerData, Immutable
     }
 
     @Override
-    public MutableBoundedValue<Short> spawnRange() {
+    public BoundedValue.Mutable<Short> spawnRange() {
         return SpongeValueFactory.boundedBuilder(Keys.SPAWNER_SPAWN_RANGE)
             .minimum((short) 0)
             .maximum(Short.MAX_VALUE)
@@ -158,13 +158,13 @@ public class SpongeMobSpawnerData extends AbstractData<MobSpawnerData, Immutable
     }
 
     @Override
-    public MutableValue<WeightedSerializableObject<EntityArchetype>> nextEntityToSpawn() {
+    public Value.Mutable<WeightedSerializableObject<EntityArchetype>> nextEntityToSpawn() {
         return new SpongeMutableValue<>(Keys.SPAWNER_NEXT_ENTITY_TO_SPAWN, DataConstants.DEFAULT_SPAWNER_NEXT_ENTITY_TO_SPAWN,
                 this.nextEntityToSpawn);
     }
 
     @Override
-    public MutableWeightedCollectionValue<EntityArchetype> possibleEntitiesToSpawn() {
+    public WeightedCollectionValue.Mutable<EntityArchetype> possibleEntitiesToSpawn() {
         return new SpongeMutableWeightedCollectionValue<>(Keys.SPAWNER_ENTITIES, this.entities);
     }
 

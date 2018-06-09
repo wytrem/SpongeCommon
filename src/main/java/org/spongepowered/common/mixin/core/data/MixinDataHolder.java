@@ -43,7 +43,6 @@ import org.spongepowered.api.data.manipulator.DataManipulatorBuilder;
 import org.spongepowered.api.data.merge.MergeFunction;
 import org.spongepowered.api.data.persistence.InvalidDataException;
 import org.spongepowered.api.data.value.Value;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.common.data.DataProcessor;
 import org.spongepowered.common.data.SpongeDataManager;
@@ -286,10 +285,10 @@ public abstract class MixinDataHolder implements DataHolder {
             return DataTransactionResult.successNoData();
         }
         final DataTransactionResult.Builder builder = DataTransactionResult.builder();
-        for (ImmutableValue<?> replaced : result.getReplacedData()) {
+        for (Value.Immutable<?> replaced : result.getReplacedData()) {
             builder.absorbResult(offer(replaced));
         }
-        for (ImmutableValue<?> successful : result.getSuccessfulData()) {
+        for (Value.Immutable<?> successful : result.getSuccessfulData()) {
             builder.absorbResult(remove(successful));
         }
         SpongeTimings.dataOfferManipulator.stopTimingIfSync();
@@ -372,7 +371,7 @@ public abstract class MixinDataHolder implements DataHolder {
     }
 
     @Override
-    public Set<ImmutableValue<?>> getValues() {
+    public Set<Value.Immutable<?>> getValues() {
         return getContainers().stream().flatMap(container -> container.getValues().stream()).collect(Collectors.toSet());
     }
 

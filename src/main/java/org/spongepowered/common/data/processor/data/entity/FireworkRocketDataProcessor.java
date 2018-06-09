@@ -31,9 +31,9 @@ import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.ImmutableFireworkRocketData;
 import org.spongepowered.api.data.manipulator.mutable.FireworkRocketData;
+import org.spongepowered.api.data.value.BoundedValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableBoundedValue;
 import org.spongepowered.api.entity.EntityType;
 import org.spongepowered.api.entity.EntityTypes;
 import org.spongepowered.common.data.manipulator.mutable.SpongeFireworkRocketData;
@@ -47,7 +47,7 @@ import org.spongepowered.common.interfaces.entity.IMixinEntityFireworkRocket;
 import java.util.Optional;
 
 public class FireworkRocketDataProcessor extends
-        AbstractEntitySingleDataProcessor<EntityFireworkRocket, Integer, MutableBoundedValue<Integer>, FireworkRocketData, ImmutableFireworkRocketData> {
+        AbstractEntitySingleDataProcessor<EntityFireworkRocket, Integer, BoundedValue.Mutable<Integer>, FireworkRocketData, ImmutableFireworkRocketData> {
 
     public FireworkRocketDataProcessor() {
         super(EntityFireworkRocket.class, Keys.FIREWORK_FLIGHT_MODIFIER);
@@ -89,12 +89,12 @@ public class FireworkRocketDataProcessor extends
     }
 
     @Override
-    protected MutableBoundedValue<Integer> constructValue(Integer value) {
+    protected BoundedValue.Mutable<Integer> constructValue(Integer value) {
         return new SpongeBoundedValue<>(Keys.FIREWORK_FLIGHT_MODIFIER, 0, ComparatorUtil.intComparator(), 0, Integer.MAX_VALUE, value);
     }
 
     @Override
-    protected ImmutableValue<Integer> constructImmutableValue(Integer value) {
+    protected Value.Immutable<Integer> constructImmutableValue(Integer value) {
         return new ImmutableSpongeBoundedValue<>(Keys.FIREWORK_FLIGHT_MODIFIER, value, 0, ComparatorUtil.intComparator(), 0, Integer.MAX_VALUE);
     }
 

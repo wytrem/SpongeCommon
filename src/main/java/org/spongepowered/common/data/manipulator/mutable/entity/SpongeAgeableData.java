@@ -28,8 +28,8 @@ import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.entity.ImmutableAgeableData;
 import org.spongepowered.api.data.manipulator.mutable.entity.AgeableData;
-import org.spongepowered.api.data.value.mutable.MutableBoundedValue;
-import org.spongepowered.api.data.value.mutable.MutableValue;
+import org.spongepowered.api.data.value.BoundedValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.common.data.manipulator.immutable.entity.ImmutableSpongeAgeableData;
 import org.spongepowered.common.data.manipulator.mutable.common.AbstractData;
 import org.spongepowered.common.data.value.SpongeValueFactory;
@@ -62,7 +62,7 @@ public class SpongeAgeableData extends AbstractData<AgeableData, ImmutableAgeabl
     }
 
     @Override
-    public MutableBoundedValue<Integer> age() {
+    public BoundedValue.Mutable<Integer> age() {
         return SpongeValueFactory.boundedBuilder(Keys.AGE)
                 .minimum(Integer.MIN_VALUE)
                 .maximum(Integer.MAX_VALUE)
@@ -72,7 +72,7 @@ public class SpongeAgeableData extends AbstractData<AgeableData, ImmutableAgeabl
     }
 
     @Override
-    public MutableValue<Boolean> adult() {
+    public Value.Mutable<Boolean> adult() {
         return new SpongeMutableValue<>(Keys.IS_ADULT, this.adult);
     }
 

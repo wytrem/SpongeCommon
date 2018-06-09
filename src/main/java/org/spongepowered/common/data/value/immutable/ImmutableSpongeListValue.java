@@ -30,12 +30,10 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import org.spongepowered.api.data.key.Key;
+import org.spongepowered.api.data.value.ListValue;
 import org.spongepowered.api.data.value.Value;
-import org.spongepowered.api.data.value.immutable.ImmutableListValue;
-import org.spongepowered.api.data.value.mutable.MutableListValue;
 import org.spongepowered.common.data.value.mutable.SpongeMutableListValue;
 
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -43,8 +41,8 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-public class ImmutableSpongeListValue<E> extends ImmutableSpongeCollectionValue<E, List<E>, ImmutableListValue<E>, MutableListValue<E>>
-    implements ImmutableListValue<E> {
+public class ImmutableSpongeListValue<E> extends ImmutableSpongeCollectionValue<E, List<E>, ListValue.Immutable<E>, ListValue.Mutable<E>>
+    implements ListValue.Immutable<E> {
 
     public ImmutableSpongeListValue(Key<? extends Value<List<E>>> key, ImmutableList<E> actualValue) {
         super(key, ImmutableList.<E>of(), actualValue);
@@ -116,7 +114,7 @@ public class ImmutableSpongeListValue<E> extends ImmutableSpongeCollectionValue<
     }
 
     @Override
-    public ImmutableListValue<E> with(int index, E value) {
+    public ListValue.Immutable<E> with(int index, E value) {
         final ImmutableList.Builder<E> builder = ImmutableList.builder();
         for (final ListIterator<E> iterator = this.actualValue.listIterator(); iterator.hasNext(); ) {
             if (iterator.nextIndex() - 1 == index) {
@@ -130,7 +128,7 @@ public class ImmutableSpongeListValue<E> extends ImmutableSpongeCollectionValue<
     }
 
     @Override
-    public ImmutableListValue<E> with(int index, Iterable<E> values) {
+    public ListValue.Immutable<E> with(int index, Iterable<E> values) {
         final ImmutableList.Builder<E> builder = ImmutableList.builder();
         for (final ListIterator<E> iterator = this.actualValue.listIterator(); iterator.hasNext(); ) {
             if (iterator.nextIndex() -1 == index) {
@@ -142,7 +140,7 @@ public class ImmutableSpongeListValue<E> extends ImmutableSpongeCollectionValue<
     }
 
     @Override
-    public ImmutableListValue<E> without(int index) {
+    public ListValue.Immutable<E> without(int index) {
         final ImmutableList.Builder<E> builder = ImmutableList.builder();
         for (final ListIterator<E> iterator = this.actualValue.listIterator(); iterator.hasNext(); ) {
             if (iterator.nextIndex() - 1 != index) {
@@ -153,7 +151,7 @@ public class ImmutableSpongeListValue<E> extends ImmutableSpongeCollectionValue<
     }
 
     @Override
-    public ImmutableListValue<E> set(int index, E element) {
+    public ListValue.Immutable<E> set(int index, E element) {
         final ImmutableList.Builder<E> builder = ImmutableList.builder();
         for (final ListIterator<E> iterator = this.actualValue.listIterator(); iterator.hasNext(); ) {
             if (iterator.nextIndex() -1 == index) {

@@ -43,7 +43,6 @@ import org.spongepowered.api.data.manipulator.DataManipulator;
 import org.spongepowered.api.data.merge.MergeFunction;
 import org.spongepowered.api.data.persistence.InvalidDataException;
 import org.spongepowered.api.data.value.Value;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
 import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.entity.EntitySnapshot;
 import org.spongepowered.api.entity.EntityType;
@@ -276,7 +275,7 @@ public class ExtentViewDownsize implements DefaultedExtent {
     }
 
     @Override
-    public Set<ImmutableValue<?>> getValues(int x, int y, int z) {
+    public Set<Value.Immutable<?>> getValues(int x, int y, int z) {
         checkBlockRange(x, y, z);
         return this.extent.getValues(x, y, z);
     }

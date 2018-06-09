@@ -28,9 +28,9 @@ import net.minecraft.tileentity.TileEntityBanner;
 import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.meta.PatternLayer;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.PatternMutableListValue;
+import org.spongepowered.api.data.value.meta.PatternListValue;
 import org.spongepowered.common.data.processor.common.AbstractSpongeValueProcessor;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongePatternListValue;
 import org.spongepowered.common.data.value.mutable.SpongePatternMutableListValue;
@@ -39,14 +39,14 @@ import org.spongepowered.common.interfaces.block.tile.IMixinBanner;
 import java.util.List;
 import java.util.Optional;
 
-public class TileBannerPatternLayersValueProcessor extends AbstractSpongeValueProcessor<TileEntityBanner, List<PatternLayer>, PatternMutableListValue> {
+public class TileBannerPatternLayersValueProcessor extends AbstractSpongeValueProcessor<TileEntityBanner, List<PatternLayer>, PatternListValue.Mutable> {
 
     public TileBannerPatternLayersValueProcessor() {
         super(TileEntityBanner.class, Keys.BANNER_PATTERNS);
     }
 
     @Override
-    protected PatternMutableListValue constructValue(List<PatternLayer> actualValue) {
+    protected PatternListValue.Mutable constructValue(List<PatternLayer> actualValue) {
         return new SpongePatternMutableListValue(Keys.BANNER_PATTERNS, actualValue);
     }
 
@@ -65,7 +65,7 @@ public class TileBannerPatternLayersValueProcessor extends AbstractSpongeValuePr
     }
 
     @Override
-    protected ImmutableValue<List<PatternLayer>> constructImmutableValue(List<PatternLayer> value) {
+    protected Value.Immutable<List<PatternLayer>> constructImmutableValue(List<PatternLayer> value) {
         return new ImmutableSpongePatternListValue(Keys.BANNER_PATTERNS, value);
     }
 

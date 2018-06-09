@@ -27,23 +27,22 @@ package org.spongepowered.common.data.processor.value.entity;
 import net.minecraft.entity.item.EntityMinecart;
 import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.processor.common.AbstractSpongeValueProcessor;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
 import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
 import java.util.Optional;
 
-public class OffsetValueProcessor extends AbstractSpongeValueProcessor<EntityMinecart, Integer, MutableValue<Integer>> {
+public class OffsetValueProcessor extends AbstractSpongeValueProcessor<EntityMinecart, Integer, Value.Mutable<Integer>> {
 
     public OffsetValueProcessor() {
         super(EntityMinecart.class, Keys.OFFSET);
     }
 
     @Override
-    protected MutableValue<Integer> constructValue(Integer value) {
+    protected Value.Mutable<Integer> constructValue(Integer value) {
         return new SpongeMutableValue<>(Keys.OFFSET, 6, value);
     }
 
@@ -60,7 +59,7 @@ public class OffsetValueProcessor extends AbstractSpongeValueProcessor<EntityMin
     }
 
     @Override
-    protected ImmutableValue<Integer> constructImmutableValue(Integer value) {
+    protected Value.Immutable<Integer> constructImmutableValue(Integer value) {
         return new ImmutableSpongeValue<>(Keys.OFFSET, 6, value);
     }
 

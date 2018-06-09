@@ -28,7 +28,7 @@ import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.item.ImmutableHideData;
 import org.spongepowered.api.data.manipulator.mutable.item.HideData;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.common.data.manipulator.immutable.common.AbstractImmutableData;
 import org.spongepowered.common.data.manipulator.mutable.item.SpongeHideData;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
@@ -41,12 +41,12 @@ public class ImmutableSpongeHideData extends AbstractImmutableData<ImmutableHide
     private final boolean canDestroy;
     private final boolean canPlace;
     private final boolean miscellaneous;
-    private final ImmutableValue<Boolean> enchantmentsValue;
-    private final ImmutableValue<Boolean> attributesValue;
-    private final ImmutableValue<Boolean> unbreakableValue;
-    private final ImmutableValue<Boolean> canDestroyValue;
-    private final ImmutableValue<Boolean> canPlaceValue;
-    private final ImmutableValue<Boolean> miscellaneousValue;
+    private final Value.Immutable<Boolean> enchantmentsValue;
+    private final Value.Immutable<Boolean> attributesValue;
+    private final Value.Immutable<Boolean> unbreakableValue;
+    private final Value.Immutable<Boolean> canDestroyValue;
+    private final Value.Immutable<Boolean> canPlaceValue;
+    private final Value.Immutable<Boolean> miscellaneousValue;
 
     public ImmutableSpongeHideData(boolean enchantments, boolean attributes, boolean unbreakable, boolean canDestroy, boolean canPlace,
             boolean miscellaneous) {
@@ -69,32 +69,32 @@ public class ImmutableSpongeHideData extends AbstractImmutableData<ImmutableHide
     }
 
     @Override
-    public ImmutableValue<Boolean> hideEnchantments() {
+    public Value.Immutable<Boolean> hideEnchantments() {
         return this.enchantmentsValue;
     }
 
     @Override
-    public ImmutableValue<Boolean> hideAttributes() {
+    public Value.Immutable<Boolean> hideAttributes() {
         return this.attributesValue;
     }
 
     @Override
-    public ImmutableValue<Boolean> hideUnbreakable() {
+    public Value.Immutable<Boolean> hideUnbreakable() {
         return this.unbreakableValue;
     }
 
     @Override
-    public ImmutableValue<Boolean> hideCanDestroy() {
+    public Value.Immutable<Boolean> hideCanDestroy() {
         return this.canDestroyValue;
     }
 
     @Override
-    public ImmutableValue<Boolean> hideCanPlace() {
+    public Value.Immutable<Boolean> hideCanPlace() {
         return this.canPlaceValue;
     }
 
     @Override
-    public ImmutableValue<Boolean> hideMiscellaneous() {
+    public Value.Immutable<Boolean> hideMiscellaneous() {
         return this.miscellaneousValue;
     }
 

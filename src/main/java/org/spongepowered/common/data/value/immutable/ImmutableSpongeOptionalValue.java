@@ -27,10 +27,8 @@ package org.spongepowered.common.data.value.immutable;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import org.spongepowered.api.data.key.Key;
+import org.spongepowered.api.data.value.OptionalValue;
 import org.spongepowered.api.data.value.Value;
-import org.spongepowered.api.data.value.immutable.ImmutableOptionalValue;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableOptionalValue;
 import org.spongepowered.common.data.value.mutable.SpongeMutableOptionalValue;
 
 import java.util.Optional;
@@ -38,7 +36,7 @@ import java.util.function.Function;
 
 import javax.annotation.Nullable;
 
-public class ImmutableSpongeOptionalValue<E> extends ImmutableSpongeValue<Optional<E>> implements ImmutableOptionalValue<E> {
+public class ImmutableSpongeOptionalValue<E> extends ImmutableSpongeValue<Optional<E>> implements OptionalValue.ImmutableOptionalValue<E> {
 
     public ImmutableSpongeOptionalValue(Key<? extends Value<Optional<E>>> key) {
         super(key, Optional.<E>empty());
@@ -69,7 +67,7 @@ public class ImmutableSpongeOptionalValue<E> extends ImmutableSpongeValue<Option
     }
 
     @Override
-    public ImmutableValue<E> or(E value) { // TODO actually construct a new key for this kind...
+    public Immutable<E> or(E value) { // TODO actually construct a new key for this kind...
         return new ImmutableSpongeValue<>(null, get().isPresent() ? get().get() : checkNotNull(value));
     }
 }

@@ -30,20 +30,18 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
 import org.spongepowered.api.data.key.Key;
+import org.spongepowered.api.data.value.SetValue;
 import org.spongepowered.api.data.value.Value;
-import org.spongepowered.api.data.value.immutable.ImmutableSetValue;
-import org.spongepowered.api.data.value.mutable.MutableSetValue;
 import org.spongepowered.common.data.value.mutable.SpongeMutableSetValue;
 
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class ImmutableSpongeSetValue<E> extends ImmutableSpongeCollectionValue<E, Set<E>, ImmutableSetValue<E>, MutableSetValue<E>>
-    implements ImmutableSetValue<E> {
+public class ImmutableSpongeSetValue<E> extends ImmutableSpongeCollectionValue<E, Set<E>, SetValue.Immutable<E>, SetValue.Mutable<E>>
+    implements SetValue.Immutable<E> {
 
     public ImmutableSpongeSetValue(Key<? extends Value<Set<E>>> key) {
         super(key, ImmutableSet.<E>of());
@@ -60,43 +58,43 @@ public class ImmutableSpongeSetValue<E> extends ImmutableSpongeCollectionValue<E
     }
 
     @Override
-    public ImmutableSetValue<E> transform(Function<Set<E>, Set<E>> function) {
+    public SetValue.Immutable<E> transform(Function<Set<E>, Set<E>> function) {
         return new ImmutableSpongeSetValue<>(getKey(), checkNotNull(checkNotNull(function).apply(this.actualValue)));
     }
 
     @Override
-    public ImmutableSetValue<E> withElement(E elements) {
+    public SetValue.Immutable<E> withElement(E elements) {
         return new ImmutableSpongeSetValue<>(getKey(), ImmutableSet.<E>builder().addAll(this.actualValue).add(elements).build());
     }
 
     @Override
-    public ImmutableSetValue<E> withAll(Iterable<E> elements) {
+    public SetValue.Immutable<E> withAll(Iterable<E> elements) {
         return new ImmutableSpongeSetValue<>(getKey(), ImmutableSet.<E>builder().addAll(this.actualValue).addAll(elements).build());
     }
 
     @Override
-    public ImmutableSetValue<E> without(E element) {
+    public SetValue.Immutable<E> without(E element) {
         final ImmutableSet.Builder<E> builder = ImmutableSet.builder();
         this.actualValue.stream().filter(existing -> !existing.equals(element)).forEach(builder::add);
         return new ImmutableSpongeSetValue<>(getKey(), builder.build());
     }
 
     @Override
-    public ImmutableSetValue<E> withoutAll(Iterable<E> elements) {
+    public SetValue.Immutable<E> withoutAll(Iterable<E> elements) {
         final ImmutableSet.Builder<E> builder = ImmutableSet.builder();
         this.actualValue.stream().filter(existingElement -> !Iterables.contains(elements, existingElement)).forEach(builder::add);
         return new ImmutableSpongeSetValue<>(getKey(), builder.build());
     }
 
     @Override
-    public ImmutableSetValue<E> withoutAll(Predicate<E> predicate) {
+    public SetValue.Immutable<E> withoutAll(Predicate<E> predicate) {
         final ImmutableSet.Builder<E> builder = ImmutableSet.builder();
         this.actualValue.stream().filter(existingElement -> checkNotNull(predicate).test(existingElement)).forEach(builder::add);
         return new ImmutableSpongeSetValue<>(getKey(), builder.build());
     }
 
     @Override
-    public ImmutableSetValue<E> filter(Predicate<? super E> predicate) {
+    public SetValue.Immutable<E> filter(Predicate<? super E> predicate) {
         return new ImmutableSpongeSetValue<>(this.getKey(), this.actualValue.stream().filter(predicate).collect(Collectors.toSet()));
     }
 
@@ -113,7 +111,7 @@ public class ImmutableSpongeSetValue<E> extends ImmutableSpongeCollectionValue<E
     }
 
     @Override
-    public MutableSetValue<E> asMutable() {
+    public SetValue.Mutable<E> asMutable() {
         final Set<E> set = Sets.newHashSet();
         set.addAll(this.actualValue);
         return new SpongeMutableSetValue<>(getKey(), set);

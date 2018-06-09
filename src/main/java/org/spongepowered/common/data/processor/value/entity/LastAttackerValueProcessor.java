@@ -27,9 +27,9 @@ package org.spongepowered.common.data.processor.value.entity;
 import net.minecraft.entity.EntityLivingBase;
 import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
+import org.spongepowered.api.data.value.OptionalValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableOptionalValue;
 import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.entity.EntitySnapshot;
 import org.spongepowered.api.entity.living.Living;
@@ -41,14 +41,14 @@ import java.util.Optional;
 import javax.annotation.Nullable;
 
 public class LastAttackerValueProcessor
-        extends AbstractSpongeValueProcessor<EntityLivingBase, Optional<EntitySnapshot>, MutableOptionalValue<EntitySnapshot>> {
+        extends AbstractSpongeValueProcessor<EntityLivingBase, Optional<EntitySnapshot>, OptionalValue.MutableOptionalValue<EntitySnapshot>> {
 
     public LastAttackerValueProcessor() {
         super(EntityLivingBase.class, Keys.LAST_ATTACKER);
     }
 
     @Override
-    protected MutableOptionalValue<EntitySnapshot> constructValue(Optional<EntitySnapshot> actualValue) {
+    protected OptionalValue.MutableOptionalValue<EntitySnapshot> constructValue(Optional<EntitySnapshot> actualValue) {
         return SpongeValueFactory.getInstance().createOptionalValue(Keys.LAST_ATTACKER, actualValue.orElse(null));
     }
 
@@ -78,7 +78,7 @@ public class LastAttackerValueProcessor
     }
 
     @Override
-    protected ImmutableValue<Optional<EntitySnapshot>> constructImmutableValue(Optional<EntitySnapshot> value) {
+    protected Value.Immutable<Optional<EntitySnapshot>> constructImmutableValue(Optional<EntitySnapshot> value) {
         return constructValue(value).asImmutable();
     }
 

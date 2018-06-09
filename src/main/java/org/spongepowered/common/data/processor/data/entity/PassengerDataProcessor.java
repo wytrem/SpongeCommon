@@ -30,9 +30,8 @@ import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.entity.ImmutablePassengerData;
 import org.spongepowered.api.data.manipulator.mutable.entity.PassengerData;
+import org.spongepowered.api.data.value.ListValue;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableListValue;
-import org.spongepowered.api.data.value.mutable.MutableListValue;
 import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.world.World;
 import org.spongepowered.common.data.manipulator.mutable.entity.SpongePassengerData;
@@ -46,7 +45,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class PassengerDataProcessor extends AbstractEntitySingleDataProcessor<net.minecraft.entity.Entity, List<UUID>, MutableListValue<UUID>, PassengerData, ImmutablePassengerData> {
+public class PassengerDataProcessor extends AbstractEntitySingleDataProcessor<net.minecraft.entity.Entity, List<UUID>, ListValue.Mutable<UUID>, PassengerData, ImmutablePassengerData> {
 
     public PassengerDataProcessor() {
         super(net.minecraft.entity.Entity.class, Keys.PASSENGERS);
@@ -83,12 +82,12 @@ public class PassengerDataProcessor extends AbstractEntitySingleDataProcessor<ne
     }
 
     @Override
-    protected ImmutableListValue<UUID> constructImmutableValue(List<UUID> value) {
+    protected ListValue.Immutable<UUID> constructImmutableValue(List<UUID> value) {
         return new ImmutableSpongeListValue<>(Keys.PASSENGERS, ImmutableList.copyOf(value));
     }
 
     @Override
-    protected MutableListValue<UUID> constructValue(List<UUID> actualValue) {
+    protected ListValue.Mutable<UUID> constructValue(List<UUID> actualValue) {
         return new SpongeMutableListValue<>(Keys.PASSENGERS, actualValue);
     }
 

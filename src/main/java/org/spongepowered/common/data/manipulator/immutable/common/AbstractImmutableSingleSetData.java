@@ -30,8 +30,8 @@ import com.google.common.collect.ImmutableSet;
 import org.spongepowered.api.data.key.Key;
 import org.spongepowered.api.data.manipulator.DataManipulator;
 import org.spongepowered.api.data.manipulator.ImmutableDataManipulator;
+import org.spongepowered.api.data.value.SetValue;
 import org.spongepowered.api.data.value.Value;
-import org.spongepowered.api.data.value.immutable.ImmutableSetValue;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeSetValue;
 import org.spongepowered.common.util.ReflectionUtil;
 
@@ -42,7 +42,7 @@ public abstract class AbstractImmutableSingleSetData<E, I extends ImmutableDataM
     extends AbstractImmutableSingleData<Set<E>, I, M> {
 
     private final Class<? extends M> mutableClass;
-    private final ImmutableSetValue<E> setValue;
+    private final SetValue.Immutable<E> setValue;
 
     public AbstractImmutableSingleSetData(Class<I> manipulatorClass, Set<E> value,
                                           Key<? extends Value<Set<E>>> usedKey,
@@ -55,7 +55,7 @@ public abstract class AbstractImmutableSingleSetData<E, I extends ImmutableDataM
     }
 
     @Override
-    protected ImmutableSetValue<E> getValueGetter() {
+    protected SetValue.Immutable<E> getValueGetter() {
         return this.setValue;
     }
 

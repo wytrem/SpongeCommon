@@ -30,7 +30,7 @@ import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.entity.ImmutableIgniteableData;
 import org.spongepowered.api.data.manipulator.mutable.entity.IgniteableData;
-import org.spongepowered.api.data.value.immutable.ImmutableBoundedValue;
+import org.spongepowered.api.data.value.BoundedValue;
 import org.spongepowered.common.data.manipulator.immutable.common.AbstractImmutableData;
 import org.spongepowered.common.data.manipulator.mutable.entity.SpongeIgniteableData;
 import org.spongepowered.common.data.util.DataConstants;
@@ -41,8 +41,8 @@ public class ImmutableSpongeIgniteableData extends AbstractImmutableData<Immutab
     private final int fireTicks;
     private final int fireDelay;
 
-    private final ImmutableBoundedValue<Integer> fireTicksValue;
-    private final ImmutableBoundedValue<Integer> fireDelayValue;
+    private final BoundedValue.Immutable<Integer> fireTicksValue;
+    private final BoundedValue.Immutable<Integer> fireDelayValue;
 
     public ImmutableSpongeIgniteableData(int fireTicks, int fireDelay) {
         super(ImmutableIgniteableData.class);
@@ -70,12 +70,12 @@ public class ImmutableSpongeIgniteableData extends AbstractImmutableData<Immutab
     }
 
     @Override
-    public ImmutableBoundedValue<Integer> fireTicks() {
+    public BoundedValue.Immutable<Integer> fireTicks() {
         return this.fireTicksValue;
     }
 
     @Override
-    public ImmutableBoundedValue<Integer> fireDelay() {
+    public BoundedValue.Immutable<Integer> fireDelay() {
         return this.fireDelayValue;
     }
 

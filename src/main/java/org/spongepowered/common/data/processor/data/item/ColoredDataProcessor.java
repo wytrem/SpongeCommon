@@ -29,9 +29,8 @@ import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.ImmutableColoredData;
 import org.spongepowered.api.data.manipulator.mutable.ColoredData;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.api.util.Color;
 import org.spongepowered.common.data.manipulator.mutable.SpongeColoredData;
 import org.spongepowered.common.data.processor.common.AbstractItemSingleDataProcessor;
@@ -42,7 +41,7 @@ import org.spongepowered.common.util.ColorUtil;
 
 import java.util.Optional;
 
-public class ColoredDataProcessor extends AbstractItemSingleDataProcessor<Color, MutableValue<Color>, ColoredData, ImmutableColoredData> {
+public class ColoredDataProcessor extends AbstractItemSingleDataProcessor<Color, Value.Mutable<Color>, ColoredData, ImmutableColoredData> {
 
     public ColoredDataProcessor() {
         super(ColorUtil::hasColor, Keys.COLOR);
@@ -80,12 +79,12 @@ public class ColoredDataProcessor extends AbstractItemSingleDataProcessor<Color,
     }
 
     @Override
-    protected MutableValue<Color> constructValue(Color actualValue) {
+    protected Value.Mutable<Color> constructValue(Color actualValue) {
         return new SpongeMutableValue<>(Keys.COLOR, Color.BLACK, actualValue);
     }
 
     @Override
-    protected ImmutableValue<Color> constructImmutableValue(Color value) {
+    protected Value.Immutable<Color> constructImmutableValue(Color value) {
         return ImmutableSpongeValue.cachedOf(Keys.COLOR, Color.BLACK, value);
     }
 

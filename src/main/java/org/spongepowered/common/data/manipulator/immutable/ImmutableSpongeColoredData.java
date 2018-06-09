@@ -28,7 +28,7 @@ import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.ImmutableColoredData;
 import org.spongepowered.api.data.manipulator.mutable.ColoredData;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.util.Color;
 import org.spongepowered.common.data.manipulator.immutable.common.AbstractImmutableSingleData;
 import org.spongepowered.common.data.manipulator.mutable.SpongeColoredData;
@@ -36,14 +36,14 @@ import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
 
 public class ImmutableSpongeColoredData extends AbstractImmutableSingleData<Color, ImmutableColoredData, ColoredData> implements ImmutableColoredData {
 
-    private final ImmutableValue<Color> immutableValue = new ImmutableSpongeValue<>(Keys.COLOR, Color.BLACK, this.value);
+    private final Value.Immutable<Color> immutableValue = new ImmutableSpongeValue<>(Keys.COLOR, Color.BLACK, this.value);
     
     public ImmutableSpongeColoredData(Color value) {
         super(ImmutableColoredData.class, value, Keys.COLOR);
     }
 
     @Override
-    protected ImmutableValue<?> getValueGetter() {
+    protected Value.Immutable<?> getValueGetter() {
         return color();
     }
 
@@ -59,7 +59,7 @@ public class ImmutableSpongeColoredData extends AbstractImmutableSingleData<Colo
     }
 
     @Override
-    public ImmutableValue<Color> color() {
+    public Value.Immutable<Color> color() {
         return this.immutableValue;
     }
 

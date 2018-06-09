@@ -29,13 +29,13 @@ import org.spongepowered.api.data.manipulator.immutable.block.ImmutableBigMushro
 import org.spongepowered.api.data.manipulator.mutable.block.BigMushroomData;
 import org.spongepowered.api.data.type.BigMushroomType;
 import org.spongepowered.api.data.type.BigMushroomTypes;
-import org.spongepowered.api.data.value.mutable.MutableValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.common.data.manipulator.mutable.block.SpongeBigMushroomData;
 import org.spongepowered.common.data.processor.common.AbstractBlockOnlyDataProcessor;
 import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
 public class BigMushroomDataProcessor extends
-        AbstractBlockOnlyDataProcessor<BigMushroomType, MutableValue<BigMushroomType>, BigMushroomData, ImmutableBigMushroomData> {
+        AbstractBlockOnlyDataProcessor<BigMushroomType, Value.Mutable<BigMushroomType>, BigMushroomData, ImmutableBigMushroomData> {
 
     public BigMushroomDataProcessor() {
         super(Keys.BIG_MUSHROOM_TYPE);
@@ -52,7 +52,7 @@ public class BigMushroomDataProcessor extends
     }
 
     @Override
-    protected MutableValue<BigMushroomType> constructValue(BigMushroomType actualValue) {
+    protected Value.Mutable<BigMushroomType> constructValue(BigMushroomType actualValue) {
         return new SpongeMutableValue<>(this.key, getDefaultValue(), actualValue);
     }
 

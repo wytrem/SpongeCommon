@@ -29,7 +29,7 @@ import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.ImmutableTargetedLocationData;
 import org.spongepowered.api.data.manipulator.mutable.TargetedLocationData;
-import org.spongepowered.api.data.value.mutable.MutableValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.common.data.manipulator.immutable.ImmutableSpongeTargetedLocationData;
 import org.spongepowered.common.data.manipulator.mutable.common.AbstractSingleData;
 import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
@@ -51,7 +51,7 @@ public final class SpongeTargetedLocationData extends AbstractSingleData<Vector3
     }
 
     @Override
-    protected MutableValue<?> getValueGetter() {
+    protected Value.Mutable<?> getValueGetter() {
         return this.target();
     }
 
@@ -61,7 +61,7 @@ public final class SpongeTargetedLocationData extends AbstractSingleData<Vector3
     }
 
     @Override
-    public MutableValue<Vector3d> target() {
+    public Value.Mutable<Vector3d> target() {
         return new SpongeMutableValue<>(this.usedKey, this.getValue());
     }
 

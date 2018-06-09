@@ -35,7 +35,7 @@ import org.spongepowered.api.Sponge;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.DataManipulator;
 import org.spongepowered.api.data.manipulator.mutable.entity.AgentData;
-import org.spongepowered.api.data.value.mutable.MutableValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.entity.ai.Goal;
 import org.spongepowered.api.entity.ai.GoalType;
@@ -288,7 +288,7 @@ public abstract class MixinEntityLiving extends MixinEntityLivingBase implements
     }
 
     @Override
-    public MutableValue<Boolean> aiEnabled() {
+    public Value.Mutable<Boolean> aiEnabled() {
         return new SpongeMutableValue<>(Keys.AI_ENABLED, true, !this.isAIDisabled());
     }
 

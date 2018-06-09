@@ -34,8 +34,7 @@ import org.spongepowered.api.data.meta.PatternLayer;
 import org.spongepowered.api.data.type.BannerPatternShape;
 import org.spongepowered.api.data.type.DyeColor;
 import org.spongepowered.api.data.value.Value;
-import org.spongepowered.api.data.value.immutable.ImmutablePatternListValue;
-import org.spongepowered.api.data.value.mutable.PatternMutableListValue;
+import org.spongepowered.api.data.value.meta.PatternListValue;
 import org.spongepowered.common.data.meta.SpongePatternLayer;
 import org.spongepowered.common.data.value.mutable.SpongePatternMutableListValue;
 
@@ -44,7 +43,7 @@ import java.util.ListIterator;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-public class ImmutableSpongePatternListValue extends ImmutableSpongeListValue<PatternLayer> implements ImmutablePatternListValue {
+public class ImmutableSpongePatternListValue extends ImmutableSpongeListValue<PatternLayer> implements PatternListValue.Immutable {
 
     public ImmutableSpongePatternListValue(Key<? extends Value<List<PatternLayer>>> key, List<PatternLayer> actualValue) {
         super(key, ImmutableList.copyOf(actualValue));
@@ -56,29 +55,29 @@ public class ImmutableSpongePatternListValue extends ImmutableSpongeListValue<Pa
     }
 
     @Override
-    public ImmutablePatternListValue transform(Function<List<PatternLayer>, List<PatternLayer>> function) {
+    public PatternListValue.Immutable transform(Function<List<PatternLayer>, List<PatternLayer>> function) {
         return new ImmutableSpongePatternListValue(getKey(), ImmutableList.copyOf(checkNotNull(checkNotNull(function).apply(this.actualValue))));
     }
 
     @Override
-    public PatternMutableListValue asMutable() {
+    public PatternListValue.Mutable asMutable() {
         final List<PatternLayer> list = Lists.newArrayList();
         list.addAll(this.actualValue);
         return new SpongePatternMutableListValue(getKey(), list);
     }
 
     @Override
-    public ImmutablePatternListValue withElement(PatternLayer elements) {
+    public PatternListValue.Immutable withElement(PatternLayer elements) {
         return new ImmutableSpongePatternListValue(getKey(), ImmutableList.<PatternLayer>builder().addAll(this.actualValue).add(elements).build());
     }
 
     @Override
-    public ImmutablePatternListValue withAll(Iterable<PatternLayer> elements) {
+    public PatternListValue.Immutable withAll(Iterable<PatternLayer> elements) {
         return new ImmutableSpongePatternListValue(getKey(), ImmutableList.<PatternLayer>builder().addAll(this.actualValue).addAll(elements).build());
     }
 
     @Override
-    public ImmutablePatternListValue without(PatternLayer element) {
+    public PatternListValue.Immutable without(PatternLayer element) {
         final ImmutableList.Builder<PatternLayer> builder = ImmutableList.builder();
         this.actualValue.stream().filter(existingElement -> !existingElement.equals(element)).forEach(builder::add);
         return new ImmutableSpongePatternListValue(getKey(), builder.build());
@@ -86,21 +85,21 @@ public class ImmutableSpongePatternListValue extends ImmutableSpongeListValue<Pa
     }
 
     @Override
-    public ImmutablePatternListValue withoutAll(Iterable<PatternLayer> elements) {
+    public PatternListValue.Immutable withoutAll(Iterable<PatternLayer> elements) {
         final ImmutableList.Builder<PatternLayer> builder = ImmutableList.builder();
         this.actualValue.stream().filter(existingElement -> !Iterables.contains(elements, existingElement)).forEach(builder::add);
         return new ImmutableSpongePatternListValue(getKey(), builder.build());
     }
 
     @Override
-    public ImmutablePatternListValue withoutAll(Predicate<PatternLayer> predicate) {
+    public PatternListValue.Immutable withoutAll(Predicate<PatternLayer> predicate) {
         final ImmutableList.Builder<PatternLayer> builder = ImmutableList.builder();
         this.actualValue.stream().filter(existing -> checkNotNull(predicate).test(existing)).forEach(builder::add);
         return new ImmutableSpongePatternListValue(getKey(), builder.build());
     }
 
     @Override
-    public ImmutablePatternListValue with(int index, PatternLayer value) {
+    public PatternListValue.Immutable with(int index, PatternLayer value) {
         final ImmutableList.Builder<PatternLayer> builder = ImmutableList.builder();
         for (final ListIterator<PatternLayer> iterator = this.actualValue.listIterator(); iterator.hasNext(); ) {
             if (iterator.nextIndex() - 1 == index) {
@@ -114,7 +113,7 @@ public class ImmutableSpongePatternListValue extends ImmutableSpongeListValue<Pa
     }
 
     @Override
-    public ImmutablePatternListValue with(int index, Iterable<PatternLayer> values) {
+    public PatternListValue.Immutable with(int index, Iterable<PatternLayer> values) {
         final ImmutableList.Builder<PatternLayer> builder = ImmutableList.builder();
         for (final ListIterator<PatternLayer> iterator = this.actualValue.listIterator(); iterator.hasNext(); ) {
             if (iterator.nextIndex() -1 == index) {
@@ -126,7 +125,7 @@ public class ImmutableSpongePatternListValue extends ImmutableSpongeListValue<Pa
     }
 
     @Override
-    public ImmutablePatternListValue without(int index) {
+    public PatternListValue.Immutable without(int index) {
         final ImmutableList.Builder<PatternLayer> builder = ImmutableList.builder();
         for (final ListIterator<PatternLayer> iterator = this.actualValue.listIterator(); iterator.hasNext(); ) {
             if (iterator.nextIndex() - 1 != index) {
@@ -137,7 +136,7 @@ public class ImmutableSpongePatternListValue extends ImmutableSpongeListValue<Pa
     }
 
     @Override
-    public ImmutablePatternListValue set(int index, PatternLayer element) {
+    public PatternListValue.Immutable set(int index, PatternLayer element) {
         final ImmutableList.Builder<PatternLayer> builder = ImmutableList.builder();
         for (final ListIterator<PatternLayer> iterator = this.actualValue.listIterator(); iterator.hasNext(); ) {
             if (iterator.nextIndex() -1 == index) {
@@ -151,17 +150,17 @@ public class ImmutableSpongePatternListValue extends ImmutableSpongeListValue<Pa
    }
 
     @Override
-    public ImmutablePatternListValue with(BannerPatternShape patternShape, DyeColor color) {
+    public PatternListValue.Immutable with(BannerPatternShape patternShape, DyeColor color) {
         return withElement(new SpongePatternLayer(patternShape, color));
     }
 
     @Override
-    public ImmutablePatternListValue with(int index, BannerPatternShape patternShape, DyeColor color) {
+    public PatternListValue.Immutable with(int index, BannerPatternShape patternShape, DyeColor color) {
         return with(index, new SpongePatternLayer(patternShape, color));
     }
 
     @Override
-    public ImmutablePatternListValue set(int index, BannerPatternShape patternShape, DyeColor color) {
+    public PatternListValue.Immutable set(int index, BannerPatternShape patternShape, DyeColor color) {
         return set(index, new SpongePatternLayer(patternShape, color));
     }
 }

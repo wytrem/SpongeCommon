@@ -29,12 +29,12 @@ import org.spongepowered.api.data.manipulator.immutable.block.ImmutablePortionDa
 import org.spongepowered.api.data.manipulator.mutable.block.PortionData;
 import org.spongepowered.api.data.type.PortionType;
 import org.spongepowered.api.data.type.PortionTypes;
-import org.spongepowered.api.data.value.mutable.MutableValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.common.data.manipulator.mutable.block.SpongePortionData;
 import org.spongepowered.common.data.processor.common.AbstractBlockOnlyDataProcessor;
 import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
-public class PortionDataProcessor extends AbstractBlockOnlyDataProcessor<PortionType, MutableValue<PortionType>, PortionData, ImmutablePortionData> {
+public class PortionDataProcessor extends AbstractBlockOnlyDataProcessor<PortionType, Value.Mutable<PortionType>, PortionData, ImmutablePortionData> {
 
     public PortionDataProcessor() {
         super(Keys.PORTION_TYPE);
@@ -51,7 +51,7 @@ public class PortionDataProcessor extends AbstractBlockOnlyDataProcessor<Portion
     }
 
     @Override
-    protected MutableValue<PortionType> constructValue(PortionType actualValue) {
+    protected Value.Mutable<PortionType> constructValue(PortionType actualValue) {
         return new SpongeMutableValue<>(this.key, getDefaultValue(), actualValue);
     }
 

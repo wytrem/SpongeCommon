@@ -26,7 +26,7 @@ package org.spongepowered.common.data.manipulator.immutable.extra;
 
 import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.key.Keys;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.extra.fluid.FluidStackSnapshot;
 import org.spongepowered.api.extra.fluid.data.manipulator.immutable.ImmutableFluidItemData;
 import org.spongepowered.api.extra.fluid.data.manipulator.mutable.FluidItemData;
@@ -38,7 +38,7 @@ import org.spongepowered.common.extra.fluid.SpongeFluidStackSnapshot;
 public class ImmutableSpongeFluidItemData extends AbstractImmutableSingleData<FluidStackSnapshot, ImmutableFluidItemData, FluidItemData>
         implements ImmutableFluidItemData {
 
-    private final ImmutableValue<FluidStackSnapshot> immutableValue;
+    private final Value.Immutable<FluidStackSnapshot> immutableValue;
 
     public ImmutableSpongeFluidItemData(FluidStackSnapshot value) {
         super(ImmutableFluidItemData.class, value, Keys.FLUID_ITEM_STACK);
@@ -46,7 +46,7 @@ public class ImmutableSpongeFluidItemData extends AbstractImmutableSingleData<Fl
     }
 
     @Override
-    protected ImmutableValue<FluidStackSnapshot> getValueGetter() {
+    protected Value.Immutable<FluidStackSnapshot> getValueGetter() {
         return this.immutableValue;
     }
 
@@ -56,7 +56,7 @@ public class ImmutableSpongeFluidItemData extends AbstractImmutableSingleData<Fl
     }
 
     @Override
-    public ImmutableValue<FluidStackSnapshot> fluid() {
+    public Value.Immutable<FluidStackSnapshot> fluid() {
         return getValueGetter();
     }
 

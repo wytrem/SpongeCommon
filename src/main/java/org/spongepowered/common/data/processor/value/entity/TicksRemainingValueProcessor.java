@@ -28,9 +28,8 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.api.entity.explosive.FusedExplosive;
 import org.spongepowered.common.data.processor.common.AbstractSpongeValueProcessor;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
@@ -39,14 +38,14 @@ import org.spongepowered.common.interfaces.entity.explosive.IMixinFusedExplosive
 
 import java.util.Optional;
 
-public class TicksRemainingValueProcessor extends AbstractSpongeValueProcessor<FusedExplosive, Integer, MutableValue<Integer>> {
+public class TicksRemainingValueProcessor extends AbstractSpongeValueProcessor<FusedExplosive, Integer, Value.Mutable<Integer>> {
 
     public TicksRemainingValueProcessor() {
         super(FusedExplosive.class, Keys.TICKS_REMAINING);
     }
 
     @Override
-    protected MutableValue<Integer> constructValue(Integer actualValue) {
+    protected Value.Mutable<Integer> constructValue(Integer actualValue) {
         return new SpongeMutableValue<>(Keys.TICKS_REMAINING, actualValue);
     }
 
@@ -66,7 +65,7 @@ public class TicksRemainingValueProcessor extends AbstractSpongeValueProcessor<F
     }
 
     @Override
-    protected ImmutableValue<Integer> constructImmutableValue(Integer value) {
+    protected Value.Immutable<Integer> constructImmutableValue(Integer value) {
         return new ImmutableSpongeValue<>(Keys.TICKS_REMAINING, value);
     }
 

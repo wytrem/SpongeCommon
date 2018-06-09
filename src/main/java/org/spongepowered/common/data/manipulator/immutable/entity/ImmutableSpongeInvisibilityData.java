@@ -28,7 +28,7 @@ import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.entity.ImmutableInvisibilityData;
 import org.spongepowered.api.data.manipulator.mutable.entity.InvisibilityData;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.common.data.manipulator.immutable.common.AbstractImmutableData;
 import org.spongepowered.common.data.manipulator.mutable.entity.SpongeInvisibilityData;
 import org.spongepowered.common.data.util.DataVersions;
@@ -40,10 +40,10 @@ public class ImmutableSpongeInvisibilityData extends AbstractImmutableData<Immut
     private final boolean collision;
     private final boolean untargetable;
     private final boolean invisible;
-    private ImmutableValue<Boolean> invisibleValue;
-    private ImmutableValue<Boolean> vanishValue;
-    private ImmutableValue<Boolean> collisionValue;
-    private ImmutableValue<Boolean> untargetableValue;
+    private Value.Immutable<Boolean> invisibleValue;
+    private Value.Immutable<Boolean> vanishValue;
+    private Value.Immutable<Boolean> collisionValue;
+    private Value.Immutable<Boolean> untargetableValue;
 
     public ImmutableSpongeInvisibilityData(boolean vanish, boolean collision, boolean untargetable, boolean invisible) {
         super(ImmutableInvisibilityData.class);
@@ -58,22 +58,22 @@ public class ImmutableSpongeInvisibilityData extends AbstractImmutableData<Immut
     }
 
     @Override
-    public ImmutableValue<Boolean> invisible() {
+    public Value.Immutable<Boolean> invisible() {
         return this.invisibleValue;
     }
 
     @Override
-    public ImmutableValue<Boolean> vanish() {
+    public Value.Immutable<Boolean> vanish() {
         return this.vanishValue;
     }
 
     @Override
-    public ImmutableValue<Boolean> ignoresCollisionDetection() {
+    public Value.Immutable<Boolean> ignoresCollisionDetection() {
         return this.collisionValue;
     }
 
     @Override
-    public ImmutableValue<Boolean> untargetable() {
+    public Value.Immutable<Boolean> untargetable() {
         return this.untargetableValue;
     }
 

@@ -29,9 +29,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import org.spongepowered.api.data.key.Key;
+import org.spongepowered.api.data.value.SetValue;
 import org.spongepowered.api.data.value.Value;
-import org.spongepowered.api.data.value.immutable.ImmutableSetValue;
-import org.spongepowered.api.data.value.mutable.MutableSetValue;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeSetValue;
 
 import java.util.Set;
@@ -39,8 +38,8 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class SpongeMutableSetValue<E> extends SpongeMutableCollectionValue<E, Set<E>, MutableSetValue<E>, ImmutableSetValue<E>>
-    implements MutableSetValue<E> {
+public class SpongeMutableSetValue<E> extends SpongeMutableCollectionValue<E, Set<E>, SetValue.Mutable<E>, SetValue.Immutable<E>>
+    implements SetValue.Mutable<E> {
 
     public SpongeMutableSetValue(Key<? extends Value<Set<E>>> key) {
         this(key, Sets.<E>newHashSet());

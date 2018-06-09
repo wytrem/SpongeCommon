@@ -30,9 +30,9 @@ import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.entity.ImmutableExplosionRadiusData;
 import org.spongepowered.api.data.manipulator.mutable.entity.ExplosionRadiusData;
+import org.spongepowered.api.data.value.OptionalValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableOptionalValue;
 import org.spongepowered.api.entity.explosive.Explosive;
 import org.spongepowered.common.data.manipulator.mutable.entity.SpongeExplosionRadiusData;
 import org.spongepowered.common.data.processor.common.AbstractSingleDataSingleTargetProcessor;
@@ -42,7 +42,7 @@ import org.spongepowered.common.interfaces.entity.explosive.IMixinExplosive;
 
 import java.util.Optional;
 
-public class ExplosionRadiusDataProcessor extends AbstractSingleDataSingleTargetProcessor<Explosive, Optional<Integer>, MutableOptionalValue<Integer>,
+public class ExplosionRadiusDataProcessor extends AbstractSingleDataSingleTargetProcessor<Explosive, Optional<Integer>, OptionalValue.MutableOptionalValue<Integer>,
         ExplosionRadiusData, ImmutableExplosionRadiusData> {
 
     public ExplosionRadiusDataProcessor() {
@@ -62,12 +62,12 @@ public class ExplosionRadiusDataProcessor extends AbstractSingleDataSingleTarget
     }
 
     @Override
-    protected ImmutableValue<Optional<Integer>> constructImmutableValue(Optional<Integer> value) {
+    protected Value.Immutable<Optional<Integer>> constructImmutableValue(Optional<Integer> value) {
         return new ImmutableSpongeOptionalValue<>(Keys.EXPLOSION_RADIUS, value);
     }
 
     @Override
-    protected MutableOptionalValue<Integer> constructValue(Optional<Integer> actualValue) {
+    protected OptionalValue.MutableOptionalValue<Integer> constructValue(Optional<Integer> actualValue) {
         return new SpongeMutableOptionalValue<>(Keys.EXPLOSION_RADIUS, actualValue);
     }
 

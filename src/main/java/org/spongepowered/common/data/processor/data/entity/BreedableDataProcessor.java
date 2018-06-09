@@ -29,9 +29,8 @@ import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.entity.ImmutableBreedableData;
 import org.spongepowered.api.data.manipulator.mutable.entity.BreedableData;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.manipulator.mutable.entity.SpongeBreedableData;
 import org.spongepowered.common.data.processor.common.AbstractSingleDataSingleTargetProcessor;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
@@ -39,7 +38,7 @@ import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
 import java.util.Optional;
 
-public class BreedableDataProcessor extends AbstractSingleDataSingleTargetProcessor<EntityAgeable, Boolean, MutableValue<Boolean>, BreedableData, ImmutableBreedableData> {
+public class BreedableDataProcessor extends AbstractSingleDataSingleTargetProcessor<EntityAgeable, Boolean, Value.Mutable<Boolean>, BreedableData, ImmutableBreedableData> {
 
     public BreedableDataProcessor() {
         super(Keys.CAN_BREED, EntityAgeable.class);
@@ -64,7 +63,7 @@ public class BreedableDataProcessor extends AbstractSingleDataSingleTargetProces
     }
 
     @Override
-    protected ImmutableValue<Boolean> constructImmutableValue(Boolean value) {
+    protected Value.Immutable<Boolean> constructImmutableValue(Boolean value) {
         return ImmutableSpongeValue.cachedOf(this.key, false, value);
     }
 
@@ -74,7 +73,7 @@ public class BreedableDataProcessor extends AbstractSingleDataSingleTargetProces
     }
 
     @Override
-    protected MutableValue<Boolean> constructValue(Boolean actualValue) {
+    protected Value.Mutable<Boolean> constructValue(Boolean actualValue) {
         return new SpongeMutableValue<>(this.key, false, actualValue);
     }
 

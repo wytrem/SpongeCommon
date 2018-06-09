@@ -30,9 +30,9 @@ import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.entity.ImmutableTameableData;
 import org.spongepowered.api.data.manipulator.mutable.entity.TameableData;
+import org.spongepowered.api.data.value.OptionalValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableOptionalValue;
 import org.spongepowered.common.data.manipulator.mutable.entity.SpongeTameableData;
 import org.spongepowered.common.data.processor.common.AbstractEntitySingleDataProcessor;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
@@ -42,7 +42,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public class HorseTameableDataProcessor
-        extends AbstractEntitySingleDataProcessor<AbstractHorse, Optional<UUID>, MutableOptionalValue<UUID>, TameableData, ImmutableTameableData> {
+        extends AbstractEntitySingleDataProcessor<AbstractHorse, Optional<UUID>, OptionalValue.MutableOptionalValue<UUID>, TameableData, ImmutableTameableData> {
 
     public HorseTameableDataProcessor() {
         super(AbstractHorse.class, Keys.TAMED_OWNER);
@@ -79,12 +79,12 @@ public class HorseTameableDataProcessor
     }
 
     @Override
-    protected MutableOptionalValue<UUID> constructValue(Optional<UUID> defaultValue) {
+    protected OptionalValue.MutableOptionalValue<UUID> constructValue(Optional<UUID> defaultValue) {
         return new SpongeMutableOptionalValue<>(this.getKey(), defaultValue);
     }
 
     @Override
-    protected ImmutableValue<Optional<UUID>> constructImmutableValue(Optional<UUID> value) {
+    protected Value.Immutable<Optional<UUID>> constructImmutableValue(Optional<UUID> value) {
         return new ImmutableSpongeValue<>(Keys.TAMED_OWNER, Optional.empty(), value);
     }
 

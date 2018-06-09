@@ -27,22 +27,21 @@ package org.spongepowered.common.data.processor.value.entity;
 import net.minecraft.entity.EntityLivingBase;
 import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
+import org.spongepowered.api.data.value.BoundedValue;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableBoundedValue;
-import org.spongepowered.api.data.value.mutable.MutableBoundedValue;
 import org.spongepowered.common.data.processor.common.AbstractSpongeValueProcessor;
 import org.spongepowered.common.data.value.SpongeValueFactory;
 
 import java.util.Optional;
 
-public class RemainingAirValueProcessor extends AbstractSpongeValueProcessor<EntityLivingBase, Integer, MutableBoundedValue<Integer>> {
+public class RemainingAirValueProcessor extends AbstractSpongeValueProcessor<EntityLivingBase, Integer, BoundedValue.Mutable<Integer>> {
 
     public RemainingAirValueProcessor() {
         super(EntityLivingBase.class, Keys.REMAINING_AIR);
     }
 
     @Override
-    public MutableBoundedValue<Integer> constructValue(Integer defaultValue) {
+    public BoundedValue.Mutable<Integer> constructValue(Integer defaultValue) {
         return SpongeValueFactory.boundedBuilder(Keys.REMAINING_AIR)
             .defaultValue(300)
             .minimum(-20)
@@ -63,7 +62,7 @@ public class RemainingAirValueProcessor extends AbstractSpongeValueProcessor<Ent
     }
 
     @Override
-    protected ImmutableBoundedValue<Integer> constructImmutableValue(Integer value) {
+    protected BoundedValue.Immutable<Integer> constructImmutableValue(Integer value) {
         return constructValue(value).asImmutable();
     }
 

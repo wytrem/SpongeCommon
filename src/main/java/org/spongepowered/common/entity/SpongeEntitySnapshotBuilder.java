@@ -39,7 +39,6 @@ import org.spongepowered.api.data.manipulator.ImmutableDataManipulator;
 import org.spongepowered.api.data.persistence.AbstractDataBuilder;
 import org.spongepowered.api.data.persistence.InvalidDataException;
 import org.spongepowered.api.data.value.Value;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
 import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.entity.EntitySnapshot;
 import org.spongepowered.api.entity.EntityType;
@@ -72,7 +71,7 @@ public class SpongeEntitySnapshotBuilder extends AbstractDataBuilder<EntitySnaps
     @Nullable UUID entityId;
     @Nullable List<ImmutableDataManipulator<?, ?>> manipulators;
     @Nullable NBTTagCompound compound;
-    @Nullable List<ImmutableValue<?>> values;
+    @Nullable List<Value.Immutable<?>> values;
     @Nullable WeakReference<Entity> entityReference;
 
     public SpongeEntitySnapshotBuilder() {
@@ -253,7 +252,7 @@ public class SpongeEntitySnapshotBuilder extends AbstractDataBuilder<EntitySnaps
     public EntitySnapshot build() {
         EntitySnapshot snapshot = new SpongeEntitySnapshot(this);
         if(this.values != null) {
-            for (ImmutableValue<?> value : this.values) {
+            for (Value.Immutable<?> value : this.values) {
                 snapshot = snapshot.with(value).orElse(snapshot);
             }
         }

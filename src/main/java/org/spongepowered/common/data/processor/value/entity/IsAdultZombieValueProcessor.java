@@ -27,9 +27,8 @@ package org.spongepowered.common.data.processor.value.entity;
 import net.minecraft.entity.monster.EntityZombie;
 import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.api.util.OptBool;
 import org.spongepowered.common.data.processor.common.AbstractSpongeValueProcessor;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
@@ -37,14 +36,14 @@ import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
 import java.util.Optional;
 
-public class IsAdultZombieValueProcessor extends AbstractSpongeValueProcessor<EntityZombie, Boolean, MutableValue<Boolean>> {
+public class IsAdultZombieValueProcessor extends AbstractSpongeValueProcessor<EntityZombie, Boolean, Value.Mutable<Boolean>> {
 
     public IsAdultZombieValueProcessor() {
         super(EntityZombie.class, Keys.IS_ADULT);
     }
 
     @Override
-    protected MutableValue<Boolean> constructValue(Boolean actualValue) {
+    protected Value.Mutable<Boolean> constructValue(Boolean actualValue) {
         return new SpongeMutableValue<>(Keys.IS_ADULT, true, actualValue);
     }
 
@@ -60,7 +59,7 @@ public class IsAdultZombieValueProcessor extends AbstractSpongeValueProcessor<En
     }
 
     @Override
-    protected ImmutableValue<Boolean> constructImmutableValue(Boolean value) {
+    protected Value.Immutable<Boolean> constructImmutableValue(Boolean value) {
         return ImmutableSpongeValue.cachedOf(Keys.IS_ADULT, true, value);
     }
 

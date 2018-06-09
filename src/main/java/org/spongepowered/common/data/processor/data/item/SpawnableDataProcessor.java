@@ -35,9 +35,8 @@ import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.item.ImmutableSpawnableData;
 import org.spongepowered.api.data.manipulator.mutable.item.SpawnableData;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.api.entity.EntityType;
 import org.spongepowered.api.entity.EntityTypes;
 import org.spongepowered.common.SpongeImplHooks;
@@ -50,7 +49,7 @@ import org.spongepowered.common.registry.type.entity.EntityTypeRegistryModule;
 
 import java.util.Optional;
 
-public class SpawnableDataProcessor extends AbstractItemSingleDataProcessor<EntityType, MutableValue<EntityType>, SpawnableData, ImmutableSpawnableData> {
+public class SpawnableDataProcessor extends AbstractItemSingleDataProcessor<EntityType, Value.Mutable<EntityType>, SpawnableData, ImmutableSpawnableData> {
 
     public SpawnableDataProcessor() {
         super(input -> input.getItem().equals(Items.SPAWN_EGG), Keys.SPAWNABLE_ENTITY_TYPE);
@@ -80,12 +79,12 @@ public class SpawnableDataProcessor extends AbstractItemSingleDataProcessor<Enti
     }
 
     @Override
-    protected MutableValue<EntityType> constructValue(EntityType actualValue) {
+    protected Value.Mutable<EntityType> constructValue(EntityType actualValue) {
         return new SpongeMutableValue<>(Keys.SPAWNABLE_ENTITY_TYPE, EntityTypes.CREEPER, actualValue);
     }
 
     @Override
-    public ImmutableValue<EntityType> constructImmutableValue(EntityType value) {
+    public Value.Immutable<EntityType> constructImmutableValue(EntityType value) {
         return ImmutableSpongeValue.cachedOf(Keys.SPAWNABLE_ENTITY_TYPE, EntityTypes.CREEPER, value);
     }
 

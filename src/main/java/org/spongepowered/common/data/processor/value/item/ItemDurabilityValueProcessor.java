@@ -27,22 +27,22 @@ package org.spongepowered.common.data.processor.value.item;
 import net.minecraft.item.ItemStack;
 import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
+import org.spongepowered.api.data.value.BoundedValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableBoundedValue;
 import org.spongepowered.common.data.processor.common.AbstractSpongeValueProcessor;
 import org.spongepowered.common.data.value.SpongeValueFactory;
 
 import java.util.Optional;
 
-public class ItemDurabilityValueProcessor extends AbstractSpongeValueProcessor<ItemStack, Integer, MutableBoundedValue<Integer>> {
+public class ItemDurabilityValueProcessor extends AbstractSpongeValueProcessor<ItemStack, Integer, BoundedValue.Mutable<Integer>> {
 
     public ItemDurabilityValueProcessor() {
         super(ItemStack.class, Keys.ITEM_DURABILITY);
     }
 
     @Override
-    public MutableBoundedValue<Integer> constructValue(Integer defaultValue) {
+    public BoundedValue.Mutable<Integer> constructValue(Integer defaultValue) {
         return SpongeValueFactory.boundedBuilder(Keys.ITEM_DURABILITY)
                 .minimum(0)
                 .maximum(Integer.MAX_VALUE)
@@ -66,7 +66,7 @@ public class ItemDurabilityValueProcessor extends AbstractSpongeValueProcessor<I
     }
 
     @Override
-    public ImmutableValue<Integer> constructImmutableValue(Integer value) {
+    public Value.Immutable<Integer> constructImmutableValue(Integer value) {
         return constructValue(value).asImmutable();
     }
 

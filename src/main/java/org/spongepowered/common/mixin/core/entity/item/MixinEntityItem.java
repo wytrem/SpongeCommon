@@ -32,7 +32,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.DataManipulator;
 import org.spongepowered.api.data.manipulator.mutable.RepresentedItemData;
-import org.spongepowered.api.data.value.mutable.MutableValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.entity.Item;
 import org.spongepowered.api.item.ItemType;
 import org.spongepowered.api.item.inventory.ItemStackSnapshot;
@@ -233,7 +233,7 @@ public abstract class MixinEntityItem extends MixinEntity implements Item, IMixi
     }
 
     @Override
-    public MutableValue<ItemStackSnapshot> item() {
+    public Value.Mutable<ItemStackSnapshot> item() {
         return new SpongeMutableValue<>(Keys.REPRESENTED_ITEM, ItemStackSnapshot.NONE, ItemStackUtil.snapshotOf(getItem()));
     }
 

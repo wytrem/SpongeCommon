@@ -26,9 +26,8 @@ package org.spongepowered.common.data.processor.value;
 
 import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.api.entity.EntityArchetype;
 import org.spongepowered.api.util.weighted.WeightedSerializableObject;
 import org.spongepowered.common.data.processor.common.AbstractSpongeValueProcessor;
@@ -40,14 +39,14 @@ import org.spongepowered.common.interfaces.IMixinMobSpawner;
 import java.util.Optional;
 
 public class SpawnerNextEntityToSpawnValueProcessor extends AbstractSpongeValueProcessor<IMixinMobSpawner,
-        WeightedSerializableObject<EntityArchetype>, MutableValue<WeightedSerializableObject<EntityArchetype>>> {
+        WeightedSerializableObject<EntityArchetype>, Value.Mutable<WeightedSerializableObject<EntityArchetype>>> {
 
     public SpawnerNextEntityToSpawnValueProcessor() {
         super(IMixinMobSpawner.class, Keys.SPAWNER_NEXT_ENTITY_TO_SPAWN);
     }
 
     @Override
-    protected MutableValue<WeightedSerializableObject<EntityArchetype>> constructValue(WeightedSerializableObject<EntityArchetype> actualValue) {
+    protected Value.Mutable<WeightedSerializableObject<EntityArchetype>> constructValue(WeightedSerializableObject<EntityArchetype> actualValue) {
         return new SpongeMutableValue<>(Keys.SPAWNER_NEXT_ENTITY_TO_SPAWN,
                 DataConstants.DEFAULT_SPAWNER_NEXT_ENTITY_TO_SPAWN, actualValue);
     }
@@ -64,7 +63,7 @@ public class SpawnerNextEntityToSpawnValueProcessor extends AbstractSpongeValueP
     }
 
     @Override
-    protected ImmutableValue<WeightedSerializableObject<EntityArchetype>> constructImmutableValue(WeightedSerializableObject<EntityArchetype> value) {
+    protected Value.Immutable<WeightedSerializableObject<EntityArchetype>> constructImmutableValue(WeightedSerializableObject<EntityArchetype> value) {
         return constructValue(value).asImmutable();
     }
 

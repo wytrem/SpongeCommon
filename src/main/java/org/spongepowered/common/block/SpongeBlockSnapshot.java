@@ -53,7 +53,6 @@ import org.spongepowered.api.data.key.Key;
 import org.spongepowered.api.data.manipulator.ImmutableDataManipulator;
 import org.spongepowered.api.data.merge.MergeFunction;
 import org.spongepowered.api.data.value.Value;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
 import org.spongepowered.api.world.BlockChangeFlag;
 import org.spongepowered.api.world.BlockChangeFlags;
 import org.spongepowered.api.world.Location;
@@ -89,11 +88,11 @@ public class SpongeBlockSnapshot implements BlockSnapshot {
     private final UUID worldUniqueId;
     private final Vector3i pos;
     private final ImmutableList<ImmutableDataManipulator<?, ?>> extraData;
-    private ImmutableMap<Key<?>, ImmutableValue<?>> keyValueMap;
-    private ImmutableSet<ImmutableValue<?>> valueSet;
+    private ImmutableMap<Key<?>, Value.Immutable<?>> keyValueMap;
+    private ImmutableSet<Value.Immutable<?>> valueSet;
     private ImmutableList<ImmutableDataManipulator<?, ?>> blockData;
-    private ImmutableMap<Key<?>, ImmutableValue<?>> blockKeyValueMap;
-    private ImmutableSet<ImmutableValue<?>> blockValueSet;
+    private ImmutableMap<Key<?>, Value.Immutable<?>> blockKeyValueMap;
+    private ImmutableSet<Value.Immutable<?>> blockValueSet;
     @Nullable final NBTTagCompound compound;
     @Nullable final UUID creatorUniqueId;
     @Nullable final UUID notifierUniqueId;
@@ -119,10 +118,10 @@ public class SpongeBlockSnapshot implements BlockSnapshot {
 
         // This avoids cross contamination of block state based values versus tile entity values.
         // TODO - delegate this to NbtProcessors when schematics are merged.
-        final ImmutableMap.Builder<Key<?>, ImmutableValue<?>> tileBuilder = ImmutableMap.builder();
+        final ImmutableMap.Builder<Key<?>, Value.Immutable<?>> tileBuilder = ImmutableMap.builder();
         this.extraData = builder.manipulators == null ? ImmutableList.<ImmutableDataManipulator<?, ?>>of() : ImmutableList.copyOf(builder.manipulators);
         for (ImmutableDataManipulator<?, ?> manipulator : this.extraData) {
-            for (ImmutableValue<?> value : manipulator.getValues()) {
+            for (Value.Immutable<?> value : manipulator.getValues()) {
                 tileBuilder.put(value.getKey(), value);
             }
         }
@@ -377,10 +376,10 @@ public class SpongeBlockSnapshot implements BlockSnapshot {
         return Optional.empty();
     }
 
-    private ImmutableMap<Key<?>, ImmutableValue<?>> getKeyValueMap() {
+    private ImmutableMap<Key<?>, Value.Immutable<?>> getKeyValueMap() {
         if (this.blockKeyValueMap == null) {
-            final ImmutableMap.Builder<Key<?>, ImmutableValue<?>> mapBuilder = ImmutableMap.builder();
-            for (ImmutableValue<?> value : this.blockState.getValues()) {
+            final ImmutableMap.Builder<Key<?>, Value.Immutable<?>> mapBuilder = ImmutableMap.builder();
+            for (Value.Immutable<?> value : this.blockState.getValues()) {
                 mapBuilder.put(value.getKey(), value);
             }
             this.blockKeyValueMap = mapBuilder.build();
@@ -388,25 +387,25 @@ public class SpongeBlockSnapshot implements BlockSnapshot {
         return this.blockKeyValueMap;
     }
 
-    private ImmutableSet<ImmutableValue<?>> getValueSet() {
+    private ImmutableSet<Value.Immutable<?>> getValueSet() {
         if (this.blockValueSet == null) {
             this.blockValueSet = ImmutableSet.copyOf(getKeyValueMap().values());
         }
         return this.blockValueSet;
     }
 
-    private ImmutableSet<ImmutableValue<?>> getTileValueSet() {
+    private ImmutableSet<Value.Immutable<?>> getTileValueSet() {
         if (this.valueSet == null) {
             this.valueSet = ImmutableSet.copyOf(this.getTileMap().values());
         }
         return this.valueSet;
     }
 
-    private ImmutableMap<Key<?>, ImmutableValue<?>> getTileMap() {
+    private ImmutableMap<Key<?>, Value.Immutable<?>> getTileMap() {
         if (this.keyValueMap == null) {
-            final ImmutableMap.Builder<Key<?>, ImmutableValue<?>> tileBuilder = ImmutableMap.builder();
+            final ImmutableMap.Builder<Key<?>, Value.Immutable<?>> tileBuilder = ImmutableMap.builder();
             for (ImmutableDataManipulator<?, ?> manipulator : this.extraData) {
-                for (ImmutableValue<?> value : manipulator.getValues()) {
+                for (Value.Immutable<?> value : manipulator.getValues()) {
                     tileBuilder.put(value.getKey(), value);
                 }
             }
@@ -452,12 +451,12 @@ public class SpongeBlockSnapshot implements BlockSnapshot {
         }
         return this.keys;
     }
-    private ImmutableSet<ImmutableValue<?>> values;
+    private ImmutableSet<Value.Immutable<?>> values;
 
     @Override
-    public Set<ImmutableValue<?>> getValues() {
+    public Set<Value.Immutable<?>> getValues() {
         if (this.values == null) {
-            this.values = ImmutableSet.<ImmutableValue<?>>builder().addAll(getTileValueSet()).addAll(getValueSet()).build();
+            this.values = ImmutableSet.<Value.Immutable<?>>builder().addAll(getTileValueSet()).addAll(getValueSet()).build();
         }
         return this.values;
     }

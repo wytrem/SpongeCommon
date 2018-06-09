@@ -29,9 +29,8 @@ import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.entity.ImmutableRespawnLocation;
 import org.spongepowered.api.data.manipulator.mutable.entity.RespawnLocationData;
+import org.spongepowered.api.data.value.MapValue;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableMapValue;
-import org.spongepowered.api.data.value.mutable.MutableMapValue;
 import org.spongepowered.api.entity.living.player.User;
 import org.spongepowered.api.util.RespawnLocation;
 import org.spongepowered.common.data.manipulator.mutable.entity.SpongeRespawnLocationData;
@@ -45,7 +44,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public class RespawnLocationDataProcessor extends
-        AbstractSingleDataSingleTargetProcessor<User, Map<UUID, RespawnLocation>, MutableMapValue<UUID, RespawnLocation>, RespawnLocationData, ImmutableRespawnLocation> {
+        AbstractSingleDataSingleTargetProcessor<User, Map<UUID, RespawnLocation>, MapValue.Mutable<UUID, RespawnLocation>, RespawnLocationData, ImmutableRespawnLocation> {
 
     public RespawnLocationDataProcessor() {
         super(Keys.RESPAWN_LOCATIONS, User.class);
@@ -80,12 +79,12 @@ public class RespawnLocationDataProcessor extends
     }
 
     @Override
-    protected MutableMapValue<UUID, RespawnLocation> constructValue(Map<UUID, RespawnLocation> actualValue) {
+    protected MapValue.Mutable<UUID, RespawnLocation> constructValue(Map<UUID, RespawnLocation> actualValue) {
         return new SpongeMutableMapValue<>(Keys.RESPAWN_LOCATIONS, actualValue);
     }
 
     @Override
-    protected ImmutableMapValue<UUID, RespawnLocation> constructImmutableValue(Map<UUID, RespawnLocation> value) {
+    protected MapValue.Immutable<UUID, RespawnLocation> constructImmutableValue(Map<UUID, RespawnLocation> value) {
         return new ImmutableSpongeMapValue<>(Keys.RESPAWN_LOCATIONS, value);
     }
 

@@ -32,9 +32,8 @@ import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.ImmutableRepresentedItemData;
 import org.spongepowered.api.data.manipulator.mutable.RepresentedItemData;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.api.item.inventory.ItemStackSnapshot;
 import org.spongepowered.common.data.manipulator.mutable.SpongeRepresentedItemData;
 import org.spongepowered.common.data.processor.common.AbstractTileEntitySingleDataProcessor;
@@ -44,7 +43,7 @@ import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 import java.util.Optional;
 
 public class FlowerPotDataProcessor extends
-        AbstractTileEntitySingleDataProcessor<TileEntityFlowerPot, ItemStackSnapshot, MutableValue<ItemStackSnapshot>, RepresentedItemData, ImmutableRepresentedItemData> {
+        AbstractTileEntitySingleDataProcessor<TileEntityFlowerPot, ItemStackSnapshot, Value.Mutable<ItemStackSnapshot>, RepresentedItemData, ImmutableRepresentedItemData> {
 
     public FlowerPotDataProcessor() {
         super(TileEntityFlowerPot.class, Keys.REPRESENTED_ITEM);
@@ -92,12 +91,12 @@ public class FlowerPotDataProcessor extends
     }
 
     @Override
-    protected MutableValue<ItemStackSnapshot> constructValue(ItemStackSnapshot value) {
+    protected Value.Mutable<ItemStackSnapshot> constructValue(ItemStackSnapshot value) {
         return new SpongeMutableValue<>(Keys.REPRESENTED_ITEM, ItemStackSnapshot.NONE, value);
     }
 
     @Override
-    protected ImmutableValue<ItemStackSnapshot> constructImmutableValue(ItemStackSnapshot value) {
+    protected Value.Immutable<ItemStackSnapshot> constructImmutableValue(ItemStackSnapshot value) {
         return new ImmutableSpongeValue<>(Keys.REPRESENTED_ITEM, ItemStackSnapshot.NONE, value);
     }
 

@@ -28,8 +28,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import org.spongepowered.api.data.key.Key;
 import org.spongepowered.api.data.value.Value;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.ImmutableDataCachingUtil;
 import org.spongepowered.common.data.value.AbstractValue;
 import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
@@ -37,10 +35,11 @@ import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 import java.util.function.Function;
 
 @SuppressWarnings("unchecked")
-public class ImmutableSpongeValue<E, I extends ImmutableValue<E, I, M>, M extends MutableValue<E, M, I>> extends AbstractValue<E> implements ImmutableValue<E, I, M> {
+public class ImmutableSpongeValue<E, I extends Value.Immutable<E, I, M>, M extends Value.Mutable<E, M, I>> extends AbstractValue<E> implements
+    Value.Immutable<E, I, M> {
 
     /**
-     * Gets a cached {@link ImmutableValue} of the default value and the actual value.
+     * Gets a cached {@link Immutable} of the default value and the actual value.
      *
      * @param key The key for the value
      * @param defaultValue The default value
@@ -48,7 +47,7 @@ public class ImmutableSpongeValue<E, I extends ImmutableValue<E, I, M>, M extend
      * @param <T> The type of value
      * @return The cached immutable value
      */
-    public static <T> ImmutableValue<T, ?, ?> cachedOf(Key<? extends Value<T>> key, T defaultValue, T actualValue) {
+    public static <T> Immutable<T, ?, ?> cachedOf(Key<? extends Value<T>> key, T defaultValue, T actualValue) {
         return ImmutableDataCachingUtil.getValue(ImmutableSpongeValue.class, key, defaultValue, actualValue);
     }
 
@@ -82,7 +81,7 @@ public class ImmutableSpongeValue<E, I extends ImmutableValue<E, I, M>, M extend
         return (I) this;
     }
 
-    public static final class Single<E> extends ImmutableSpongeValue<E, ImmutableValue.Single<E>, MutableValue.Single<E>> implements ImmutableValue.Single<E> {
+    public static final class Single<E> extends ImmutableSpongeValue<E, Immutable.Single<E>, Mutable.Single<E>> implements Immutable.Single<E> {
 
         public Single(Key<? extends Value<E>> key, E defaultValue) {
             super(key, defaultValue);

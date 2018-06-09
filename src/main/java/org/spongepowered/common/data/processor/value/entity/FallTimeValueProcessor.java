@@ -27,23 +27,22 @@ package org.spongepowered.common.data.processor.value.entity;
 import net.minecraft.entity.item.EntityFallingBlock;
 import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.processor.common.AbstractSpongeValueProcessor;
 import org.spongepowered.common.data.util.DataConstants;
 import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
 import java.util.Optional;
 
-public class FallTimeValueProcessor extends AbstractSpongeValueProcessor<EntityFallingBlock, Integer, MutableValue<Integer>> {
+public class FallTimeValueProcessor extends AbstractSpongeValueProcessor<EntityFallingBlock, Integer, Value.Mutable<Integer>> {
 
     public FallTimeValueProcessor() {
         super(EntityFallingBlock.class, Keys.FALL_TIME);
     }
 
     @Override
-    protected MutableValue<Integer> constructValue(Integer value) {
+    protected Value.Mutable<Integer> constructValue(Integer value) {
         return new SpongeMutableValue<>(Keys.FALL_TIME, DataConstants.DEFAULT_FALLING_BLOCK_FALL_TIME, value);
     }
 
@@ -59,7 +58,7 @@ public class FallTimeValueProcessor extends AbstractSpongeValueProcessor<EntityF
     }
 
     @Override
-    protected ImmutableValue<Integer> constructImmutableValue(Integer value) {
+    protected Value.Immutable<Integer> constructImmutableValue(Integer value) {
         return constructValue(value).asImmutable();
     }
 

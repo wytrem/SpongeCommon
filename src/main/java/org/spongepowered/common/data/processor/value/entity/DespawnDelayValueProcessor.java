@@ -27,9 +27,8 @@ package org.spongepowered.common.data.processor.value.entity;
 import net.minecraft.entity.item.EntityItem;
 import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
+import org.spongepowered.api.data.value.BoundedValue;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableBoundedValue;
-import org.spongepowered.api.data.value.mutable.MutableBoundedValue;
 import org.spongepowered.common.data.processor.common.AbstractSpongeValueProcessor;
 import org.spongepowered.common.data.util.DataConstants;
 import org.spongepowered.common.data.value.SpongeValueFactory;
@@ -37,14 +36,14 @@ import org.spongepowered.common.interfaces.entity.item.IMixinEntityItem;
 
 import java.util.Optional;
 
-public class DespawnDelayValueProcessor extends AbstractSpongeValueProcessor<EntityItem, Integer, MutableBoundedValue<Integer>> {
+public class DespawnDelayValueProcessor extends AbstractSpongeValueProcessor<EntityItem, Integer, BoundedValue.Mutable<Integer>> {
 
     public DespawnDelayValueProcessor() {
         super(EntityItem.class, Keys.DESPAWN_DELAY);
     }
 
     @Override
-    public MutableBoundedValue<Integer> constructValue(Integer defaultValue) {
+    public BoundedValue.Mutable<Integer> constructValue(Integer defaultValue) {
         return SpongeValueFactory.boundedBuilder(Keys.DESPAWN_DELAY)
                 .defaultValue(DataConstants.Entity.Item.DEFAULT_DESPAWN_DELAY)
                 .minimum(DataConstants.Entity.Item.MIN_DESPAWN_DELAY)
@@ -65,7 +64,7 @@ public class DespawnDelayValueProcessor extends AbstractSpongeValueProcessor<Ent
     }
 
     @Override
-    protected ImmutableBoundedValue<Integer> constructImmutableValue(Integer value) {
+    protected BoundedValue.Immutable<Integer> constructImmutableValue(Integer value) {
         return constructValue(value).asImmutable();
     }
 

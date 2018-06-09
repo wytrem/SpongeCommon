@@ -40,8 +40,6 @@ import org.spongepowered.api.data.manipulator.DataManipulator;
 import org.spongepowered.api.data.merge.MergeFunction;
 import org.spongepowered.api.data.persistence.InvalidDataException;
 import org.spongepowered.api.data.value.Value;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.SpongeImpl;
 import org.spongepowered.common.data.nbt.CustomDataNbtUtil;
 import org.spongepowered.common.data.nbt.NbtDataType;
@@ -163,10 +161,10 @@ public abstract class AbstractArchetype<C extends CatalogType, S extends Locatab
             return DataTransactionResult.successNoData();
         }
         final DataTransactionResult.Builder builder = DataTransactionResult.builder();
-        for (ImmutableValue<?> replaced : result.getReplacedData()) {
+        for (Value.Immutable<?> replaced : result.getReplacedData()) {
             builder.absorbResult(offer(replaced));
         }
-        for (ImmutableValue<?> successful : result.getSuccessfulData()) {
+        for (Value.Immutable<?> successful : result.getSuccessfulData()) {
             builder.absorbResult(remove(successful));
         }
         return builder.build();
@@ -216,14 +214,14 @@ public abstract class AbstractArchetype<C extends CatalogType, S extends Locatab
     }
 
     @Override
-    public Set<ImmutableValue<?>> getValues() {
+    public Set<Value.Immutable<?>> getValues() {
         return DataUtil.getNbtValueProcessors(this.getDataType()).stream()
                 .map(processor -> processor.readFrom(this.data))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
-                .filter(value -> value instanceof MutableValue<?>)
-                .map(value -> (MutableValue<?>) value)
-                .map(MutableValue::asImmutable)
+                .filter(value -> value instanceof Value.Mutable<?>)
+                .map(value -> (Value.Mutable<?>) value)
+                .map(Value.Mutable::asImmutable)
                 .collect(Collectors.toSet());
     }
 

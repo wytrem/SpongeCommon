@@ -30,7 +30,7 @@ import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.tileentity.ImmutableStructureData;
 import org.spongepowered.api.data.manipulator.mutable.tileentity.StructureData;
 import org.spongepowered.api.data.type.StructureMode;
-import org.spongepowered.api.data.value.mutable.MutableValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.common.data.manipulator.immutable.tileentity.ImmutableSpongeStructureData;
 import org.spongepowered.common.data.manipulator.mutable.common.AbstractData;
 import org.spongepowered.common.data.util.DataConstants;
@@ -108,7 +108,7 @@ public final class SpongeStructureData extends AbstractData<StructureData, Immut
     }
 
     @Override
-    public MutableValue<String> author() {
+    public Value.Mutable<String> author() {
         return new SpongeMutableValue<>(Keys.STRUCTURE_AUTHOR, DataConstants.DEFAULT_STRUCTURE_AUTHOR, this.author);
     }
 
@@ -121,7 +121,7 @@ public final class SpongeStructureData extends AbstractData<StructureData, Immut
     }
 
     @Override
-    public MutableValue<Boolean> ignoreEntities() {
+    public Value.Mutable<Boolean> ignoreEntities() {
         return new SpongeMutableValue<>(Keys.STRUCTURE_IGNORE_ENTITIES, DataConstants.DEFAULT_STRUCTURE_IGNORE_ENTITIES, this.ignoreEntities);
     }
 
@@ -134,7 +134,7 @@ public final class SpongeStructureData extends AbstractData<StructureData, Immut
     }
 
     @Override
-    public MutableValue<Float> integrity() {
+    public Value.Mutable<Float> integrity() {
         return new SpongeMutableValue<>(Keys.STRUCTURE_INTEGRITY, DataConstants.DEFAULT_STRUCTURE_INTEGRITY, this.integrity);
     }
 
@@ -147,7 +147,7 @@ public final class SpongeStructureData extends AbstractData<StructureData, Immut
     }
 
     @Override
-    public MutableValue<StructureMode> mode() {
+    public Value.Mutable<StructureMode> mode() {
         return new SpongeMutableValue<>(Keys.STRUCTURE_MODE, DataConstants.DEFAULT_STRUCTURE_MODE, this.mode);
     }
 
@@ -160,7 +160,7 @@ public final class SpongeStructureData extends AbstractData<StructureData, Immut
     }
 
     @Override
-    public MutableValue<Vector3i> position() {
+    public Value.Mutable<Vector3i> position() {
         return new SpongeMutableValue<>(Keys.STRUCTURE_POSITION, Vector3i.ONE, this.position);
     }
 
@@ -173,7 +173,7 @@ public final class SpongeStructureData extends AbstractData<StructureData, Immut
     }
 
     @Override
-    public MutableValue<Boolean> powered() {
+    public Value.Mutable<Boolean> powered() {
         return new SpongeMutableValue<>(Keys.STRUCTURE_POWERED, DataConstants.DEFAULT_STRUCTURE_POWERED, this.powered);
     }
 
@@ -186,7 +186,7 @@ public final class SpongeStructureData extends AbstractData<StructureData, Immut
     }
 
     @Override
-    public MutableValue<Long> seed() {
+    public Value.Mutable<Long> seed() {
         return new SpongeMutableValue<>(Keys.STRUCTURE_SEED, DataConstants.DEFAULT_STRUCTURE_SEED, this.seed);
     }
 
@@ -199,7 +199,7 @@ public final class SpongeStructureData extends AbstractData<StructureData, Immut
     }
 
     @Override
-    public MutableValue<Boolean> showAir() {
+    public Value.Mutable<Boolean> showAir() {
         return new SpongeMutableValue<>(Keys.STRUCTURE_SHOW_AIR, DataConstants.DEFAULT_STRUCTURE_SHOW_AIR, this.showAir);
     }
 
@@ -212,7 +212,7 @@ public final class SpongeStructureData extends AbstractData<StructureData, Immut
     }
 
     @Override
-    public MutableValue<Boolean> showBoundingBox() {
+    public Value.Mutable<Boolean> showBoundingBox() {
         return new SpongeMutableValue<>(Keys.STRUCTURE_SHOW_BOUNDING_BOX, DataConstants.DEFAULT_STRUCTURE_SHOW_BOUNDING_BOX, this.showBoundingBox);
     }
 
@@ -225,7 +225,7 @@ public final class SpongeStructureData extends AbstractData<StructureData, Immut
     }
 
     @Override
-    public MutableValue<Vector3i> size() {
+    public Value.Mutable<Vector3i> size() {
         return new SpongeMutableValue<>(Keys.STRUCTURE_SIZE, Vector3i.ONE, this.size);
     }
 

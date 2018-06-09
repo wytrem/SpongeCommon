@@ -29,9 +29,8 @@ import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.entity.ImmutableCustomNameVisibleData;
 import org.spongepowered.api.data.manipulator.mutable.entity.CustomNameVisibleData;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.api.entity.living.Humanoid;
 import org.spongepowered.common.data.manipulator.mutable.entity.SpongeCustomNameVisibleData;
 import org.spongepowered.common.data.processor.common.AbstractSingleDataSingleTargetProcessor;
@@ -41,14 +40,14 @@ import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 import java.util.Optional;
 
 public final class CustomNameVisibleProcessor extends
-        AbstractSingleDataSingleTargetProcessor<Entity, Boolean, MutableValue<Boolean>, CustomNameVisibleData, ImmutableCustomNameVisibleData> {
+        AbstractSingleDataSingleTargetProcessor<Entity, Boolean, Value.Mutable<Boolean>, CustomNameVisibleData, ImmutableCustomNameVisibleData> {
 
     public CustomNameVisibleProcessor() {
         super(Keys.CUSTOM_NAME_VISIBLE, Entity.class);
     }
 
     @Override
-    protected MutableValue<Boolean> constructValue(Boolean actualValue) {
+    protected Value.Mutable<Boolean> constructValue(Boolean actualValue) {
         return new SpongeMutableValue<>(this.key, false, actualValue);
     }
 
@@ -64,7 +63,7 @@ public final class CustomNameVisibleProcessor extends
     }
 
     @Override
-    protected ImmutableValue<Boolean> constructImmutableValue(Boolean value) {
+    protected Value.Immutable<Boolean> constructImmutableValue(Boolean value) {
         return ImmutableSpongeValue.cachedOf(this.key, false, value);
     }
 

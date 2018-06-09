@@ -29,8 +29,8 @@ import org.spongepowered.api.data.key.Key;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.entity.ImmutableDespawnDelayData;
 import org.spongepowered.api.data.manipulator.mutable.entity.DespawnDelayData;
-import org.spongepowered.api.data.value.mutable.MutableBoundedValue;
-import org.spongepowered.api.data.value.mutable.MutableValue;
+import org.spongepowered.api.data.value.BoundedValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.common.data.manipulator.immutable.entity.ImmutableSpongeDespawnDelayData;
 import org.spongepowered.common.data.manipulator.mutable.common.AbstractIntData;
 import org.spongepowered.common.data.util.DataConstants;
@@ -53,7 +53,7 @@ public final class SpongeDespawnDelayData extends AbstractIntData<DespawnDelayDa
 
 
     @Override
-    public MutableBoundedValue<Integer> delay() {
+    public BoundedValue.Mutable<Integer> delay() {
         return SpongeValueFactory.boundedBuilder(Keys.DESPAWN_DELAY) // this.usedKey does not work here
                 .actualValue(this.getValue())
                 .minimum(DataConstants.Entity.Item.MIN_DESPAWN_DELAY)
@@ -68,7 +68,7 @@ public final class SpongeDespawnDelayData extends AbstractIntData<DespawnDelayDa
     }
 
     @Override
-    public MutableValue<Boolean> infinite() {
+    public Value.Mutable<Boolean> infinite() {
         return new SpongeMutableValue<>(Keys.INFINITE_DESPAWN_DELAY, false, isInfinite());
     }
 
@@ -77,7 +77,7 @@ public final class SpongeDespawnDelayData extends AbstractIntData<DespawnDelayDa
     }
 
     @Override
-    protected MutableValue<?> getValueGetter() {
+    protected Value.Mutable<?> getValueGetter() {
         return this.delay();
     }
 

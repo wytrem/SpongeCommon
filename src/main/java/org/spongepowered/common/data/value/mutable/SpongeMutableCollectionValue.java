@@ -27,10 +27,8 @@ package org.spongepowered.common.data.value.mutable;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import org.spongepowered.api.data.key.Key;
+import org.spongepowered.api.data.value.CollectionValue;
 import org.spongepowered.api.data.value.Value;
-import org.spongepowered.api.data.value.immutable.ImmutableCollectionValue;
-import org.spongepowered.api.data.value.mutable.MutableCollectionValue;
-import org.spongepowered.common.data.value.immutable.ImmutableSpongeCollectionValue;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -41,9 +39,9 @@ import java.util.function.Predicate;
 @SuppressWarnings("unchecked")
 public abstract class SpongeMutableCollectionValue<E,
     C extends Collection<E>,
-    M extends MutableCollectionValue<E, C, M, I>,
-    I extends ImmutableCollectionValue<E, C, I, M>>
-    extends SpongeMutableValue<C, M, I> implements MutableCollectionValue<E, C, M, I> {
+    M extends CollectionValue.Mutable<E, C, M, I>,
+    I extends CollectionValue.Immutable<E, C, I, M>>
+    extends SpongeMutableValue<C, M, I> implements CollectionValue.Mutable<E, C, M, I> {
 
 
     public SpongeMutableCollectionValue(Key<? extends Value<C>> key, C defaultValue) {

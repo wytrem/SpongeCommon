@@ -56,8 +56,8 @@ import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.DataManipulator;
 import org.spongepowered.api.data.manipulator.mutable.entity.DamageableData;
 import org.spongepowered.api.data.manipulator.mutable.entity.HealthData;
-import org.spongepowered.api.data.value.mutable.MutableBoundedValue;
-import org.spongepowered.api.data.value.mutable.MutableOptionalValue;
+import org.spongepowered.api.data.value.BoundedValue;
+import org.spongepowered.api.data.value.OptionalValue;
 import org.spongepowered.api.entity.EntitySnapshot;
 import org.spongepowered.api.entity.Transform;
 import org.spongepowered.api.entity.living.Living;
@@ -920,7 +920,7 @@ public abstract class MixinEntityLivingBase extends MixinEntity implements Livin
     }
 
     @Override
-    public MutableBoundedValue<Double> health() {
+    public BoundedValue.Mutable<Double> health() {
         return SpongeValueFactory.boundedBuilder(Keys.HEALTH)
                 .minimum(0D)
                 .maximum((double) this.getMaxHealth())
@@ -930,7 +930,7 @@ public abstract class MixinEntityLivingBase extends MixinEntity implements Livin
     }
 
     @Override
-    public MutableBoundedValue<Double> maxHealth() {
+    public BoundedValue.Mutable<Double> maxHealth() {
         return SpongeValueFactory.boundedBuilder(Keys.MAX_HEALTH)
                 .minimum(1D)
                 .maximum((double) Float.MAX_VALUE)
@@ -945,13 +945,13 @@ public abstract class MixinEntityLivingBase extends MixinEntity implements Livin
     }
 
     @Override
-    public MutableOptionalValue<EntitySnapshot> lastAttacker() {
+    public OptionalValue.MutableOptionalValue<EntitySnapshot> lastAttacker() {
         return new SpongeMutableOptionalValue<>(Keys.LAST_ATTACKER, Optional.empty(), Optional.ofNullable(this.revengeTarget == null ?
                                                                                                           null : ((Living) this.revengeTarget).createSnapshot()));
     }
 
     @Override
-    public MutableOptionalValue<Double> lastDamage() {
+    public OptionalValue.MutableOptionalValue<Double> lastDamage() {
         return new SpongeMutableOptionalValue<>(Keys.LAST_DAMAGE, Optional.empty(), Optional.ofNullable(this.revengeTarget == null ?
                                                                                                         null : (double) (this.lastDamage)));
     }

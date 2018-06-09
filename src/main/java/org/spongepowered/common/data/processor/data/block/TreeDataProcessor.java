@@ -32,7 +32,7 @@ import org.spongepowered.api.data.manipulator.immutable.block.ImmutableTreeData;
 import org.spongepowered.api.data.manipulator.mutable.block.TreeData;
 import org.spongepowered.api.data.type.TreeType;
 import org.spongepowered.api.data.type.TreeTypes;
-import org.spongepowered.api.data.value.mutable.MutableValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.item.ItemType;
 import org.spongepowered.api.item.ItemTypes;
 import org.spongepowered.common.data.manipulator.mutable.block.SpongeTreeData;
@@ -42,7 +42,7 @@ import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 import java.util.Map;
 import java.util.Optional;
 
-public class TreeDataProcessor extends AbstractCatalogDataProcessor<TreeType, MutableValue<TreeType>, TreeData, ImmutableTreeData> {
+public class TreeDataProcessor extends AbstractCatalogDataProcessor<TreeType, Value.Mutable<TreeType>, TreeData, ImmutableTreeData> {
 
     private static final Map<ItemType, TreeType> boatMapping = ImmutableMap.<ItemType, TreeType>builder()
             .put(ItemTypes.BOAT, TreeTypes.OAK)
@@ -116,7 +116,7 @@ public class TreeDataProcessor extends AbstractCatalogDataProcessor<TreeType, Mu
     }
 
     @Override
-    protected MutableValue<TreeType> constructValue(TreeType actualValue) {
+    protected Value.Mutable<TreeType> constructValue(TreeType actualValue) {
         return new SpongeMutableValue<>(this.key, getDefaultValue(), actualValue);
     }
 

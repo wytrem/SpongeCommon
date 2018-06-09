@@ -29,9 +29,8 @@ import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.type.HorseColor;
 import org.spongepowered.api.data.type.HorseColors;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.processor.common.AbstractSpongeValueProcessor;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
 import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
@@ -43,14 +42,14 @@ import org.spongepowered.common.registry.type.entity.HorseStyleRegistryModule;
 
 import java.util.Optional;
 
-public class HorseColorValueProcessor extends AbstractSpongeValueProcessor<EntityHorse, HorseColor, MutableValue<HorseColor>> {
+public class HorseColorValueProcessor extends AbstractSpongeValueProcessor<EntityHorse, HorseColor, Value.Mutable<HorseColor>> {
 
     public HorseColorValueProcessor() {
         super(EntityHorse.class, Keys.HORSE_COLOR);
     }
 
     @Override
-    protected MutableValue<HorseColor> constructValue(HorseColor defaultValue) {
+    protected Value.Mutable<HorseColor> constructValue(HorseColor defaultValue) {
         return new SpongeMutableValue<>(Keys.HORSE_COLOR, defaultValue);
     }
 
@@ -67,7 +66,7 @@ public class HorseColorValueProcessor extends AbstractSpongeValueProcessor<Entit
     }
 
     @Override
-    protected ImmutableValue<HorseColor> constructImmutableValue(HorseColor value) {
+    protected Value.Immutable<HorseColor> constructImmutableValue(HorseColor value) {
         return ImmutableSpongeValue.cachedOf(Keys.HORSE_COLOR, HorseColors.WHITE, value);
     }
 

@@ -29,7 +29,7 @@ import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.ImmutableRepresentedItemData;
 import org.spongepowered.api.data.manipulator.mutable.RepresentedItemData;
-import org.spongepowered.api.data.value.mutable.MutableValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.item.inventory.ItemStack;
 import org.spongepowered.api.item.inventory.ItemStackSnapshot;
 import org.spongepowered.common.data.manipulator.immutable.ImmutableSpongeRepresentedItemData;
@@ -47,7 +47,7 @@ public class SpongeRepresentedItemData extends AbstractSingleData<ItemStackSnaps
     }
 
     @Override
-    public MutableValue<ItemStackSnapshot> item() {
+    public Value.Mutable<ItemStackSnapshot> item() {
         return new SpongeMutableValue<>(Keys.REPRESENTED_ITEM, ItemStackSnapshot.NONE, this.getValue());
     }
 
@@ -68,7 +68,7 @@ public class SpongeRepresentedItemData extends AbstractSingleData<ItemStackSnaps
     }
 
     @Override
-    protected MutableValue<?> getValueGetter() {
+    protected Value.Mutable<?> getValueGetter() {
         return item();
     }
 }

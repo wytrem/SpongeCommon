@@ -38,8 +38,8 @@ import org.spongepowered.api.data.manipulator.immutable.entity.ImmutableBodyPart
 import org.spongepowered.api.data.manipulator.mutable.entity.BodyPartRotationalData;
 import org.spongepowered.api.data.type.BodyPart;
 import org.spongepowered.api.data.type.BodyParts;
-import org.spongepowered.api.data.value.mutable.MutableMapValue;
-import org.spongepowered.api.data.value.mutable.MutableValue;
+import org.spongepowered.api.data.value.MapValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.common.data.manipulator.immutable.entity.ImmutableSpongeBodyPartRotationalData;
 import org.spongepowered.common.data.manipulator.mutable.common.AbstractData;
 import org.spongepowered.common.data.util.DataConstants;
@@ -102,37 +102,37 @@ public class SpongeBodyPartRotationalData extends AbstractData<BodyPartRotationa
     }
 
     @Override
-    public MutableMapValue<BodyPart, Vector3d> partRotation() {
+    public MapValue.Mutable<BodyPart, Vector3d> partRotation() {
         return new SpongeMutableMapValue<>(Keys.BODY_ROTATIONS, this.rotations);
     }
 
     @Override
-    public MutableValue<Vector3d> headDirection() {
+    public Value.Mutable<Vector3d> headDirection() {
         return new SpongeMutableValue<>(Keys.HEAD_ROTATION, this.rotations.get(BodyParts.HEAD));
     }
 
     @Override
-    public MutableValue<Vector3d> bodyRotation() {
+    public Value.Mutable<Vector3d> bodyRotation() {
         return new SpongeMutableValue<>(Keys.CHEST_ROTATION, this.rotations.get(BodyParts.CHEST));
     }
 
     @Override
-    public MutableValue<Vector3d> leftArmDirection() {
+    public Value.Mutable<Vector3d> leftArmDirection() {
         return new SpongeMutableValue<>(Keys.LEFT_ARM_ROTATION, this.rotations.get(BodyParts.LEFT_ARM));
     }
 
     @Override
-    public MutableValue<Vector3d> rightArmDirection() {
+    public Value.Mutable<Vector3d> rightArmDirection() {
         return new SpongeMutableValue<>(Keys.RIGHT_ARM_ROTATION, this.rotations.get(BodyParts.RIGHT_ARM));
     }
 
     @Override
-    public MutableValue<Vector3d> leftLegDirection() {
+    public Value.Mutable<Vector3d> leftLegDirection() {
         return new SpongeMutableValue<>(Keys.LEFT_LEG_ROTATION, this.rotations.get(BodyParts.LEFT_LEG));
     }
 
     @Override
-    public MutableValue<Vector3d> rightLegDirection() {
+    public Value.Mutable<Vector3d> rightLegDirection() {
         return new SpongeMutableValue<>(Keys.RIGHT_LEG_ROTATION, this.rotations.get(BodyParts.RIGHT_LEG));
     }
 

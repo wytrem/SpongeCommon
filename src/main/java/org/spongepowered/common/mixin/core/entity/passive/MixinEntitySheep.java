@@ -30,7 +30,7 @@ import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.DataManipulator;
 import org.spongepowered.api.data.manipulator.mutable.DyeableData;
 import org.spongepowered.api.data.type.DyeColor;
-import org.spongepowered.api.data.value.mutable.MutableValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.entity.living.animal.Sheep;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -53,7 +53,7 @@ public abstract class MixinEntitySheep extends MixinEntityAnimal implements Shee
     }
 
     @Override
-    public MutableValue<DyeColor> color() {
+    public Value.Mutable<DyeColor> color() {
         return new SpongeMutableValue<>(Keys.DYE_COLOR, DataConstants.Catalog.DEFAULT_SHEEP_COLOR, (DyeColor) (Object) getFleeceColor());
     }
 

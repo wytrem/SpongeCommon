@@ -24,6 +24,8 @@
  */
 package org.spongepowered.test.myhomes.data.home.impl;
 
+import org.spongepowered.api.data.value.MapValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.test.myhomes.MyHomes;
 import org.spongepowered.test.myhomes.data.home.Home;
 import org.spongepowered.test.myhomes.data.home.HomeData;
@@ -38,8 +40,6 @@ import org.spongepowered.api.data.DataQuery;
 import org.spongepowered.api.data.DataView;
 import org.spongepowered.api.data.manipulator.mutable.common.AbstractData;
 import org.spongepowered.api.data.merge.MergeFunction;
-import org.spongepowered.api.data.value.mutable.MutableMapValue;
-import org.spongepowered.api.data.value.mutable.MutableValue;
 
 import java.util.Map;
 import java.util.Optional;
@@ -63,14 +63,14 @@ public class HomeDataImpl extends AbstractData<HomeData, ImmutableHomeData> impl
 
     // Override if you have a separate interface
     @Override
-    public MutableValue<Home> defaultHome() {
+    public Value.Mutable<Home> defaultHome() {
         return Sponge.getRegistry().getValueFactory()
                 .createValue(MyHomes.DEFAULT_HOME, this.defaultHome, null);
     }
 
     // Override if you have a separate interface
     @Override
-    public MutableMapValue<String, Home> homes() {
+    public MapValue.Mutable<String, Home> homes() {
         return Sponge.getRegistry().getValueFactory()
                 .createMapValue(MyHomes.HOMES, this.homes, ImmutableMap.of());
     }

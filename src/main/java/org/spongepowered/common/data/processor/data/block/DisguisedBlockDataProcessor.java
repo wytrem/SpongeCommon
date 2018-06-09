@@ -30,14 +30,14 @@ import org.spongepowered.api.data.manipulator.immutable.block.ImmutableDisguised
 import org.spongepowered.api.data.manipulator.mutable.block.DisguisedBlockData;
 import org.spongepowered.api.data.type.DisguisedBlockType;
 import org.spongepowered.api.data.type.DisguisedBlockTypes;
-import org.spongepowered.api.data.value.mutable.MutableValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.item.ItemTypes;
 import org.spongepowered.common.data.manipulator.mutable.block.SpongeDisguisedBlockData;
 import org.spongepowered.common.data.processor.common.AbstractCatalogDataProcessor;
 import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
 public class DisguisedBlockDataProcessor extends
-        AbstractCatalogDataProcessor<DisguisedBlockType, MutableValue<DisguisedBlockType>, DisguisedBlockData, ImmutableDisguisedBlockData> {
+        AbstractCatalogDataProcessor<DisguisedBlockType, Value.Mutable<DisguisedBlockType>, DisguisedBlockData, ImmutableDisguisedBlockData> {
 
     public DisguisedBlockDataProcessor() {
         super(Keys.DISGUISED_BLOCK_TYPE, input -> input.getItem() == ItemTypes.MONSTER_EGG);
@@ -64,7 +64,7 @@ public class DisguisedBlockDataProcessor extends
     }
 
     @Override
-    protected MutableValue<DisguisedBlockType> constructValue(DisguisedBlockType actualValue) {
+    protected Value.Mutable<DisguisedBlockType> constructValue(DisguisedBlockType actualValue) {
         return new SpongeMutableValue<>(this.key, getDefaultValue(), actualValue);
     }
 

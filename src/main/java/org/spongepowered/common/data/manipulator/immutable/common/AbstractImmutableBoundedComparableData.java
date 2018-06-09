@@ -31,8 +31,6 @@ import org.spongepowered.api.data.manipulator.DataManipulator;
 import org.spongepowered.api.data.manipulator.ImmutableDataManipulator;
 import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.BoundedValue;
-import org.spongepowered.api.data.value.immutable.ImmutableBoundedValue;
-import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.ImmutableDataCachingUtil;
 import org.spongepowered.common.data.value.SpongeValueFactory;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeBoundedValue;
@@ -43,7 +41,7 @@ import java.util.Comparator;
 
 /**
  * An abstracted {@link ImmutableDataManipulator} that focuses solely on an
- * {@link ImmutableBoundedValue} as it's {@link MutableValue} return type. The
+ * {@link BoundedValue.Immutable} as it's {@link Value.Mutable} return type. The
  * advantage is that this type of {@link ImmutableDataManipulator} can easily
  * be cached in the {@link ImmutableDataCachingUtil}.
  *
@@ -59,7 +57,7 @@ public abstract class AbstractImmutableBoundedComparableData<T extends Comparabl
     protected final T lowerBound;
     protected final T upperBound;
     protected final T defaultValue;
-    private final ImmutableBoundedValue<T> immutableBoundedValue;
+    private final BoundedValue.Immutable<T> immutableBoundedValue;
 
     @SuppressWarnings("unchecked")
     protected AbstractImmutableBoundedComparableData(Class<I> immutableClass, T value,
@@ -93,7 +91,7 @@ public abstract class AbstractImmutableBoundedComparableData<T extends Comparabl
     }
 
     @Override
-    protected final ImmutableBoundedValue<T> getValueGetter() {
+    protected final BoundedValue.Immutable<T> getValueGetter() {
         return this.immutableBoundedValue;
     }
 

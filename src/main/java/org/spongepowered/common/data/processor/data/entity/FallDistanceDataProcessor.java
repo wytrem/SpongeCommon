@@ -31,9 +31,9 @@ import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.entity.ImmutableFallDistanceData;
 import org.spongepowered.api.data.manipulator.mutable.entity.FallDistanceData;
+import org.spongepowered.api.data.value.BoundedValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableBoundedValue;
 import org.spongepowered.common.data.manipulator.mutable.entity.SpongeFallDistanceData;
 import org.spongepowered.common.data.processor.common.AbstractEntitySingleDataProcessor;
 import org.spongepowered.common.data.value.SpongeValueFactory;
@@ -41,7 +41,7 @@ import org.spongepowered.common.data.value.SpongeValueFactory;
 import java.util.Optional;
 
 public class FallDistanceDataProcessor
-        extends AbstractEntitySingleDataProcessor<EntityLivingBase, Float, MutableBoundedValue<Float>, FallDistanceData, ImmutableFallDistanceData> {
+        extends AbstractEntitySingleDataProcessor<EntityLivingBase, Float, BoundedValue.Mutable<Float>, FallDistanceData, ImmutableFallDistanceData> {
 
     public FallDistanceDataProcessor() {
         super(EntityLivingBase.class, Keys.FALL_DISTANCE);
@@ -59,7 +59,7 @@ public class FallDistanceDataProcessor
     }
 
     @Override
-    protected MutableBoundedValue<Float> constructValue(Float value) {
+    protected BoundedValue.Mutable<Float> constructValue(Float value) {
         return SpongeValueFactory.boundedBuilder(this.key)
                 .actualValue(value)
                 .defaultValue(0F)
@@ -69,7 +69,7 @@ public class FallDistanceDataProcessor
     }
 
     @Override
-    protected ImmutableValue<Float> constructImmutableValue(Float value) {
+    protected Value.Immutable<Float> constructImmutableValue(Float value) {
         return constructValue(value).asImmutable();
     }
 

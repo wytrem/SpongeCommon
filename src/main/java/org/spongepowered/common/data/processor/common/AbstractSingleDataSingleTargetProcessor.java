@@ -35,8 +35,6 @@ import org.spongepowered.api.data.manipulator.ImmutableDataManipulator;
 import org.spongepowered.api.data.merge.MergeFunction;
 import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.api.entity.EntityType;
 import org.spongepowered.common.SpongeImpl;
 import org.spongepowered.common.data.ValueProcessor;
@@ -62,7 +60,7 @@ public abstract class AbstractSingleDataSingleTargetProcessor<Holder, T, V exten
 
     protected abstract Optional<T> getVal(Holder dataHolder);
 
-    protected abstract ImmutableValue<T> constructImmutableValue(T value);
+    protected abstract Value.Immutable<T> constructImmutableValue(T value);
 
     @SuppressWarnings("unchecked")
     @Override
@@ -83,18 +81,18 @@ public abstract class AbstractSingleDataSingleTargetProcessor<Holder, T, V exten
             final Optional<M> old = from(dataHolder);
             final M merged = checkNotNull(function).merge(old.orElse(null), manipulator);
             final T newValue = merged.get(this.key).get();
-            final V immutableValue = (V) ((MutableValue) merged.getValue(this.key).get()).asImmutable();
+            final V immutableValue = (V) ((Value.Mutable) merged.getValue(this.key).get()).asImmutable();
             try {
                 if (set((Holder) dataHolder, newValue)) {
                     if (old.isPresent()) {
                         builder.replace(old.get().getValues());
                     }
-                    return builder.result(DataTransactionResult.Type.SUCCESS).success((ImmutableValue<?>) immutableValue).build();
+                    return builder.result(DataTransactionResult.Type.SUCCESS).success((Value.Immutable<?>) immutableValue).build();
                 }
-                return builder.result(DataTransactionResult.Type.FAILURE).reject((ImmutableValue<?>) immutableValue).build();
+                return builder.result(DataTransactionResult.Type.FAILURE).reject((Value.Immutable<?>) immutableValue).build();
             } catch (Exception e) {
                 SpongeImpl.getLogger().debug("An exception occurred when setting data: ", e);
-                return builder.result(DataTransactionResult.Type.ERROR).reject((ImmutableValue<?>) immutableValue).build();
+                return builder.result(DataTransactionResult.Type.ERROR).reject((Value.Immutable<?>) immutableValue).build();
             }
         }
         return DataTransactionResult.failResult(manipulator.getValues());
@@ -144,11 +142,11 @@ public abstract class AbstractSingleDataSingleTargetProcessor<Holder, T, V exten
     }
 
     /**
-     * Builds a {@link MutableValue} of the type produced by this processor from an
+     * Builds a {@link Value.Mutable} of the type produced by this processor from an
      * input, actual value.
      *
      * @param actualValue The actual value
-     * @return The constructed {@link MutableValue}
+     * @return The constructed {@link Value.Mutable}
      */
     protected abstract V constructValue(T actualValue);
 
@@ -179,7 +177,7 @@ public abstract class AbstractSingleDataSingleTargetProcessor<Holder, T, V exten
     @SuppressWarnings("unchecked")
     @Override
     public DataTransactionResult offerToStore(ValueContainer<?> container, T value) {
-        final ImmutableValue<T> newValue = constructImmutableValue(value);
+        final Value.Immutable<T> newValue = constructImmutableValue(value);
         if (supports(container)) {
             final DataTransactionResult.Builder builder = DataTransactionResult.builder();
             final Optional<T> oldVal = getVal((Holder) container);

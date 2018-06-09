@@ -30,9 +30,9 @@ import net.minecraft.potion.PotionType;
 import net.minecraft.util.EnumParticleTypes;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.mutable.entity.AreaEffectCloudData;
-import org.spongepowered.api.data.value.mutable.MutableListValue;
-import org.spongepowered.api.data.value.mutable.MutableBoundedValue;
-import org.spongepowered.api.data.value.mutable.MutableValue;
+import org.spongepowered.api.data.value.BoundedValue;
+import org.spongepowered.api.data.value.ListValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.effect.particle.ParticleType;
 import org.spongepowered.api.effect.particle.ParticleTypes;
 import org.spongepowered.api.effect.potion.PotionEffect;
@@ -86,12 +86,12 @@ public abstract class MixinEntityAreaEffectCloud extends MixinEntity implements 
     }
 
     @Override
-    public MutableValue<Color> color() {
+    public Value.Mutable<Color> color() {
         return new SpongeMutableValue<>(Keys.AREA_EFFECT_CLOUD_COLOR, Color.WHITE, Color.ofRgb(getColor()));
     }
 
     @Override
-    public MutableBoundedValue<Double> radius() {
+    public BoundedValue.Mutable<Double> radius() {
         return SpongeValueFactory.boundedBuilder(Keys.AREA_EFFECT_CLOUD_RADIUS)
                 .minimum(0D)
                 .maximum((double) Float.MAX_VALUE)
@@ -101,12 +101,12 @@ public abstract class MixinEntityAreaEffectCloud extends MixinEntity implements 
     }
 
     @Override
-    public MutableValue<ParticleType> particleType() {
+    public Value.Mutable<ParticleType> particleType() {
         return new SpongeMutableValue<>(Keys.AREA_EFFECT_CLOUD_PARTICLE_TYPE, ParticleTypes.MOB_SPELL, ParticleTypes.MOB_SPELL);
     }
 
     @Override
-    public MutableBoundedValue<Integer> duration() {
+    public BoundedValue.Mutable<Integer> duration() {
         return SpongeValueFactory.boundedBuilder(Keys.AREA_EFFECT_CLOUD_DURATION)
                 .minimum(Integer.MIN_VALUE)
                 .maximum(Integer.MAX_VALUE)
@@ -116,7 +116,7 @@ public abstract class MixinEntityAreaEffectCloud extends MixinEntity implements 
     }
 
     @Override
-    public MutableBoundedValue<Integer> waitTime() {
+    public BoundedValue.Mutable<Integer> waitTime() {
         return SpongeValueFactory.boundedBuilder(Keys.AREA_EFFECT_CLOUD_WAIT_TIME)
                 .minimum(0)
                 .maximum(Integer.MAX_VALUE)
@@ -126,7 +126,7 @@ public abstract class MixinEntityAreaEffectCloud extends MixinEntity implements 
     }
 
     @Override
-    public MutableBoundedValue<Double> radiusOnUse() {
+    public BoundedValue.Mutable<Double> radiusOnUse() {
         return SpongeValueFactory.boundedBuilder(Keys.AREA_EFFECT_CLOUD_RADIUS_ON_USE)
                 .minimum(0.0D)
                 .maximum((double) Float.MAX_VALUE)
@@ -136,7 +136,7 @@ public abstract class MixinEntityAreaEffectCloud extends MixinEntity implements 
     }
 
     @Override
-    public MutableBoundedValue<Double> radiusPerTick() {
+    public BoundedValue.Mutable<Double> radiusPerTick() {
         return SpongeValueFactory.boundedBuilder(Keys.AREA_EFFECT_CLOUD_RADIUS_PER_TICK)
                 .minimum(0.0D)
                 .maximum((double) Float.MAX_VALUE)
@@ -146,7 +146,7 @@ public abstract class MixinEntityAreaEffectCloud extends MixinEntity implements 
     }
 
     @Override
-    public MutableBoundedValue<Integer> durationOnUse() {
+    public BoundedValue.Mutable<Integer> durationOnUse() {
         return SpongeValueFactory.boundedBuilder(Keys.AREA_EFFECT_CLOUD_DURATION_ON_USE)
                 .minimum(0)
                 .maximum(Integer.MAX_VALUE)
@@ -156,7 +156,7 @@ public abstract class MixinEntityAreaEffectCloud extends MixinEntity implements 
     }
 
     @Override
-    public MutableBoundedValue<Integer> applicationDelay() {
+    public BoundedValue.Mutable<Integer> applicationDelay() {
         return SpongeValueFactory.boundedBuilder(Keys.AREA_EFFECT_CLOUD_DURATION_ON_USE)
                 .minimum(0)
                 .maximum(Integer.MAX_VALUE)
@@ -166,12 +166,12 @@ public abstract class MixinEntityAreaEffectCloud extends MixinEntity implements 
     }
 
     @Override
-    public MutableListValue<PotionEffect> effects() {
+    public ListValue.Mutable<PotionEffect> effects() {
         return new SpongeMutableListValue<>(Keys.POTION_EFFECTS, (List<PotionEffect>) (List<?>) this.effects);
     }
 
     @Override
-    public MutableBoundedValue<Integer> age() {
+    public BoundedValue.Mutable<Integer> age() {
         return SpongeValueFactory.boundedBuilder(Keys.AREA_EFFECT_CLOUD_AGE)
                 .defaultValue(0)
                 .minimum(0)

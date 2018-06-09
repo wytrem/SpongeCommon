@@ -31,9 +31,9 @@ import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.entity.ImmutableSlimeData;
 import org.spongepowered.api.data.manipulator.mutable.entity.SlimeData;
+import org.spongepowered.api.data.value.BoundedValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableBoundedValue;
 import org.spongepowered.common.data.manipulator.mutable.entity.SpongeSlimeData;
 import org.spongepowered.common.data.processor.common.AbstractEntitySingleDataProcessor;
 import org.spongepowered.common.data.value.SpongeValueFactory;
@@ -41,7 +41,7 @@ import org.spongepowered.common.data.value.SpongeValueFactory;
 import java.util.Optional;
 
 public class SlimeDataProcessor
-        extends AbstractEntitySingleDataProcessor<EntitySlime, Integer, MutableBoundedValue<Integer>, SlimeData, ImmutableSlimeData> {
+        extends AbstractEntitySingleDataProcessor<EntitySlime, Integer, BoundedValue.Mutable<Integer>, SlimeData, ImmutableSlimeData> {
 
     public SlimeDataProcessor() {
         super(EntitySlime.class, Keys.SLIME_SIZE);
@@ -59,7 +59,7 @@ public class SlimeDataProcessor
     }
 
     @Override
-    protected MutableBoundedValue<Integer> constructValue(Integer actualValue) {
+    protected BoundedValue.Mutable<Integer> constructValue(Integer actualValue) {
         return SpongeValueFactory.boundedBuilder(Keys.SLIME_SIZE)
                 .comparator(intComparator())
                 .minimum(0)
@@ -70,7 +70,7 @@ public class SlimeDataProcessor
     }
 
     @Override
-    protected ImmutableValue<Integer> constructImmutableValue(Integer value) {
+    protected Value.Immutable<Integer> constructImmutableValue(Integer value) {
         return constructValue(value).asImmutable();
     }
 

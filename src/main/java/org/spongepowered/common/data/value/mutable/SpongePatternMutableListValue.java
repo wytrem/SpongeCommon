@@ -31,7 +31,7 @@ import org.spongepowered.api.data.meta.PatternLayer;
 import org.spongepowered.api.data.type.BannerPatternShape;
 import org.spongepowered.api.data.type.DyeColor;
 import org.spongepowered.api.data.value.Value;
-import org.spongepowered.api.data.value.mutable.PatternMutableListValue;
+import org.spongepowered.api.data.value.meta.PatternListValue;
 import org.spongepowered.common.data.meta.SpongePatternLayer;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongePatternListValue;
 
@@ -39,7 +39,7 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-public class SpongePatternMutableListValue extends SpongeMutableListValue<PatternLayer> implements PatternMutableListValue {
+public class SpongePatternMutableListValue extends SpongeMutableListValue<PatternLayer> implements PatternListValue.Mutable {
 
     public SpongePatternMutableListValue(Key<? extends Value<List<PatternLayer>>> key) {
         super(key);
@@ -50,84 +50,84 @@ public class SpongePatternMutableListValue extends SpongeMutableListValue<Patter
     }
 
     @Override
-    public PatternMutableListValue set(List<PatternLayer> value) {
+    public PatternListValue.Mutable set(List<PatternLayer> value) {
         super.set(value);
         return this;
     }
 
     @Override
-    public PatternMutableListValue filter(Predicate<? super PatternLayer> predicate) {
+    public PatternListValue.Mutable filter(Predicate<? super PatternLayer> predicate) {
         super.filter(predicate);
         return this;
     }
 
     @Override
-    public PatternMutableListValue add(BannerPatternShape patternShape, DyeColor color) {
+    public PatternListValue.Mutable add(BannerPatternShape patternShape, DyeColor color) {
         super.add(new SpongePatternLayer(patternShape, color));
         return this;
     }
 
     @Override
-    public PatternMutableListValue add(int index, BannerPatternShape patternShape, DyeColor color) {
+    public PatternListValue.Mutable add(int index, BannerPatternShape patternShape, DyeColor color) {
         return add(index, new SpongePatternLayer(patternShape, color));
     }
 
     @Override
-    public PatternMutableListValue add(int index, PatternLayer value) {
+    public PatternListValue.Mutable add(int index, PatternLayer value) {
         super.add(index, value);
         return this;
     }
 
     @Override
-    public PatternMutableListValue add(int index, Iterable<PatternLayer> values) {
+    public PatternListValue.Mutable add(int index, Iterable<PatternLayer> values) {
         super.add(index, values);
         return this;
     }
 
     @Override
-    public PatternMutableListValue remove(int index) {
+    public PatternListValue.Mutable remove(int index) {
         super.remove(index);
         return this;
     }
 
     @Override
-    public PatternMutableListValue set(int index, PatternLayer element) {
+    public PatternListValue.Mutable set(int index, PatternLayer element) {
         super.set(index, element);
         return this;
     }
 
     @Override
-    public PatternMutableListValue transform(Function<List<PatternLayer>, List<PatternLayer>> function) {
+    public PatternListValue.Mutable transform(Function<List<PatternLayer>, List<PatternLayer>> function) {
         super.transform(function);
         return this;
     }
 
     @Override
-    public PatternMutableListValue add(PatternLayer element) {
+    public PatternListValue.Mutable add(PatternLayer element) {
         super.add(element);
         return this;
     }
 
     @Override
-    public PatternMutableListValue addAll(Iterable<PatternLayer> elements) {
+    public PatternListValue.Mutable addAll(Iterable<PatternLayer> elements) {
         super.addAll(elements);
         return this;
     }
 
     @Override
-    public PatternMutableListValue remove(PatternLayer element) {
+    public PatternListValue.Mutable remove(PatternLayer element) {
         super.remove(element);
         return this;
     }
 
     @Override
-    public PatternMutableListValue removeAll(Iterable<PatternLayer> elements) {
+    public PatternListValue.Mutable removeAll(Iterable<PatternLayer> elements) {
         super.removeAll(elements);
         return this;
     }
 
     @Override
-    public PatternMutableListValue removeAll(Predicate<PatternLayer> predicate) {
+    public PatternListValue.Mutable removeAll(Predicate<PatternLayer> predicate) {
         super.removeAll(predicate);
         return this;
     }
@@ -138,7 +138,7 @@ public class SpongePatternMutableListValue extends SpongeMutableListValue<Patter
     }
 
     @Override
-    public PatternMutableListValue copy() {
+    public PatternListValue.Mutable copy() {
         return new SpongePatternMutableListValue(getKey(), Lists.newArrayList(this.actualValue));
     }
 }

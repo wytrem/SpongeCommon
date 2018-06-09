@@ -32,7 +32,6 @@ import org.spongepowered.api.data.key.Key;
 import org.spongepowered.api.data.manipulator.DataManipulator;
 import org.spongepowered.api.data.manipulator.ImmutableDataManipulator;
 import org.spongepowered.api.data.value.Value;
-import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.ImmutableDataCachingUtil;
 import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 import org.spongepowered.common.util.ReflectionUtil;
@@ -79,7 +78,7 @@ public abstract class AbstractSingleEnumData<E extends Enum<E>, M extends DataMa
     }
 
     @Override
-    protected MutableValue<E> getValueGetter() {
+    protected Value.Mutable<E> getValueGetter() {
         return new SpongeMutableValue<>(this.usedKey, this.defaultValue, this.getValue());
     }
 }

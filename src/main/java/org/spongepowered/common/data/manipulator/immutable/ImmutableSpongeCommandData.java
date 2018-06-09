@@ -28,9 +28,9 @@ import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.ImmutableCommandData;
 import org.spongepowered.api.data.manipulator.mutable.CommandData;
-import org.spongepowered.api.data.value.immutable.ImmutableBoundedValue;
-import org.spongepowered.api.data.value.immutable.ImmutableOptionalValue;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
+import org.spongepowered.api.data.value.BoundedValue;
+import org.spongepowered.api.data.value.OptionalValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.common.data.manipulator.immutable.common.AbstractImmutableData;
 import org.spongepowered.common.data.manipulator.mutable.SpongeCommandData;
@@ -49,10 +49,10 @@ public class ImmutableSpongeCommandData extends AbstractImmutableData<ImmutableC
     private final boolean tracks;
     @Nullable private final Text lastOutput;
 
-    private final ImmutableValue<String> storedValue;
-    private final ImmutableBoundedValue<Integer> successValue;
-    private final ImmutableValue<Boolean> tracksValue;
-    private final ImmutableOptionalValue<Text> lastOutputValue;
+    private final Value.Immutable<String> storedValue;
+    private final BoundedValue.Immutable<Integer> successValue;
+    private final Value.Immutable<Boolean> tracksValue;
+    private final OptionalValue.ImmutableOptionalValue<Text> lastOutputValue;
 
     public ImmutableSpongeCommandData(String storedCommand, int success, boolean tracks, @Nullable Text lastOutput) {
         super(ImmutableCommandData.class);
@@ -76,22 +76,22 @@ public class ImmutableSpongeCommandData extends AbstractImmutableData<ImmutableC
     }
 
     @Override
-    public ImmutableValue<String> storedCommand() {
+    public Value.Immutable<String> storedCommand() {
         return this.storedValue;
     }
 
     @Override
-    public ImmutableBoundedValue<Integer> successCount() {
+    public BoundedValue.Immutable<Integer> successCount() {
         return this.successValue;
     }
 
     @Override
-    public ImmutableValue<Boolean> doesTrackOutput() {
+    public Value.Immutable<Boolean> doesTrackOutput() {
         return this.tracksValue;
     }
 
     @Override
-    public ImmutableOptionalValue<Text> lastOutput() {
+    public OptionalValue.ImmutableOptionalValue<Text> lastOutput() {
         return this.lastOutputValue;
     }
 

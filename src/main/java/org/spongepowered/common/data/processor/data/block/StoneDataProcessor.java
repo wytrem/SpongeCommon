@@ -30,13 +30,13 @@ import org.spongepowered.api.data.manipulator.immutable.block.ImmutableStoneData
 import org.spongepowered.api.data.manipulator.mutable.block.StoneData;
 import org.spongepowered.api.data.type.StoneType;
 import org.spongepowered.api.data.type.StoneTypes;
-import org.spongepowered.api.data.value.mutable.MutableValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.item.ItemTypes;
 import org.spongepowered.common.data.manipulator.mutable.block.SpongeStoneData;
 import org.spongepowered.common.data.processor.common.AbstractCatalogDataProcessor;
 import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
-public class StoneDataProcessor extends AbstractCatalogDataProcessor<StoneType, MutableValue<StoneType>, StoneData, ImmutableStoneData> {
+public class StoneDataProcessor extends AbstractCatalogDataProcessor<StoneType, Value.Mutable<StoneType>, StoneData, ImmutableStoneData> {
 
     public StoneDataProcessor() {
         super(Keys.STONE_TYPE, input -> input.getItem() == ItemTypes.STONE || input.getItem() == ItemTypes.STONE_STAIRS);
@@ -63,7 +63,7 @@ public class StoneDataProcessor extends AbstractCatalogDataProcessor<StoneType, 
     }
 
     @Override
-    protected MutableValue<StoneType> constructValue(StoneType actualValue) {
+    protected Value.Mutable<StoneType> constructValue(StoneType actualValue) {
         return new SpongeMutableValue<>(this.key, getDefaultValue(), actualValue);
     }
 

@@ -27,13 +27,12 @@ package org.spongepowered.common.data.processor.common;
 import net.minecraft.item.ItemStack;
 import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Key;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableValue;
 
 import java.util.Optional;
 
-public abstract class AbstractBlockOnlyValueProcessor<T, V extends MutableValue<T>> extends
+public abstract class AbstractBlockOnlyValueProcessor<T, V extends Value.Mutable<T>> extends
         AbstractSpongeValueProcessor<ItemStack, T, V> {
 
     protected AbstractBlockOnlyValueProcessor(Key<V> key) {
@@ -61,7 +60,7 @@ public abstract class AbstractBlockOnlyValueProcessor<T, V extends MutableValue<
     }
 
     @Override
-    protected ImmutableValue<T> constructImmutableValue(T value) {
+    protected Value.Immutable<T> constructImmutableValue(T value) {
         return this.constructValue(value).asImmutable();
     }
 

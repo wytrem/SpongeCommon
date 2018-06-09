@@ -34,7 +34,7 @@ import org.spongepowered.api.data.type.HorseColor;
 import org.spongepowered.api.data.type.HorseColors;
 import org.spongepowered.api.data.type.HorseStyle;
 import org.spongepowered.api.data.type.HorseStyles;
-import org.spongepowered.api.data.value.mutable.MutableValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.common.data.manipulator.immutable.entity.ImmutableSpongeHorseData;
 import org.spongepowered.common.data.manipulator.mutable.common.AbstractData;
 import org.spongepowered.common.data.util.DataConstants;
@@ -69,12 +69,12 @@ public class SpongeHorseData extends AbstractData<HorseData, ImmutableHorseData>
     }
 
     @Override
-    public MutableValue<HorseColor> color() {
+    public Value.Mutable<HorseColor> color() {
         return new SpongeMutableValue<>(Keys.HORSE_COLOR, DataConstants.Horse.DEFAULT_COLOR, this.horseColor);
     }
 
     @Override
-    public MutableValue<HorseStyle> style() {
+    public Value.Mutable<HorseStyle> style() {
         return new SpongeMutableValue<>(Keys.HORSE_STYLE, DataConstants.Horse.DEFAULT_STYLE, this.horseStyle);
     }
 

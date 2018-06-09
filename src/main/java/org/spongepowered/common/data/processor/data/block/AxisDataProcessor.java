@@ -27,13 +27,13 @@ package org.spongepowered.common.data.processor.data.block;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.block.ImmutableAxisData;
 import org.spongepowered.api.data.manipulator.mutable.block.AxisData;
-import org.spongepowered.api.data.value.mutable.MutableValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.util.Axis;
 import org.spongepowered.common.data.manipulator.mutable.block.SpongeAxisData;
 import org.spongepowered.common.data.processor.common.AbstractBlockOnlyDataProcessor;
 import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
-public class AxisDataProcessor extends AbstractBlockOnlyDataProcessor<Axis, MutableValue<Axis>, AxisData, ImmutableAxisData> {
+public class AxisDataProcessor extends AbstractBlockOnlyDataProcessor<Axis, Value.Mutable<Axis>, AxisData, ImmutableAxisData> {
 
     public AxisDataProcessor() {
         super(Keys.AXIS);
@@ -50,7 +50,7 @@ public class AxisDataProcessor extends AbstractBlockOnlyDataProcessor<Axis, Muta
     }
 
     @Override
-    protected MutableValue<Axis> constructValue(Axis actualValue) {
+    protected Value.Mutable<Axis> constructValue(Axis actualValue) {
         return new SpongeMutableValue<>(this.key, getDefaultValue(), actualValue);
     }
 

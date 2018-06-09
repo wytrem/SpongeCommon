@@ -26,9 +26,8 @@ package org.spongepowered.common.data.value.immutable;
 
 import com.google.common.collect.Iterables;
 import org.spongepowered.api.data.key.Key;
+import org.spongepowered.api.data.value.CollectionValue;
 import org.spongepowered.api.data.value.Value;
-import org.spongepowered.api.data.value.immutable.ImmutableCollectionValue;
-import org.spongepowered.api.data.value.mutable.MutableCollectionValue;
 
 import java.util.Collection;
 import java.util.function.Function;
@@ -41,8 +40,9 @@ import java.util.function.Function;
  * @param <I> The subtype of collection value (ImmutableSpongeListValue)
  * @param <L> The type of Mutable collection value (SpongeMutableListValue)
  */
-public abstract class ImmutableSpongeCollectionValue<E, V extends Collection<E>, I extends ImmutableCollectionValue<E, V, I, L>,
-    L extends MutableCollectionValue<E, V, L, I>> extends ImmutableSpongeValue<V, I, L> implements ImmutableCollectionValue<E, V, I, L> {
+public abstract class ImmutableSpongeCollectionValue<E, V extends Collection<E>, I extends CollectionValue.Immutable<E, V, I, L>,
+    L extends CollectionValue.Mutable<E, V, L, I>> extends ImmutableSpongeValue<V, I, L> implements
+    CollectionValue.Immutable<E, V, I, L> {
 
     ImmutableSpongeCollectionValue(Key<? extends Value<V>> key, V defaultValue) {
         super(key, defaultValue);

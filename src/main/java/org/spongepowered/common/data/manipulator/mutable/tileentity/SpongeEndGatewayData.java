@@ -29,7 +29,7 @@ import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.tileentity.ImmutableEndGatewayData;
 import org.spongepowered.api.data.manipulator.mutable.tileentity.EndGatewayData;
-import org.spongepowered.api.data.value.mutable.MutableValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.common.data.manipulator.immutable.tileentity.ImmutableSpongeEndGatewayData;
 import org.spongepowered.common.data.manipulator.mutable.common.AbstractData;
 import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
@@ -71,7 +71,7 @@ public final class SpongeEndGatewayData extends AbstractData<EndGatewayData, Imm
     }
 
     @Override
-    public MutableValue<Vector3i> exitPosition() {
+    public Value.Mutable<Vector3i> exitPosition() {
         return new SpongeMutableValue<>(Keys.EXIT_POSITION, Vector3i.ONE, this.exitPortal);
     }
 
@@ -84,7 +84,7 @@ public final class SpongeEndGatewayData extends AbstractData<EndGatewayData, Imm
     }
 
     @Override
-    public MutableValue<Boolean> exactTeleport() {
+    public Value.Mutable<Boolean> exactTeleport() {
         return new SpongeMutableValue<>(Keys.EXACT_TELEPORT, false, this.exactTeleport);
     }
 
@@ -97,7 +97,7 @@ public final class SpongeEndGatewayData extends AbstractData<EndGatewayData, Imm
     }
 
     @Override
-    public MutableValue<Long> age() {
+    public Value.Mutable<Long> age() {
         return new SpongeMutableValue<>(Keys.END_GATEWAY_AGE, 0L, this.age);
     }
 
@@ -110,7 +110,7 @@ public final class SpongeEndGatewayData extends AbstractData<EndGatewayData, Imm
     }
 
     @Override
-    public MutableValue<Integer> teleportCooldown() {
+    public Value.Mutable<Integer> teleportCooldown() {
         return new SpongeMutableValue<>(Keys.END_GATEWAY_TELEPORT_COOLDOWN, 0, this.teleportCooldown);
     }
 

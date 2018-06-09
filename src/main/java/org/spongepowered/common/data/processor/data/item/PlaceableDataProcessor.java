@@ -31,9 +31,8 @@ import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.item.ImmutablePlaceableData;
 import org.spongepowered.api.data.manipulator.mutable.item.PlaceableData;
+import org.spongepowered.api.data.value.SetValue;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableSetValue;
-import org.spongepowered.api.data.value.mutable.MutableSetValue;
 import org.spongepowered.common.data.manipulator.mutable.item.SpongePlaceableData;
 import org.spongepowered.common.data.processor.common.AbstractItemSingleDataProcessor;
 import org.spongepowered.common.data.processor.common.BreakablePlaceableUtils;
@@ -45,7 +44,7 @@ import java.util.Optional;
 import java.util.Set;
 
 public class PlaceableDataProcessor
-        extends AbstractItemSingleDataProcessor<Set<BlockType>, MutableSetValue<BlockType>, PlaceableData, ImmutablePlaceableData> {
+        extends AbstractItemSingleDataProcessor<Set<BlockType>, SetValue.Mutable<BlockType>, PlaceableData, ImmutablePlaceableData> {
 
     public PlaceableDataProcessor() {
         super(stack -> true, Keys.PLACEABLE_BLOCKS);
@@ -83,12 +82,12 @@ public class PlaceableDataProcessor
     }
 
     @Override
-    protected MutableSetValue<BlockType> constructValue(Set<BlockType> actualValue) {
+    protected SetValue.Mutable<BlockType> constructValue(Set<BlockType> actualValue) {
         return new SpongeMutableSetValue<>(Keys.PLACEABLE_BLOCKS, actualValue);
     }
 
     @Override
-    protected ImmutableSetValue<BlockType> constructImmutableValue(Set<BlockType> value) {
+    protected SetValue.Immutable<BlockType> constructImmutableValue(Set<BlockType> value) {
         return new ImmutableSpongeSetValue<>(Keys.PLACEABLE_BLOCKS, value);
     }
 

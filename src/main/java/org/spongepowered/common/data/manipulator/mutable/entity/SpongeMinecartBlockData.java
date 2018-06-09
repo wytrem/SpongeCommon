@@ -31,7 +31,7 @@ import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.entity.ImmutableMinecartBlockData;
 import org.spongepowered.api.data.manipulator.mutable.entity.MinecartBlockData;
-import org.spongepowered.api.data.value.mutable.MutableValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.common.data.manipulator.immutable.entity.ImmutableSpongeMinecartBlockData;
 import org.spongepowered.common.data.manipulator.mutable.common.AbstractData;
 import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
@@ -55,12 +55,12 @@ public class SpongeMinecartBlockData extends AbstractData<MinecartBlockData, Imm
     }
 
     @Override
-    public MutableValue<BlockState> block() {
+    public Value.Mutable<BlockState> block() {
         return new SpongeMutableValue<>(Keys.REPRESENTED_BLOCK, (BlockState) Blocks.AIR.getDefaultState(), this.block);
     }
 
     @Override
-    public MutableValue<Integer> offset() {
+    public Value.Mutable<Integer> offset() {
         return new SpongeMutableValue<>(Keys.OFFSET, 6, this.offset);
     }
 

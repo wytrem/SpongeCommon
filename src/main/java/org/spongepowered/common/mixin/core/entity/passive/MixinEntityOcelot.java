@@ -33,7 +33,7 @@ import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.DataManipulator;
 import org.spongepowered.api.data.manipulator.mutable.entity.OcelotData;
 import org.spongepowered.api.data.type.OcelotType;
-import org.spongepowered.api.data.value.mutable.MutableValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.entity.living.animal.Ocelot;
 import org.spongepowered.api.event.CauseStackManager.StackFrame;
 import org.spongepowered.api.event.SpongeEventFactory;
@@ -94,7 +94,7 @@ public abstract class MixinEntityOcelot extends MixinEntityTameable implements O
     }
 
     @Override
-    public MutableValue<OcelotType> variant() {
+    public Value.Mutable<OcelotType> variant() {
         return new SpongeMutableValue<>(Keys.OCELOT_TYPE, DataConstants.Ocelot.DEFAULT_TYPE, OcelotTypeRegistryModule.OCELOT_IDMAP.get(this.getTameSkin()));
     }
 

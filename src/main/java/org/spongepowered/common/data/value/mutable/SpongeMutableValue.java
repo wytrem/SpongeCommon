@@ -26,15 +26,14 @@ package org.spongepowered.common.data.value.mutable;
 
 import org.spongepowered.api.data.key.Key;
 import org.spongepowered.api.data.value.Value;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.value.AbstractValue;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeValue;
 
 import java.util.function.Function;
 
 @SuppressWarnings("unchecked")
-public class SpongeMutableValue<E, M extends MutableValue<E, M, I>, I extends ImmutableValue<E, I, M>> extends AbstractValue<E> implements MutableValue<E, M, I> {
+public class SpongeMutableValue<E, M extends Value.Mutable<E, M, I>, I extends Value.Immutable<E, I, M>> extends AbstractValue<E> implements
+    Value.Mutable<E, M, I> {
 
     public SpongeMutableValue(Key<? extends Value<E>> key, E defaultValue) {
         this(key, defaultValue, defaultValue);
@@ -63,15 +62,15 @@ public class SpongeMutableValue<E, M extends MutableValue<E, M, I>, I extends Im
 
     @Override
     public I asImmutable() {
-        return (I) ImmutableSpongeValue.cachedOf(this.getKey(), this.getDefault(), this.actualValue);
+        return (I) new ImmutableSpongeValue<>(this.getKey(), this.actualValue, this.getDefault());
     }
 
     @Override
     public M copy() {
-        return (M) new SpongeMutableValue<E, M, I>(this.getKey(), this.getDefault(), this.actualValue);
+        return (M) new SpongeMutableValue<>(this.getKey(), this.getDefault(), this.actualValue);
     }
 
-    public static final class Single<E> extends SpongeMutableValue<E, MutableValue.Single<E>, ImmutableValue.Single<E>> implements MutableValue.Single<E> {
+    public static final class Single<E> extends SpongeMutableValue<E, Mutable.Single<E>, Immutable.Single<E>> implements Mutable.Single<E> {
 
         public Single(Key<? extends Value<E>> key, E defaultValue) {
             super(key, defaultValue);

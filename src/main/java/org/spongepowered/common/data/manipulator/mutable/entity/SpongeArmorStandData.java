@@ -28,7 +28,7 @@ import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.entity.ImmutableArmorStandData;
 import org.spongepowered.api.data.manipulator.mutable.entity.ArmorStandData;
-import org.spongepowered.api.data.value.mutable.MutableValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.common.data.ImmutableDataCachingUtil;
 import org.spongepowered.common.data.manipulator.immutable.entity.ImmutableSpongeArmorStandData;
 import org.spongepowered.common.data.manipulator.mutable.common.AbstractData;
@@ -75,22 +75,22 @@ public class SpongeArmorStandData extends AbstractData<ArmorStandData, Immutable
     }
 
     @Override
-    public MutableValue<Boolean> marker() {
+    public Value.Mutable<Boolean> marker() {
         return new SpongeMutableValue<>(Keys.ARMOR_STAND_MARKER, false, this.marker);
     }
 
     @Override
-    public MutableValue<Boolean> small() {
+    public Value.Mutable<Boolean> small() {
         return new SpongeMutableValue<>(Keys.ARMOR_STAND_IS_SMALL, false, this.small);
     }
 
     @Override
-    public MutableValue<Boolean> arms() {
+    public Value.Mutable<Boolean> arms() {
         return new SpongeMutableValue<>(Keys.ARMOR_STAND_HAS_ARMS, false, this.arms);
     }
 
     @Override
-    public MutableValue<Boolean> basePlate() {
+    public Value.Mutable<Boolean> basePlate() {
         return new SpongeMutableValue<>(Keys.ARMOR_STAND_HAS_BASE_PLATE, true, this.basePlate);
     }
 

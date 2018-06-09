@@ -27,8 +27,8 @@ package org.spongepowered.common.data.manipulator.mutable.item;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.item.ImmutableGenerationData;
 import org.spongepowered.api.data.manipulator.mutable.item.GenerationData;
-import org.spongepowered.api.data.value.mutable.MutableBoundedValue;
-import org.spongepowered.api.data.value.mutable.MutableValue;
+import org.spongepowered.api.data.value.BoundedValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.common.data.manipulator.immutable.item.ImmutableSpongeGenerationData;
 import org.spongepowered.common.data.manipulator.mutable.common.AbstractIntData;
 import org.spongepowered.common.data.util.DataConstants;
@@ -45,7 +45,7 @@ public final class SpongeGenerationData extends AbstractIntData<GenerationData, 
     }
 
     @Override
-    public MutableBoundedValue<Integer> generation() {
+    public BoundedValue.Mutable<Integer> generation() {
         return SpongeValueFactory.boundedBuilder(Keys.GENERATION)
                 .actualValue(this.getValue())
                 .defaultValue(0)
@@ -55,7 +55,7 @@ public final class SpongeGenerationData extends AbstractIntData<GenerationData, 
     }
 
     @Override
-    protected MutableValue<?> getValueGetter() {
+    protected Value.Mutable<?> getValueGetter() {
         return generation();
     }
 

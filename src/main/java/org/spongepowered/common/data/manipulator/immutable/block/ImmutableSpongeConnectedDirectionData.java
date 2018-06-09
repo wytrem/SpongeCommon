@@ -29,8 +29,8 @@ import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.block.ImmutableConnectedDirectionData;
 import org.spongepowered.api.data.manipulator.mutable.block.ConnectedDirectionData;
-import org.spongepowered.api.data.value.immutable.ImmutableSetValue;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
+import org.spongepowered.api.data.value.SetValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.util.Direction;
 import org.spongepowered.common.data.manipulator.immutable.common.AbstractImmutableData;
 import org.spongepowered.common.data.manipulator.mutable.block.SpongeConnectedDirectionData;
@@ -43,11 +43,11 @@ public class ImmutableSpongeConnectedDirectionData extends AbstractImmutableData
 
     private final ImmutableSet<Direction> directions;
 
-    private final ImmutableSetValue<Direction> directionsValue;
-    private final ImmutableValue<Boolean> northValue;
-    private final ImmutableValue<Boolean> southValue;
-    private final ImmutableValue<Boolean> eastValue;
-    private final ImmutableValue<Boolean> westValue;
+    private final SetValue.Immutable<Direction> directionsValue;
+    private final Value.Immutable<Boolean> northValue;
+    private final Value.Immutable<Boolean> southValue;
+    private final Value.Immutable<Boolean> eastValue;
+    private final Value.Immutable<Boolean> westValue;
 
     public ImmutableSpongeConnectedDirectionData(Set<Direction> directions) {
         super(ImmutableConnectedDirectionData.class);
@@ -63,27 +63,27 @@ public class ImmutableSpongeConnectedDirectionData extends AbstractImmutableData
     }
 
     @Override
-    public ImmutableSetValue<Direction> connectedDirections() {
+    public SetValue.Immutable<Direction> connectedDirections() {
         return this.directionsValue;
     }
 
     @Override
-    public ImmutableValue<Boolean> connectedNorth() {
+    public Value.Immutable<Boolean> connectedNorth() {
         return this.northValue;
     }
 
     @Override
-    public ImmutableValue<Boolean> connectedSouth() {
+    public Value.Immutable<Boolean> connectedSouth() {
         return this.southValue;
     }
 
     @Override
-    public ImmutableValue<Boolean> connectedEast() {
+    public Value.Immutable<Boolean> connectedEast() {
         return this.eastValue;
     }
 
     @Override
-    public ImmutableValue<Boolean> connectedWest() {
+    public Value.Immutable<Boolean> connectedWest() {
         return this.westValue;
     }
 

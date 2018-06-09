@@ -38,7 +38,6 @@ import org.spongepowered.api.data.manipulator.DataManipulator;
 import org.spongepowered.api.data.manipulator.DataManipulatorBuilder;
 import org.spongepowered.api.data.manipulator.ImmutableDataManipulator;
 import org.spongepowered.api.data.value.Value;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
 import org.spongepowered.api.util.PEBKACException;
 import org.spongepowered.asm.util.PrettyPrinter;
 import org.spongepowered.lwts.runner.LaunchWrapperParameterized;
@@ -92,8 +91,8 @@ public class ManipulatorTest {
             final Constructor<?> ctor = this.manipulatorClass.getConstructor();
             final DataManipulator<?, ?> manipulator = (DataManipulator<?, ?>) ctor.newInstance();
             final ImmutableDataManipulator<?, ?> immutable = manipulator.asImmutable();
-            final Set<ImmutableValue<?>> manipulatorValues = manipulator.getValues();
-            final Set<ImmutableValue<?>> immutableValues = immutable.getValues();
+            final Set<Value.Immutable<?>> manipulatorValues = manipulator.getValues();
+            final Set<Value.Immutable<?>> immutableValues = immutable.getValues();
             assertThat("The ImmutableDataManipulator is missing values present from the DataManipulator! " + this.dataName,
                 manipulatorValues.containsAll(immutableValues), is(true));
             assertThat("The DataManipulator is missing values present from the ImmutableDataManipulator! " + this.dataName,

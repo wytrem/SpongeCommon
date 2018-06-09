@@ -29,9 +29,8 @@ import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.entity.ImmutableCriticalHitData;
 import org.spongepowered.api.data.manipulator.mutable.entity.CriticalHitData;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.common.data.manipulator.mutable.entity.SpongeCriticalHitData;
 import org.spongepowered.common.data.processor.common.AbstractEntitySingleDataProcessor;
 import org.spongepowered.common.data.value.SpongeValueFactory;
@@ -39,14 +38,14 @@ import org.spongepowered.common.data.value.SpongeValueFactory;
 import java.util.Optional;
 
 public class CriticalHitDataProcessor
-        extends AbstractEntitySingleDataProcessor<EntityArrow, Boolean, MutableValue<Boolean>, CriticalHitData, ImmutableCriticalHitData> {
+        extends AbstractEntitySingleDataProcessor<EntityArrow, Boolean, Value.Mutable<Boolean>, CriticalHitData, ImmutableCriticalHitData> {
 
     public CriticalHitDataProcessor() {
         super(EntityArrow.class, Keys.CRITICAL_HIT);
     }
 
     @Override
-    protected MutableValue<Boolean> constructValue(Boolean actualValue) {
+    protected Value.Mutable<Boolean> constructValue(Boolean actualValue) {
         return SpongeValueFactory.getInstance().createValue(Keys.CRITICAL_HIT, actualValue, false);
     }
 
@@ -62,7 +61,7 @@ public class CriticalHitDataProcessor
     }
 
     @Override
-    protected ImmutableValue<Boolean> constructImmutableValue(Boolean value) {
+    protected Value.Immutable<Boolean> constructImmutableValue(Boolean value) {
         return constructValue(value).asImmutable();
     }
 

@@ -31,9 +31,8 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Maps;
 import org.spongepowered.api.data.key.Key;
+import org.spongepowered.api.data.value.MapValue;
 import org.spongepowered.api.data.value.Value;
-import org.spongepowered.api.data.value.immutable.ImmutableMapValue;
-import org.spongepowered.api.data.value.mutable.MutableMapValue;
 import org.spongepowered.common.data.value.immutable.ImmutableSpongeMapValue;
 
 import java.util.Iterator;
@@ -41,7 +40,7 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-public class SpongeMutableMapValue<K, V> extends SpongeMutableValue<Map<K, V>> implements MutableMapValue<K, V> {
+public class SpongeMutableMapValue<K, V> extends SpongeMutableValue<Map<K, V>> implements MapValue.Mutable<K, V> {
 
     public SpongeMutableMapValue(Key<? extends Value<Map<K, V>>> key) {
         this(key, Maps.<K, V>newHashMap());
@@ -56,18 +55,18 @@ public class SpongeMutableMapValue<K, V> extends SpongeMutableValue<Map<K, V>> i
     }
 
     @Override
-    public MutableMapValue<K, V> transform(Function<Map<K, V>, Map<K, V>> function) {
+    public MapValue.Mutable<K, V> transform(Function<Map<K, V>, Map<K, V>> function) {
         this.actualValue = Maps.newHashMap(checkNotNull(checkNotNull(function).apply(this.actualValue)));
         return this;
     }
 
     @Override
-    public ImmutableMapValue<K, V> asImmutable() {
+    public MapValue.Immutable<K, V> asImmutable() {
         return new ImmutableSpongeMapValue<>(getKey(), ImmutableMap.copyOf(this.actualValue));
     }
 
     @Override
-    public MutableMapValue<K, V> copy() {
+    public MapValue.Mutable<K, V> copy() {
         return new SpongeMutableMapValue<>(getKey(), this.getDefault(), this.actualValue);
     }
 
@@ -77,25 +76,25 @@ public class SpongeMutableMapValue<K, V> extends SpongeMutableValue<Map<K, V>> i
     }
 
     @Override
-    public MutableMapValue<K, V> put(K key, V value) {
+    public MapValue.Mutable<K, V> put(K key, V value) {
         this.actualValue.put(checkNotNull(key), checkNotNull(value));
         return this;
     }
 
     @Override
-    public MutableMapValue<K, V> putAll(Map<K, V> map) {
+    public MapValue.Mutable<K, V> putAll(Map<K, V> map) {
         this.actualValue.putAll(checkNotNull(map));
         return this;
     }
 
     @Override
-    public MutableMapValue<K, V> remove(K key) {
+    public MapValue.Mutable<K, V> remove(K key) {
         this.actualValue.remove(checkNotNull(key));
         return this;
     }
 
     @Override
-    public MutableMapValue<K, V> removeAll(Iterable<K> keys) {
+    public MapValue.Mutable<K, V> removeAll(Iterable<K> keys) {
         for (K key : keys) {
             this.actualValue.remove(checkNotNull(key));
         }
@@ -103,7 +102,7 @@ public class SpongeMutableMapValue<K, V> extends SpongeMutableValue<Map<K, V>> i
     }
 
     @Override
-    public MutableMapValue<K, V> removeAll(Predicate<Map.Entry<K, V>> predicate) {
+    public MapValue.Mutable<K, V> removeAll(Predicate<Map.Entry<K, V>> predicate) {
         for (Iterator<Map.Entry<K, V>> iterator = this.actualValue.entrySet().iterator(); iterator.hasNext(); ) {
             final Map.Entry<K, V> entry = iterator.next();
             if (!checkNotNull(predicate).test(entry)) {

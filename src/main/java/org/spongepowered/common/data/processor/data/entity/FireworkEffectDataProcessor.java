@@ -31,9 +31,9 @@ import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.ImmutableFireworkEffectData;
 import org.spongepowered.api.data.manipulator.mutable.FireworkEffectData;
+import org.spongepowered.api.data.value.ListValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.api.data.value.ValueContainer;
-import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.data.value.mutable.MutableListValue;
 import org.spongepowered.api.entity.EntityType;
 import org.spongepowered.api.entity.EntityTypes;
 import org.spongepowered.api.item.FireworkEffect;
@@ -48,7 +48,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class FireworkEffectDataProcessor extends
-        AbstractEntitySingleDataProcessor<EntityFireworkRocket, List<FireworkEffect>, MutableListValue<FireworkEffect>, FireworkEffectData, ImmutableFireworkEffectData> {
+        AbstractEntitySingleDataProcessor<EntityFireworkRocket, List<FireworkEffect>, ListValue.Mutable<FireworkEffect>, FireworkEffectData, ImmutableFireworkEffectData> {
 
     public FireworkEffectDataProcessor() {
         super(EntityFireworkRocket.class, Keys.FIREWORK_EFFECTS);
@@ -92,12 +92,12 @@ public class FireworkEffectDataProcessor extends
     }
 
     @Override
-    protected MutableListValue<FireworkEffect> constructValue(List<FireworkEffect> value) {
+    protected ListValue.Mutable<FireworkEffect> constructValue(List<FireworkEffect> value) {
         return new SpongeMutableListValue<>(Keys.FIREWORK_EFFECTS, value);
     }
 
     @Override
-    protected ImmutableValue<List<FireworkEffect>> constructImmutableValue(List<FireworkEffect> value) {
+    protected Value.Immutable<List<FireworkEffect>> constructImmutableValue(List<FireworkEffect> value) {
         return new ImmutableSpongeListValue<>(Keys.FIREWORK_EFFECTS, ImmutableList.copyOf(value));
     }
 

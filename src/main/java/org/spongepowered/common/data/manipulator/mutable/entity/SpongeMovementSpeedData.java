@@ -28,7 +28,7 @@ import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.entity.ImmutableMovementSpeedData;
 import org.spongepowered.api.data.manipulator.mutable.entity.MovementSpeedData;
-import org.spongepowered.api.data.value.mutable.MutableValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.common.data.manipulator.immutable.entity.ImmutableSpongeMovementSpeedData;
 import org.spongepowered.common.data.manipulator.mutable.common.AbstractData;
 import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
@@ -80,12 +80,12 @@ public class SpongeMovementSpeedData extends AbstractData<MovementSpeedData, Imm
     }
 
     @Override
-    public MutableValue<Double> walkSpeed() {
+    public Value.Mutable<Double> walkSpeed() {
         return new SpongeMutableValue<>(Keys.WALKING_SPEED, 0.7D, this.walkSpeed);
     }
 
     @Override
-    public MutableValue<Double> flySpeed() {
+    public Value.Mutable<Double> flySpeed() {
         return new SpongeMutableValue<>(Keys.FLYING_SPEED, 0.05D, this.flySpeed);
     }
 

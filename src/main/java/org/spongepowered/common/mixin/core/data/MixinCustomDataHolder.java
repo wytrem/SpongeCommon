@@ -36,7 +36,6 @@ import org.spongepowered.api.data.key.Key;
 import org.spongepowered.api.data.manipulator.DataManipulator;
 import org.spongepowered.api.data.merge.MergeFunction;
 import org.spongepowered.api.data.value.Value;
-import org.spongepowered.api.data.value.mutable.MutableValue;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.common.entity.player.SpongeUser;
 import org.spongepowered.common.interfaces.data.IMixinCustomDataHolder;
@@ -143,9 +142,9 @@ public abstract class MixinCustomDataHolder implements IMixinCustomDataHolder {
         for (DataManipulator<?, ?> manipulator : this.manipulators) {
             if (manipulator.supports(key)) {
                 final DataTransactionResult.Builder builder = DataTransactionResult.builder();
-                builder.replace(((MutableValue) manipulator.getValue((Key) key).get()).asImmutable());
+                builder.replace(((Value.Mutable) manipulator.getValue((Key) key).get()).asImmutable());
                 manipulator.set(key, value);
-                builder.success(((MutableValue) manipulator.getValue((Key) key).get()).asImmutable());
+                builder.success(((Value.Mutable) manipulator.getValue((Key) key).get()).asImmutable());
                 return builder.result(DataTransactionResult.Type.SUCCESS).build();
             }
         }

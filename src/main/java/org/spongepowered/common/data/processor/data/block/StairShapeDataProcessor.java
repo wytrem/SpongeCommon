@@ -29,13 +29,13 @@ import org.spongepowered.api.data.manipulator.immutable.block.ImmutableStairShap
 import org.spongepowered.api.data.manipulator.mutable.block.StairShapeData;
 import org.spongepowered.api.data.type.StairShape;
 import org.spongepowered.api.data.type.StairShapes;
-import org.spongepowered.api.data.value.mutable.MutableValue;
+import org.spongepowered.api.data.value.Value;
 import org.spongepowered.common.data.manipulator.mutable.block.SpongeStairShapeData;
 import org.spongepowered.common.data.processor.common.AbstractBlockOnlyDataProcessor;
 import org.spongepowered.common.data.value.mutable.SpongeMutableValue;
 
 public class StairShapeDataProcessor extends
-        AbstractBlockOnlyDataProcessor<StairShape, MutableValue<StairShape>, StairShapeData, ImmutableStairShapeData> {
+        AbstractBlockOnlyDataProcessor<StairShape, Value.Mutable<StairShape>, StairShapeData, ImmutableStairShapeData> {
 
     public StairShapeDataProcessor() {
         super(Keys.STAIR_SHAPE);
@@ -52,7 +52,7 @@ public class StairShapeDataProcessor extends
     }
 
     @Override
-    protected MutableValue<StairShape> constructValue(StairShape actualValue) {
+    protected Value.Mutable<StairShape> constructValue(StairShape actualValue) {
         return new SpongeMutableValue<>(this.key, getDefaultValue(), actualValue);
     }
 
