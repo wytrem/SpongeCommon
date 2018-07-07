@@ -33,10 +33,9 @@ import net.minecraft.network.play.server.SPacketHeldItemChange;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import org.spongepowered.api.entity.living.player.Player;
-import org.spongepowered.api.item.inventory.Inventory;
 import org.spongepowered.api.item.inventory.ItemStackSnapshot;
 import org.spongepowered.api.item.inventory.Slot;
-import org.spongepowered.api.item.inventory.entity.MainPlayerInventory;
+import org.spongepowered.api.item.inventory.entity.PrimaryPlayerInventory;
 import org.spongepowered.api.item.inventory.entity.PlayerInventory;
 import org.spongepowered.api.item.inventory.equipment.EquipmentInventory;
 import org.spongepowered.api.item.inventory.equipment.EquipmentTypes;
@@ -53,15 +52,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.common.interfaces.entity.player.IMixinInventoryPlayer;
 import org.spongepowered.common.item.inventory.adapter.impl.comp.EquipmentInventoryAdapter;
-import org.spongepowered.common.item.inventory.adapter.impl.comp.HotbarAdapter;
-import org.spongepowered.common.item.inventory.adapter.impl.comp.MainPlayerInventoryAdapter;
+import org.spongepowered.common.item.inventory.adapter.impl.comp.PrimaryPlayerInventoryAdapter;
 import org.spongepowered.common.item.inventory.adapter.impl.slots.EquipmentSlotAdapter;
 import org.spongepowered.common.item.inventory.adapter.impl.slots.SlotAdapter;
 import org.spongepowered.common.item.inventory.lens.Fabric;
 import org.spongepowered.common.item.inventory.lens.Lens;
 import org.spongepowered.common.item.inventory.lens.SlotProvider;
-import org.spongepowered.common.item.inventory.lens.impl.collections.SlotCollection;
-import org.spongepowered.common.item.inventory.lens.impl.comp.OrderedInventoryLensImpl;
+import org.spongepowered.common.item.inventory.lens.impl.DefaultIndexedLens;
+import org.spongepowered.common.item.inventory.lens.impl.collections.SlotLensCollection;
 import org.spongepowered.common.item.inventory.lens.impl.fabric.IInventoryFabric;
 import org.spongepowered.common.item.inventory.lens.impl.minecraft.PlayerInventoryLens;
 import org.spongepowered.common.item.inventory.lens.impl.slots.EquipmentSlotLensImpl;
@@ -99,14 +97,15 @@ public abstract class MixinInventoryPlayer implements IMixinInventoryPlayer, Pla
     private List<SlotTransaction> capturedTransactions = new ArrayList<>();
     private boolean doCapture = false;
 
-    protected SlotCollection slots;
+    protected SlotLensCollection slots;
     protected Fabric inventory;
     protected Lens lens;
 
     private Player carrier;
-    private HotbarAdapter hotbar;
-    private MainPlayerInventoryAdapter main;
+    private PrimaryPlayerInventoryAdapter main;
     @Nullable private EquipmentInventoryAdapter equipment;
+    @Nullable private EquipmentInventoryAdapter armor;
+
     private SlotAdapter offhand;
 
     private int offhandIndex;
@@ -130,7 +129,7 @@ public abstract class MixinInventoryPlayer implements IMixinInventoryPlayer, Pla
             Class clazz = this.getClass();
             if (clazz == InventoryPlayer.class) { // Build Player Lens
                 // We only care about Server inventories
-                this.slots = new SlotCollection.Builder()
+                this.slots = new SlotLensCollection.Builder()
                         .add(this.mainInventory.size())
                         .add(this.offHandInventory.size(), EquipmentSlotAdapter.class, index -> new EquipmentSlotLensImpl(index, i -> true, t -> true, e -> e == EquipmentTypes.OFF_HAND))
                         // TODO predicates for ItemStack/ItemType?
@@ -144,8 +143,8 @@ public abstract class MixinInventoryPlayer implements IMixinInventoryPlayer, Pla
                         .build();
                 this.lens = new PlayerInventoryLens(this, this.slots);
             } else if (this.getSizeInventory() != 0) { // Fallback OrderedLens when not 0 sized inventory
-                this.slots = new SlotCollection.Builder().add(this.getSizeInventory()).build();
-                this.lens = new OrderedInventoryLensImpl(0, this.getSizeInventory(), 1, slots);
+                this.slots = new SlotLensCollection.Builder().add(this.getSizeInventory()).build();
+                this.lens = new DefaultIndexedLens(0, this.getSizeInventory(), slots);
             }
         }
     }
@@ -173,21 +172,24 @@ public abstract class MixinInventoryPlayer implements IMixinInventoryPlayer, Pla
     }
 
     @Override
-    public Inventory getChild(Lens lens) {
-        return null;
-    }
-
-    @Override
     public Optional<Player> getCarrier() {
         return Optional.ofNullable(this.carrier);
     }
 
     @Override
-    public MainPlayerInventory getMain() {
+    public PrimaryPlayerInventory getPrimary() {
         if (this.main == null && this.lens instanceof PlayerInventoryLens) {
-            this.main = (MainPlayerInventoryAdapter) ((PlayerInventoryLens) this.lens).getMainLens().getAdapter(this.inventory, this);
+            this.main = (PrimaryPlayerInventoryAdapter) ((PlayerInventoryLens) this.lens).getMainLens().getAdapter(this.inventory, this);
         }
         return this.main;
+    }
+
+    @Override
+    public EquipmentInventory getArmor() {
+        if (this.armor == null && this.lens instanceof PlayerInventoryLens) {
+            this.armor = (EquipmentInventoryAdapter) ((PlayerInventoryLens) this.lens).getArmorLens().getAdapter(this.inventory, this);
+        }
+        return this.armor;
     }
 
     @Override
@@ -242,33 +244,6 @@ public abstract class MixinInventoryPlayer implements IMixinInventoryPlayer, Pla
     }
 
     @Override
-    public int getFirstAvailableSlot(ItemStack itemstack) {
-        for (int i = 0; i < this.mainInventory.size(); ++i) {
-            int stackSize = itemstack.getCount();
-
-            if (this.mainInventory.get(i).getCount() == 0) {
-                // empty slot
-                return i;
-            }
-
-            if (this.mainInventory.get(i).getItem() == itemstack.getItem() && this.mainInventory.get(i).isStackable() && this.mainInventory.get(i).getCount() < this.mainInventory
-                    .get(i).getMaxStackSize() && this.mainInventory.get(i).getCount() < this.getInventoryStackLimit() && (!this.mainInventory.get(i).getHasSubtypes() || this.mainInventory
-                                                                                                                                                                                    .get(i).getItemDamage() == itemstack.getItemDamage()) && ItemStack.areItemStackTagsEqual(this.mainInventory
-                    .get(i), itemstack)) {
-                stackSize -= (this.mainInventory.get(i).getMaxStackSize() < this.getInventoryStackLimit() ? this.mainInventory.get(i).getMaxStackSize() : this.getInventoryStackLimit()) - this.mainInventory
-                        .get(i).getCount();
-            }
-
-            if (stackSize <= 0) {
-                // available space in slot
-                return i;
-            }
-        }
-
-        return -1;
-    }
-
-    @Override
     public List<SlotTransaction> getCapturedTransactions() {
         return this.capturedTransactions;
     }
@@ -285,10 +260,10 @@ public abstract class MixinInventoryPlayer implements IMixinInventoryPlayer, Pla
 
     public Slot getSpongeSlot(int index) {
         if (index < getHotbarSize()) {
-            return this.getMain().getHotbar().getSlot(SlotIndex.of(index)).get();
+            return this.getPrimary().getHotbar().getSlot(SlotIndex.of(index)).get();
         }
         index -= getHotbarSize();
-        return this.getMain().getGrid().getSlot(SlotIndex.of(index)).get();
+        return this.getPrimary().getStorage().getSlot(SlotIndex.of(index)).get();
     }
 
     @Inject(method = "add", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/NonNullList;set(ILjava/lang/Object;)Ljava/lang/Object;", ordinal = 0))

@@ -28,9 +28,8 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import org.spongepowered.api.entity.living.player.User;
-import org.spongepowered.api.item.inventory.Inventory;
 import org.spongepowered.api.item.inventory.Slot;
-import org.spongepowered.api.item.inventory.entity.MainPlayerInventory;
+import org.spongepowered.api.item.inventory.entity.PrimaryPlayerInventory;
 import org.spongepowered.api.item.inventory.entity.UserInventory;
 import org.spongepowered.api.item.inventory.equipment.EquipmentInventory;
 import org.spongepowered.asm.mixin.Final;
@@ -43,13 +42,13 @@ import org.spongepowered.common.entity.player.SpongeUser;
 import org.spongepowered.common.entity.player.SpongeUserInventory;
 import org.spongepowered.common.item.inventory.adapter.impl.MinecraftInventoryAdapter;
 import org.spongepowered.common.item.inventory.adapter.impl.comp.EquipmentInventoryAdapter;
-import org.spongepowered.common.item.inventory.adapter.impl.comp.MainPlayerInventoryAdapter;
+import org.spongepowered.common.item.inventory.adapter.impl.comp.PrimaryPlayerInventoryAdapter;
 import org.spongepowered.common.item.inventory.adapter.impl.slots.EquipmentSlotAdapter;
 import org.spongepowered.common.item.inventory.adapter.impl.slots.SlotAdapter;
 import org.spongepowered.common.item.inventory.lens.Fabric;
 import org.spongepowered.common.item.inventory.lens.Lens;
 import org.spongepowered.common.item.inventory.lens.SlotProvider;
-import org.spongepowered.common.item.inventory.lens.impl.collections.SlotCollection;
+import org.spongepowered.common.item.inventory.lens.impl.collections.SlotLensCollection;
 import org.spongepowered.common.item.inventory.lens.impl.fabric.IInventoryFabric;
 import org.spongepowered.common.item.inventory.lens.impl.minecraft.PlayerInventoryLens;
 
@@ -69,13 +68,14 @@ public abstract class MixinSpongeUserInventory implements MinecraftInventoryAdap
 
     @Shadow public abstract int getSizeInventory();
 
-    protected SlotCollection slots;
+    protected SlotLensCollection slots;
     protected Fabric inventory;
     protected PlayerInventoryLens lens;
 
     @Nullable private User carrier;
-    @Nullable private MainPlayerInventoryAdapter main;
+    @Nullable private PrimaryPlayerInventoryAdapter main;
     @Nullable private EquipmentInventoryAdapter equipment;
+    @Nullable private EquipmentInventoryAdapter armor;
     @Nullable private SlotAdapter offhand;
 
     @SuppressWarnings("unchecked")
@@ -84,7 +84,7 @@ public abstract class MixinSpongeUserInventory implements MinecraftInventoryAdap
         // We only care about Server inventories
         this.inventory = new IInventoryFabric((IInventory) this);
 
-        this.slots = new SlotCollection.Builder()
+        this.slots = new SlotLensCollection.Builder()
                 .add(this.mainInventory.size())
                 .add(this.offHandInventory.size())
                 .add(this.armorInventory.size(), EquipmentSlotAdapter.class)
@@ -100,14 +100,10 @@ public abstract class MixinSpongeUserInventory implements MinecraftInventoryAdap
         return this.lens;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Fabric getFabric() {
         return this.inventory;
-    }
-
-    @Override
-    public Inventory getChild(Lens lens) {
-        return null;
     }
 
     @Override
@@ -116,11 +112,19 @@ public abstract class MixinSpongeUserInventory implements MinecraftInventoryAdap
     }
 
     @Override
-    public MainPlayerInventory getMain() {
+    public PrimaryPlayerInventory getPrimary() {
         if (this.main == null) {
-            this.main = (MainPlayerInventoryAdapter) this.lens.getMainLens().getAdapter(this.inventory, this);
+            this.main = (PrimaryPlayerInventoryAdapter) this.lens.getMainLens().getAdapter(this.inventory, this);
         }
         return this.main;
+    }
+
+    @Override
+    public EquipmentInventory getArmor() {
+        if (this.armor == null) {
+            this.armor = (EquipmentInventoryAdapter) this.lens.getArmorLens().getAdapter(this.inventory, this);
+        }
+        return this.armor;
     }
 
     @Override

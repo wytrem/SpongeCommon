@@ -50,6 +50,8 @@ public interface Fabric {
      */
     <TInventory> TInventory get(int index);
 
+    Class getType();
+
     ItemStack getStack(int index);
 
     void setStack(int index, ItemStack stack);

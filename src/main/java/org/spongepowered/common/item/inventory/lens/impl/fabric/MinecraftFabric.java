@@ -22,7 +22,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.spongepowered.common.item.inventory.lens.impl;
+package org.spongepowered.common.item.inventory.lens.impl.fabric;
 
 import static com.google.common.base.Preconditions.*;
 
@@ -34,10 +34,6 @@ import org.spongepowered.api.item.inventory.Inventory;
 import org.spongepowered.common.item.inventory.adapter.InventoryAdapter;
 import org.spongepowered.common.item.inventory.lens.Fabric;
 import org.spongepowered.common.item.inventory.lens.UnsupportedFabricException;
-import org.spongepowered.common.item.inventory.lens.impl.fabric.CompoundFabric;
-import org.spongepowered.common.item.inventory.lens.impl.fabric.ContainerFabric;
-import org.spongepowered.common.item.inventory.lens.impl.fabric.IInventoryFabric;
-import org.spongepowered.common.item.inventory.lens.impl.fabric.SlotFabric;
 
 public abstract class MinecraftFabric implements Fabric {
 
@@ -60,6 +56,11 @@ public abstract class MinecraftFabric implements Fabric {
             return new IInventoryFabric((IInventory) target);
         }
         throw new UnsupportedFabricException("Container of type %s could not be used as an inventory fabric", target.getClass());
+    }
+
+    @Override
+    public Class getType() {
+        return IInventory.class;
     }
 
     @SuppressWarnings({"unchecked", "rawtypes"})
