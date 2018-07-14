@@ -46,11 +46,9 @@ import org.spongepowered.common.util.ThreadUtil;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 import java.util.function.BiConsumer;
 
 import javax.annotation.Nullable;
@@ -59,11 +57,17 @@ import javax.annotation.Nullable;
 public final class SpongeCauseStackManager implements CauseStackManager {
 
     public static final boolean DEBUG_CAUSE_FRAMES = Boolean.valueOf(System.getProperty("sponge.debugcauseframes", "false"));
+    public static final int MAX_POOL_SIZE = 50;
 
     private final Deque<Object> cause = Queues.newArrayDeque();
-    private final Deque<CauseStackFrameImpl> frames = Queues.newArrayDeque();
-    private Map<EventContextKey<?>, Object> ctx = Maps.newHashMap();
 
+    // Frames in use
+    private final Deque<CauseStackFrameImpl> frames = Queues.newArrayDeque();
+
+    // Frames not currently in use
+    private final Deque<CauseStackFrameImpl> framePool = new ArrayDeque<>(MAX_POOL_SIZE);
+
+    private Map<EventContextKey<?>, Object> ctx = Maps.newHashMap();
     private int min_depth = 0;
     @Nullable private Cause cached_cause;
     @Nullable private EventContext cached_ctx;
@@ -76,7 +80,12 @@ public final class SpongeCauseStackManager implements CauseStackManager {
     private Deque<Tuple<PhaseContext<?>, BiConsumer<StackFrame, PhaseContext<?>>>> phaseContextProviders = new ArrayDeque<>();
 
     @Inject
-    private SpongeCauseStackManager() { }
+    private SpongeCauseStackManager() {
+        // start with an initial frame pool of 10 - this may need to be tweaked
+        for (int i = 0; i < 10; i++) {
+            this.framePool.push(new CauseStackFrameImpl());
+        }
+    }
 
     private void enforceMainThread() {
         // On clients, this may not be available immediately, we can't bomb out that early.
@@ -178,7 +187,14 @@ public final class SpongeCauseStackManager implements CauseStackManager {
     @Override
     public StackFrame pushCauseFrame() {
         enforceMainThread();
-        CauseStackFrameImpl frame = new CauseStackFrameImpl(this.min_depth);
+        CauseStackFrameImpl frame;
+        if (this.framePool.isEmpty()) {
+            frame = new CauseStackFrameImpl();
+        } else {
+            frame = this.framePool.pop();
+        }
+
+        frame.old_min_depth = min_depth;
         this.frames.push(frame);
         this.min_depth = this.cause.size();
         if (DEBUG_CAUSE_FRAMES) {
@@ -197,7 +213,7 @@ public final class SpongeCauseStackManager implements CauseStackManager {
         CauseStackFrameImpl frame = this.frames.peek();
         if (frame != oldFrame) {
             // If the given frame is not the top frame then some form of
-            // corruption of the stack has occured and we do our best to correct
+            // corruption of the stack has occurred and we do our best to correct
             // it.
 
             // If the target frame is still in the stack then we can pop frames
@@ -251,24 +267,17 @@ public final class SpongeCauseStackManager implements CauseStackManager {
             return;
         }
         this.frames.pop();
+
         // Remove new values
-        boolean ctx_invalid = false;
-        if (frame.hasNew()) {
-            for (EventContextKey<?> key : frame.getNew()) {
-                this.ctx.remove(key);
-            }
-            ctx_invalid = true;
-        }
-        // Restore old values
-        if (frame.hasStoredValues()) {
-            for (Map.Entry<EventContextKey<?>, Object> e : frame.getStoredValues()) {
-                this.ctx.put(e.getKey(), e.getValue());
-            }
-            ctx_invalid = true;
-        }
-        if (ctx_invalid) {
+        for (Map.Entry<EventContextKey<?>, Object> entry : frame.getOriginalContextDelta().entrySet()) {
             this.cached_ctx = null;
+            if (entry.getValue() == null) { // wasn't present before, remove
+                this.ctx.remove(entry.getKey());
+            } else { // was there, replace
+                this.ctx.put(entry.getKey(), entry.getValue());
+            }
         }
+
         // If there were any objects left on the stack then we pop them off
         while (this.cause.size() > this.min_depth) {
             this.cause.pop();
@@ -277,6 +286,14 @@ public final class SpongeCauseStackManager implements CauseStackManager {
             this.cached_cause = null;
         }
         this.min_depth = frame.old_min_depth;
+
+        // finally, return the frame to the pool
+        if (this.framePool.size() < MAX_POOL_SIZE) {
+            // cache it, but clear the map to remove references to
+            // other objects that may go out of scope
+            frame.storedContext.clear();
+            this.framePool.push(frame);
+        }
     }
 
     @Override
@@ -287,12 +304,7 @@ public final class SpongeCauseStackManager implements CauseStackManager {
         this.cached_ctx = null;
         Object existing = this.ctx.put(key, value);
         if (!this.frames.isEmpty()) {
-            CauseStackFrameImpl frame = this.frames.peek();
-            if (existing == null) {
-                frame.markNew(key);
-            } else if (!frame.isNew(key) && !frame.isStored(key)) {
-                frame.store(key, existing);
-            }
+            this.frames.peek().storeOriginalContext(key, existing);
         }
         return this;
     }
@@ -312,11 +324,8 @@ public final class SpongeCauseStackManager implements CauseStackManager {
         checkNotNull(key, "key");
         this.cached_ctx = null;
         Object existing = this.ctx.remove(key);
-        if (existing != null && !this.frames.isEmpty()) {
-            CauseStackFrameImpl frame = this.frames.peek();
-            if (!frame.isNew(key)) {
-                frame.store(key, existing);
-            }
+        if (!this.frames.isEmpty()) {
+            this.frames.peek().storeOriginalContext(key, existing);
         }
         return Optional.ofNullable((T) existing);
     }
@@ -354,56 +363,22 @@ public final class SpongeCauseStackManager implements CauseStackManager {
 
     }
 
-    // TODO could pool these for more fasts
     public static class CauseStackFrameImpl implements StackFrame {
 
-        // lazy loaded
-        @Nullable private Map<EventContextKey<?>, Object> stored_ctx_values;
-        @Nullable private Set<EventContextKey<?>> new_ctx_values;
-        public int old_min_depth;
+        private final Map<EventContextKey<?>, Object> storedContext = new HashMap<>();
+        int old_min_depth;
 
-        public Exception stack_debug = null;
+        @Nullable public Exception stack_debug = null;
 
-        public CauseStackFrameImpl(int old_depth) {
-            this.old_min_depth = old_depth;
-        }
-
-        public boolean isStored(EventContextKey<?> key) {
-            return this.stored_ctx_values != null && this.stored_ctx_values.containsKey(key);
-        }
-
-        public Set<Map.Entry<EventContextKey<?>, Object>> getStoredValues() {
-            return this.stored_ctx_values.entrySet();
-        }
-
-        public boolean hasStoredValues() {
-            return this.stored_ctx_values != null && !this.stored_ctx_values.isEmpty();
-        }
-
-        public void store(EventContextKey<?> key, Object existing) {
-            if (this.stored_ctx_values == null) {
-                this.stored_ctx_values = new HashMap<>();
+        // Note that a null object indicates that the context should be removed
+        void storeOriginalContext(EventContextKey<?> key, @Nullable Object object) {
+            if (!this.storedContext.containsKey(key)) {
+                this.storedContext.put(key, object);
             }
-            this.stored_ctx_values.put(key, existing);
         }
 
-        public boolean isNew(EventContextKey<?> key) {
-            return this.new_ctx_values != null && this.new_ctx_values.contains(key);
-        }
-
-        public Set<EventContextKey<?>> getNew() {
-            return this.new_ctx_values;
-        }
-
-        public boolean hasNew() {
-            return this.new_ctx_values != null && !this.new_ctx_values.isEmpty();
-        }
-
-        public void markNew(EventContextKey<?> key) {
-            if (this.new_ctx_values == null) {
-                this.new_ctx_values = new HashSet<>();
-            }
-            this.new_ctx_values.add(key);
+        Map<EventContextKey<?>, Object> getOriginalContextDelta() {
+            return this.storedContext;
         }
 
         @Override
