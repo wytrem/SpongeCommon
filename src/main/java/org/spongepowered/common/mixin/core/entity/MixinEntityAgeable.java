@@ -37,17 +37,21 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.common.SpongeImpl;
 import org.spongepowered.common.event.ShouldFire;
+import org.spongepowered.common.event.tracking.PhaseTracker;
 
 import java.util.Optional;
 
 @Mixin(EntityAgeable.class)
 public abstract class MixinEntityAgeable extends MixinEntityCreature implements Ageable {
 
-    @Inject(method = "setGrowingAge", at = @At(value = "HEAD"))
-    private void callReadyToMateOnUpdate(final int age, final CallbackInfo ci) {
-        if (age == 0) {
-            this.callReadyToMateEvent();
-        }
+    @Inject(method = "ageUp", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/EntityAgeable;onGrowingAdult()V"))
+    private void callReadyToMateOnAgeUp(final int growthSeconds, final boolean updateForcedAge, final CallbackInfo ci) {
+        this.callReadyToMateEvent();
+    }
+
+    @Inject(method = "onLivingUpdate", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/EntityAgeable;onGrowingAdult()V"))
+    private void callReadyToMateOnUpdate(final CallbackInfo ci) {
+        this.callReadyToMateEvent();
     }
 
     // TODO This is nasty but there is no central spot in EntityAnimal for this invocation.

@@ -24,6 +24,7 @@
  */
 package org.spongepowered.test;
 
+import org.spongepowered.api.Game;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.entity.living.animal.Animal;
 import org.spongepowered.api.event.Listener;
@@ -45,10 +46,17 @@ public final class FarmTest {
     @Listener
     public void onSpawnEntity(SpawnEntityEvent event) {
         event.getEntities().stream().filter(e -> e instanceof Animal).map(e -> (Animal) e).forEach(e -> e.offer(Keys.CUSTOM_NAME_VISIBLE, true));
+
+        if (event instanceof SpawnEntityEvent.ChunkLoad) {
+            System.err.println(event.getCause());
+        }
     }
 
     @Listener
     public void onBreedEntityReadyToMate(final BreedEntityEvent.ReadyToMate event) {
+        if (event.getCause().root() instanceof Game) {
+            Thread.dumpStack();
+        }
         System.err.println(event.getCause().toString());
     }
 
