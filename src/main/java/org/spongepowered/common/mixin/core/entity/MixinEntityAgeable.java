@@ -38,20 +38,19 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.common.SpongeImpl;
 import org.spongepowered.common.event.ShouldFire;
 import org.spongepowered.common.event.tracking.PhaseTracker;
+import org.spongepowered.common.event.tracking.phase.general.GeneralPhase;
 
 import java.util.Optional;
 
 @Mixin(EntityAgeable.class)
 public abstract class MixinEntityAgeable extends MixinEntityCreature implements Ageable {
 
-    @Inject(method = "ageUp", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/EntityAgeable;onGrowingAdult()V"))
-    private void callReadyToMateOnAgeUp(final int growthSeconds, final boolean updateForcedAge, final CallbackInfo ci) {
-        this.callReadyToMateEvent();
-    }
-
-    @Inject(method = "onLivingUpdate", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/EntityAgeable;onGrowingAdult()V"))
-    private void callReadyToMateOnUpdate(final CallbackInfo ci) {
-        this.callReadyToMateEvent();
+    @Inject(method = "setGrowingAge", at = @At("RETURN"))
+    private void callReadyToMateOnAgeUp(final int age, final CallbackInfo ci) {
+        // TODO Need a better way to know that we're coming off of ChunkIO
+        if (age == 0) {
+            this.callReadyToMateEvent();
+        }
     }
 
     // TODO This is nasty but there is no central spot in EntityAnimal for this invocation.

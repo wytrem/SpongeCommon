@@ -24,7 +24,8 @@
  */
 package org.spongepowered.test;
 
-import org.spongepowered.api.Game;
+import com.google.inject.Inject;
+import org.spongepowered.api.Sponge;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.entity.living.animal.Animal;
 import org.spongepowered.api.event.Listener;
@@ -32,9 +33,14 @@ import org.spongepowered.api.event.entity.BreedEntityEvent;
 import org.spongepowered.api.event.entity.SpawnEntityEvent;
 import org.spongepowered.api.event.game.state.GameConstructionEvent;
 import org.spongepowered.api.plugin.Plugin;
+import org.spongepowered.api.plugin.PluginContainer;
+import org.spongepowered.api.text.Text;
+import org.spongepowered.api.text.format.TextColors;
 
 @Plugin(id = "farm")
 public final class FarmTest {
+
+    @Inject private PluginContainer container;
 
     @Listener
     public void onGameConstruction(final GameConstructionEvent event) {
@@ -45,28 +51,28 @@ public final class FarmTest {
 
     @Listener
     public void onSpawnEntity(SpawnEntityEvent event) {
-        event.getEntities().stream().filter(e -> e instanceof Animal).map(e -> (Animal) e).forEach(e -> e.offer(Keys.CUSTOM_NAME_VISIBLE, true));
-
-        if (event instanceof SpawnEntityEvent.ChunkLoad) {
-            System.err.println(event.getCause());
-        }
+        event.getEntities().stream()
+            .filter(e -> e instanceof Animal)
+            .map(e -> (Animal) e)
+            .forEach(e -> e.offer(Keys.CUSTOM_NAME_VISIBLE, true));
     }
 
     @Listener
     public void onBreedEntityReadyToMate(final BreedEntityEvent.ReadyToMate event) {
-        if (event.getCause().root() instanceof Game) {
-            Thread.dumpStack();
-        }
-        System.err.println(event.getCause().toString());
+        final Animal animal = event.getTargetEntity();
+        animal.offer(Keys.DISPLAY_NAME, Text.of(TextColors.DARK_AQUA, animal.getTranslation().get()));
     }
 
     @Listener
     public void onBreedEntityFindMate(final BreedEntityEvent.FindMate event) {
-        System.err.println(event.getCause().toString());
     }
 
     @Listener
     public void onBreedEntityBreed(final BreedEntityEvent.Breed event) {
-        System.err.println(event.getCause().toString());
+        event.getCause().allOf(Animal.class).forEach(a -> a.offer(Keys.DISPLAY_NAME, Text.of(a.getTranslation().get())));
+
+        Sponge.getScheduler().createTaskBuilder()
+            .execute(() -> event.getOffspringEntity().offer(Keys.IS_ADULT, true))
+            .submit(this.container);
     }
 }

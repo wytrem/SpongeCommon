@@ -71,8 +71,8 @@ public abstract class MixinEntityAIMate {
                 final BreedEntityEvent.FindMate event =
                     SpongeEventFactory.createBreedEntityEventFindMate(Sponge.getCauseStackManager().getCurrentCause(), TristateResult.Result.DEFAULT,
                         TristateResult.Result.DEFAULT, Optional.empty(), (Animal) nearbyMate, (Ageable) this.animal, true);
-                SpongeImpl.postEvent(event);
-                if (event.getResult() == TristateResult.Result.DENY) {
+                final boolean cancelled = SpongeImpl.postEvent(event);
+                if (cancelled || event.getResult() == TristateResult.Result.DENY) {
                     nearbyMate = null;
                 }
             }
