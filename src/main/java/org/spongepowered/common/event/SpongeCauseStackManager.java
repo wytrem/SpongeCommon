@@ -329,6 +329,8 @@ public final class SpongeCauseStackManager implements CauseStackManager {
         this.cached_ctx = null; // Reset the cache
         // Since we cannot rely on the PhaseStack being tied to this stack of providers,
         // we have to make the tuple to tie the phase context to provide the consumer.
+        // TODO - Technically, we only need to rely on the phase tracker to provide us with
+        // TODO - the phase context that needs to be pushed/popped. I think we could even just flag it.
         this.phaseContextProviders.push(Tuple.of(context, consumer));
         return this.phaseContextProviders.size();
     }

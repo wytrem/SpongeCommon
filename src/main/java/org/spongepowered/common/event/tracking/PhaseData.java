@@ -59,8 +59,8 @@ public final class PhaseData {
     @Override
     public String toString() {
         return com.google.common.base.MoreObjects.toStringHelper(this)
-            .add("context", this.context)
             .add("state", this.state)
+            .add("context", this.context)
             .toString();
     }
 }
